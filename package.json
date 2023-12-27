@@ -1,12 +1,8 @@
 {
   "name": "form-associated-helpers",
   "version": "0.0.1",
-  "description": "A variety of simple components that match an aria-role",
-  "main": "./exports/index.js",
-  "module": "./exports/index.js",
-  "types": "./exports/index.d.ts",
+  "description": "A collection of reusable mixins + helpers for working with form associated custom elements.",
   "exports": {
-    ".": "./exports/index.js",
     "./package.json": "./package.json",
     "./exports/*.js": "./exports/*.js",
     "./exports/*": "./exports/*",
@@ -21,7 +17,8 @@
     "LICENSE"
   ],
   "scripts": {
-    "build": "rimraf -g \"./exports/**/*.d.ts\" && tsc",
+    "clean": "rimraf -g \"./exports/**/*.d.ts\" \"./internal/**/*.d.ts\"",
+    "build": "npm run clean && tsc",
     "deploy:patch": "npm run build && npm version patch && npm publish && git push --follow-tags",
     "deploy:minor": "npm run build && npm version minor && npm publish && git push --follow-tags",
     "deploy:major": "npm run build && npm version major && npm publish && git push --follow-tags",
@@ -29,7 +26,10 @@
   },
   "keywords": [
     "web-components",
-    "aria"
+    "custom-elements",
+    "face",
+    "form-associated",
+    "form-associated-custom-elements"
   ],
   "license": "MIT",
   "repository": "git@github.com:KonnorRogers/form-associated-helpers.git",
@@ -42,10 +42,11 @@
     "access": "public"
   },
   "devDependencies": {
-    "form-associated-helpers": "link:.",
     "@open-wc/testing-helpers": "^3.0.0",
     "@web/test-runner": "^0.18.0",
     "@web/test-runner-playwright": "^0.11.0",
+    "form-associated-helpers": "link:.",
+    "lit": "^3.1.0",
     "rimraf": "^5.0.5",
     "typescript": "^5.3.3"
   }

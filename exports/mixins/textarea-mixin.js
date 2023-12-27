@@ -1,0 +1,191 @@
+import { OpinionatedFormAssociatedMixin } from "./opinionated-form-associated-mixin.js";
+import { PatternMismatchValidator } from "../validators/pattern-mismatch-validator.js"
+import { TooLongValidator } from "../validators/too-long-validator.js"
+import { TooShortValidator } from "../validators/too-short-validator.js"
+
+/**
+ * A mixin for textareas
+ *
+ * @see https://webkit.org/blog/13711/elementinternals-and-form-associated-custom-elements/
+ * @template {import("./types.js").GConstructable<HTMLElement>} T
+ * @param {T} superclass
+ */
+export function TextareaMixin(superclass) {
+  return (
+    /**
+     * @implements {Omit<HTMLTextAreaElement, "cols" | "rows">}
+     */
+    class extends OpinionatedFormAssociatedMixin(superclass) {
+      /**
+       * @override
+       */
+      static get validators () {
+        return [
+          ...super.validators,
+          TooLongValidator,
+          TooShortValidator,
+          PatternMismatchValidator
+        ]
+      }
+
+      /**
+       * @param {...any} args
+       */
+      constructor (...args) {
+        super(...args)
+
+        /**
+         * @type {HTMLTextAreaElement["autocomplete"]}
+         */
+        this.autocomplete = ""
+
+        /**
+         * @type {HTMLTextAreaElement["wrap"]}
+         */
+        this.wrap = ""
+
+        /**
+         * @type {string}
+         */
+        this.value = ""
+
+        /**
+         * @type {string}
+         */
+        this.defaultValue = ""
+
+        /**
+         * @type {HTMLTextAreaElement["maxLength"]}
+         */
+        this.maxLength = -1
+
+        /**
+         * @type {HTMLTextAreaElement["minLength"]}
+         */
+        this.minLength = -1
+
+        /**
+         * @type {HTMLTextAreaElement["readOnly"]}
+         */
+        this.readOnly = false
+
+        /**
+         * @type {HTMLTextAreaElement["placeholder"]}
+         */
+        this.placeholder = ""
+
+        /**
+         * @type {HTMLTextAreaElement["required"]}
+         */
+        this.required = false
+
+        /**
+         * @type {null | HTMLTextAreaElement}
+         */
+        this.formControl = null
+
+        /**
+         * @type {HTMLTextAreaElement["dirName"]}
+         */
+        this.dirName = ""
+
+        /** @type {HTMLTextAreaElement["selectionDirection"]} */
+        this.selectionDirection = "forward"
+
+        /**
+         * @type {string}
+         */
+        this.pattern = ""
+      }
+
+      /**
+       * @param {Parameters<HTMLTextAreaElement["setSelectionRange"]>} args
+       */
+      setSelectionRange (...args) {
+        const formControl = this.formControl
+
+        if (formControl && "selectionRange" in formControl) {
+          /** @type {HTMLTextAreaElement} */ (/** @type {unknown} */ (formControl)).setSelectionRange(...args)
+        }
+      }
+
+      /**
+       * @param {[replacement: string, start: number, end: number, selectionMode?: SelectionMode] | [replacement: string]} args
+       */
+      setRangeText (...args) {
+        const formControl = this.formControl
+
+        if (formControl && "setRangeText" in formControl) {
+          // @ts-expect-error
+          /** @type {HTMLTextAreaElement} */ (/** @type {unknown} */ (formControl)).setRangeText(...args)
+        }
+      }
+
+      /**
+       * @returns {HTMLTextAreaElement["textLength"]}
+       */
+      get textLength () {
+        const formControl = /** @type {HTMLTextAreaElement} */ (this.formControl)
+
+        if (formControl && "textLength" in formControl) {
+          return formControl.textLength
+        }
+
+        return 0
+      }
+
+      /**
+       * @returns {HTMLTextAreaElement["selectionStart"]}
+       */
+      get selectionStart () {
+        const formControl = /** @type {HTMLTextAreaElement} */ (this.formControl)
+
+        if (formControl && "selectionStart" in formControl) {
+          return formControl.selectionStart
+        }
+
+        return 0
+      }
+
+      /**
+       * @returns {HTMLTextAreaElement["selectionStart"]}
+       */
+      get selectionEnd () {
+        const formControl = /** @type {HTMLTextAreaElement} */ (this.formControl)
+
+        if (formControl && "selectionEnd" in formControl) {
+          return formControl.selectionEnd
+        }
+
+        return 0
+      }
+
+      /**
+       * @type {HTMLTextAreaElement["select"]}
+       */
+      select () {
+        const formControl = this.formControl
+
+        if (formControl) {
+          /** @type {HTMLTextAreaElement} */ (formControl).select?.()
+        }
+      }
+    }
+  )
+}
+
+TextareaMixin.formProperties = Object.assign(
+  OpinionatedFormAssociatedMixin.formProperties,
+  {
+    autocomplete: {reflect: true},
+    wrap: {reflect: true},
+    readOnly: {attribute: "readonly", type: Boolean, reflect: true},
+    placeholder: {},
+    dirName: {attribute: "dirname", reflect: true},
+
+    // Validation
+    maxLength: {attribute: "maxlength", type: Number},
+    minLength: {attribute: "minlength", type: Number},
+    pattern: {},
+  }
+)
