@@ -15,7 +15,7 @@ export const PatternMismatchValidator = {
 
     const pattern = element.pattern ?? element.getAttribute("pattern")
     /** If no value is provided, this validator should return true */
-    if (!(element.value && typeof element.value === "string") || !pattern) {
+    if (!(typeof element.value === "string") || !pattern) {
       return validity;
     }
 

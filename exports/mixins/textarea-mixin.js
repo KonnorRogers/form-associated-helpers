@@ -180,12 +180,12 @@ TextareaMixin.formProperties = Object.assign(
     autocomplete: {reflect: true},
     wrap: {reflect: true},
     readOnly: {attribute: "readonly", type: Boolean, reflect: true},
-    placeholder: {},
+    placeholder: {reflect: true},
     dirName: {attribute: "dirname", reflect: true},
 
     // Validation
-    maxLength: {attribute: "maxlength", type: Number},
-    minLength: {attribute: "minlength", type: Number},
-    pattern: {},
+    maxLength: {attribute: "maxlength", type: Number, reflect: true},
+    minLength: {attribute: "minlength", type: Number, reflect: true},
+    pattern: {reflect: true},
   }
 )

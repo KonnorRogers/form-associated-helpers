@@ -14,11 +14,19 @@ OpinionatedFormAssociatedMixin.formProperties = {
 }
 
 /**
- * @template {HTMLElement & ElementInternals & { formControl?: any }} T
+ * @template {HTMLElement & ElementInternals & { formControl?: any, disabled?: boolean }} T
  * @param {T} element
  */
-function runValidators (element) {
+export function runValidators (element) {
   element.setValidity({})
+
+  if (element.disabled || element.getAttribute("disabled")) {
+    // We don't run validators on disabled elements to be inline with native HTMLElements.
+    // https://codepen.io/paramagicdev/pen/PoLogeL
+    return
+  }
+
+
   const validators = /** @type {{allValidators?: Array<import("../types.js").Validator>}} */ (/** @type {unknown} */ (element)).allValidators
 
   if (!validators) return
@@ -186,7 +194,7 @@ export function OpinionatedFormAssociatedMixin(superclass) {
         return [...staticValidators, ...validators]
       }
 
-      get shouldShowValidationMessage () {
+      get willShowValidationMessage () {
         return this.disabled !== true && this.hasInteracted === true
       }
 
@@ -226,7 +234,17 @@ export function OpinionatedFormAssociatedMixin(superclass) {
        * @param {string} newVal
        */
       attributeChangedCallback(name, oldVal, newVal) {
-        if (name === "role" && oldVal !== newVal) {
+        // @ts-expect-error
+        if (typeof super.attributeChangedCallback === "function") {
+          // @ts-expect-error
+          super.attributeChangedCallback(name, oldVal, newVal)
+        }
+
+        if (newVal === oldVal) {
+          return
+        }
+
+        if (name === "role") {
           this.internals.role = newVal || null
         }
 
