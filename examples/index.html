@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- importmaps -->
+    <script async src="../node_modules/es-module-shims/dist/es-module-shims.js" crossorigin="anonymous"></script>
+    <script type="importmap">
+    {
+      "imports": {
+        "lit": "../node_modules/lit/index.js",
+        "lit/directives/ref.js": "../node_modules/lit/directives/ref.js"
+      },
+      "scopes": {
+        "../node_modules/": {
+          "@lit/reactive-element": "../node_modules/@lit/reactive-element/development/reactive-element.js",
+          "lit-element/lit-element.js": "../node_modules/lit-element/development/lit-element.js",
+          "lit-html": "../node_modules/lit-html/development/lit-html.js",
+          "lit-html/": "../node_modules/lit-html/development/"
+        }
+      }
+    }
+    </script>
+    <link rel="modulepreload" href="./textarea-component.js" />
+    <link rel="modulepreload" href="../exports/mixins/form-associated-mixin.js" />
+    <link rel="modulepreload" href="../exports/mixins/lit-form-associated-mixin.js" />
+    <link rel="modulepreload" href="../exports/mixins/textarea-mixin.js" />
+    <link rel="modulepreload" href="../exports/mixins/vanilla-form-associated-mixin.js" />
+    <link rel="modulepreload" href="../exports/validators/pattern-mismatch-validator.js" />
+    <link rel="modulepreload" href="../exports/validators/too-long-validator.js" />
+    <link rel="modulepreload" href="../exports/validators/too-short-validator.js" />
+    <link rel="modulepreload" href="../exports/validators/value-missing-validator.js" />
+    <link rel="modulepreload" href="../internal/run-validators.js" />
+    <link rel="modulepreload" href="../node_modules/@lit/reactive-element/development/css-tag.js" />
+    <link rel="modulepreload" href="../node_modules/@lit/reactive-element/development/reactive-element.js" />
+    <link rel="modulepreload" href="../node_modules/lit-element/development/lit-element.js" />
+    <link rel="modulepreload" href="../node_modules/lit-html/development/async-directive.js" />
+    <link rel="modulepreload" href="../node_modules/lit-html/development/directive-helpers.js" />
+    <link rel="modulepreload" href="../node_modules/lit-html/development/directive.js" />
+    <link rel="modulepreload" href="../node_modules/lit-html/development/directives/ref.js" />
+    <link rel="modulepreload" href="../node_modules/lit-html/development/is-server.js" />
+    <link rel="modulepreload" href="../node_modules/lit-html/development/lit-html.js" />
+    <link rel="modulepreload" href="../node_modules/lit/directives/ref.js" />
+    <link rel="modulepreload" href="../node_modules/lit/index.js" />
+    <!-- end importmaps -->
+    <script type="module">
+      import TextareaComponet from "./textarea-component.js"
+      customElements.define("textarea-component", TextareaComponet)
+    </script>
+  </head>
+  <body>
+    <form>
+      <textarea-component name="foo" value="bar"></textarea-component>
+      <button>Submit</button>
+    </form>
+
+    <script>
+      document.addEventListener('submit', (e) => {
+        e.preventDefault()
+        const vals = [...new FormData(e.target)].reduce((accum, [name, val]) => {
+          if (accum[name] == null) accum[name] = [];
+
+          accum[name].push(val)
+          return accum
+        }, {})
+        console.log(vals)
+      })
+    </script>
+  </body>
+</html>

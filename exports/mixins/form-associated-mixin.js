@@ -1,7 +1,7 @@
 
 /**
  * A mixin to call `attachInternals()`
- * This is merely an implementation that sets the `formAssociated` static class property and calls `attachInternals()`. It doesn't do anything else.
+ * This is merely an implementation that sets the `formAssociated` static class property and calls `attachInternals()`. It doesn't do anything else. It is intentionally minimal.
  *
  * @see https://webkit.org/blog/13711/elementinternals-and-form-associated-custom-elements/
  * @template {import("./types.js").GConstructable<HTMLElement> & {observedAttributes?: string[]}} T

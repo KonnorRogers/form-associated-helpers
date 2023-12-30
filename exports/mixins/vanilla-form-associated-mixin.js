@@ -1,59 +1,7 @@
+import { runValidators } from "../../internal/run-validators.js"
 import { ValueMissingValidator } from "../validators/value-missing-validator.js"
 import { FormAssociatedMixin } from "./form-associated-mixin.js"
 
-OpinionatedFormAssociatedMixin.formProperties = {
-  role: {reflect: true},
-  name: {reflect: true},
-  type: {reflect: true},
-  disabled: {reflect: true, type: Boolean},
-  required: {reflect: true, type: Boolean},
-  hasInteracted: {type: Boolean, attribute: "has-interacted", reflect: true},
-  formControl: {attribute: false, state: true},
-  value: {attribute: false, state: true},
-  defaultValue: {attribute: "value", reflect: true},
-}
-
-/**
- * @template {HTMLElement & ElementInternals & { formControl?: any, disabled?: boolean }} T
- * @param {T} element
- */
-export function runValidators (element) {
-  element.setValidity({})
-
-  if (element.disabled || element.getAttribute("disabled")) {
-    // We don't run validators on disabled elements to be inline with native HTMLElements.
-    // https://codepen.io/paramagicdev/pen/PoLogeL
-    return
-  }
-
-
-  const validators = /** @type {{allValidators?: Array<import("../types.js").Validator>}} */ (/** @type {unknown} */ (element)).allValidators
-
-  if (!validators) return
-
-  const flags = {}
-
-  const formControl = element.formControl || undefined
-
-  let finalMessage = ""
-
-  for (const validator of validators) {
-    const { isValid, message, invalidKeys } = validator.checkValidity(element)
-
-    if (isValid) { continue }
-
-    if (!finalMessage) {
-      finalMessage = message
-    }
-
-    if (invalidKeys?.length >= 0) {
-      // @ts-expect-error
-      invalidKeys.forEach((str) => flags[str] = true)
-    }
-  }
-
-  element.setValidity(flags, finalMessage, formControl)
-}
 
 /**
  * A mixin of form associated helpers that get added to a class with attachInternals.
@@ -64,7 +12,7 @@ export function runValidators (element) {
  * @template {import("./types.js").GConstructable<HTMLElement> & { observedAttributes?: string[] }} T
  * @param {T} superclass
  */
-export function OpinionatedFormAssociatedMixin(superclass) {
+export function VanillaFormAssociatedMixin(superclass) {
   return (
     /**
      * @implements {ElementInternals}
@@ -168,15 +116,18 @@ export function OpinionatedFormAssociatedMixin(superclass) {
           this.addEventListener("focusout", this.handleInteraction)
           this.addEventListener("click", this.handleInteraction)
         }
-
       }
 
       /**
        * Sets `this.hasInteracted = true` to true when the users focus / clicks the element.
+       * @param {Event} e
        */
-      handleInteraction = () => {
+      handleInteraction = (e) => {
         if (this.disabled !== true) {
           this.hasInteracted = true
+        }
+        if (e.type === "focusout") {
+          runValidators(this)
         }
       }
 
@@ -257,38 +208,6 @@ export function OpinionatedFormAssociatedMixin(superclass) {
             this.setFormValue(this.value, this.value)
           }
         }
-
-        runValidators(this)
-      }
-
-      /**
-      * @param {import("lit").PropertyValues<this>} changedProperties
-      */
-      willUpdate (changedProperties) {
-        // @ts-expect-error
-        if (typeof super.willUpdate !== "function") {
-          return
-        }
-
-        if (changedProperties.has("role")) {
-          this.internals.role = changedProperties.get("role") || null
-        }
-
-        if (
-          changedProperties.has("formControl")
-          || changedProperties.has("defaultValue")
-          || changedProperties.has("value")
-        ) {
-          const formControl = this.formControl
-          if (formControl) {
-            this.setFormValue(this.value, this.value)
-          }
-        }
-
-        runValidators(this)
-
-        // @ts-expect-error
-        super.willUpdate(changedProperties)
       }
 
       /**
@@ -348,12 +267,10 @@ export function OpinionatedFormAssociatedMixin(superclass) {
       }
 
       reportValidity () {
-        runValidators(this)
         return this.internals.reportValidity()
       }
 
       checkValidity () {
-        runValidators(this)
         return this.internals.checkValidity()
       }
 

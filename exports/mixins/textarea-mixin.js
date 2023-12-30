@@ -1,13 +1,32 @@
-import { OpinionatedFormAssociatedMixin } from "./opinionated-form-associated-mixin.js";
 import { PatternMismatchValidator } from "../validators/pattern-mismatch-validator.js"
 import { TooLongValidator } from "../validators/too-long-validator.js"
 import { TooShortValidator } from "../validators/too-short-validator.js"
+import { LitFormAssociatedMixin } from "./lit-form-associated-mixin.js"
+
+
+TextareaMixin.formProperties = Object.freeze(
+  Object.assign(
+    {
+      autocomplete: {reflect: true},
+      wrap: {reflect: true},
+      readOnly: {attribute: "readonly", type: Boolean, reflect: true},
+      placeholder: {reflect: true},
+      dirName: {attribute: "dirname", reflect: true},
+
+      // Validation
+      maxLength: {attribute: "maxlength", type: Number, reflect: true},
+      minLength: {attribute: "minlength", type: Number, reflect: true},
+      pattern: {reflect: true},
+    },
+    LitFormAssociatedMixin.formProperties
+  )
+)
 
 /**
  * A mixin for textareas
  *
  * @see https://webkit.org/blog/13711/elementinternals-and-form-associated-custom-elements/
- * @template {import("./types.js").GConstructable<HTMLElement>} T
+ * @template {import("./types.js").GConstructable<import("lit").LitElement> & { properties?: import("lit").PropertyValues }} T
  * @param {T} superclass
  */
 export function TextareaMixin(superclass) {
@@ -15,7 +34,7 @@ export function TextareaMixin(superclass) {
     /**
      * @implements {Omit<HTMLTextAreaElement, "cols" | "rows">}
      */
-    class extends OpinionatedFormAssociatedMixin(superclass) {
+    class extends LitFormAssociatedMixin(superclass) {
       /**
        * @override
        */
@@ -28,6 +47,14 @@ export function TextareaMixin(superclass) {
         ]
       }
 
+      static get properties () {
+        if (super.properties) {
+          return {...TextareaMixin.formProperties, ...super.properties}
+        }
+
+
+        return TextareaMixin.formProperties
+      }
       /**
        * @param {...any} args
        */
@@ -173,19 +200,3 @@ export function TextareaMixin(superclass) {
     }
   )
 }
-
-TextareaMixin.formProperties = Object.assign(
-  OpinionatedFormAssociatedMixin.formProperties,
-  {
-    autocomplete: {reflect: true},
-    wrap: {reflect: true},
-    readOnly: {attribute: "readonly", type: Boolean, reflect: true},
-    placeholder: {reflect: true},
-    dirName: {attribute: "dirname", reflect: true},
-
-    // Validation
-    maxLength: {attribute: "maxlength", type: Number, reflect: true},
-    minLength: {attribute: "minlength", type: Number, reflect: true},
-    pattern: {reflect: true},
-  }
-)

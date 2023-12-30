@@ -5,6 +5,12 @@ settings:
   excludeLinksFromLockfile: false
 
 devDependencies:
+  '@esm-bundle/chai':
+    specifier: 4.3.4-fix.0
+    version: 4.3.4-fix.0
+  '@lit/reactive-element':
+    specifier: ^2.0.2
+    version: 2.0.2
   '@open-wc/testing-helpers':
     specifier: ^3.0.0
     version: 3.0.0
@@ -14,12 +20,24 @@ devDependencies:
   '@web/test-runner-playwright':
     specifier: ^0.11.0
     version: 0.11.0
+  es-module-shims:
+    specifier: ^1.8.2
+    version: 1.8.2
   form-associated-helpers:
     specifier: link:.
     version: 'link:'
   lit:
     specifier: ^3.1.0
     version: 3.1.0
+  lit-element:
+    specifier: ^4.0.2
+    version: 4.0.2
+  lit-html:
+    specifier: ^3.1.0
+    version: 3.1.0
+  playwright:
+    specifier: ^1.40.1
+    version: 1.40.1
   rimraf:
     specifier: ^5.0.5
     version: 5.0.5
@@ -57,6 +75,12 @@ packages:
       '@babel/helper-validator-identifier': 7.22.20
       chalk: 2.4.2
       js-tokens: 4.0.0
+    dev: true
+
+  /@esm-bundle/chai@4.3.4-fix.0:
+    resolution: {integrity: sha512-26SKdM4uvDWlY8/OOOxSB1AqQWeBosCX3wRYUZO7enTAj03CtVxIiCimYVG2WpULcyV51qapK4qTovwkUr5Mlw==}
+    dependencies:
+      '@types/chai': 4.3.11
     dev: true
 
   /@isaacs/cliui@8.0.2:
@@ -322,6 +346,10 @@ packages:
     dependencies:
       '@types/connect': 3.4.38
       '@types/node': 20.10.5
+    dev: true
+
+  /@types/chai@4.3.11:
+    resolution: {integrity: sha512-qQR1dr2rGIHYlJulmr8Ioq3De0Le9E4MJ5AiaeAETJJpndT1uUNHsGFK3L/UIu+rbkQSdj8J/w2bCsBZc/Y5fQ==}
     dev: true
 
   /@types/co-body@6.1.3:
@@ -1219,6 +1247,10 @@ packages:
 
   /es-module-lexer@1.4.1:
     resolution: {integrity: sha512-cXLGjP0c4T3flZJKQSuziYoq7MlT+rnvfZjfp7h+I7K9BNX54kP9nyWvdbwjQ4u1iWbOL4u96fgeZLToQlZC7w==}
+    dev: true
+
+  /es-module-shims@1.8.2:
+    resolution: {integrity: sha512-7vIYVzpOhXtpc3Yn03itB+GSgVZFW7oL4kdydA+iL+IEi7HiSLBUxM05QFw4SxTl6e++pMpGqZPo2+vdNs3TbA==}
     dev: true
 
   /escalade@3.1.1:
