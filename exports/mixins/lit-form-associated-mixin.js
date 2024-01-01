@@ -11,6 +11,7 @@ const formProperties = Object.freeze({
   formControl: {attribute: false, state: true},
   value: {attribute: false, state: true},
   defaultValue: {attribute: "value", reflect: true},
+  valueHasChanged: {type: Boolean, attribute: false},
 })
 
 LitFormAssociatedMixin.formProperties = formProperties
@@ -26,6 +27,7 @@ export function LitFormAssociatedMixin(superclass) {
   return (
     class extends VanillaFormAssociatedMixin(superclass) {
       /**
+       * @protected
        * @param {import("lit").PropertyValues} changedProperties
        */
       willUpdate (changedProperties) {
@@ -49,10 +51,11 @@ export function LitFormAssociatedMixin(superclass) {
           || changedProperties.has("defaultValue")
           || changedProperties.has("value")
         ) {
-          const formControl = this.formControl
-          if (formControl) {
-            this.setFormValue(this.value, this.value)
+          if (this.valueHasChanged === false) {
+            this.value = this.defaultValue
           }
+
+          this.setFormValue(this.value, this.value)
         }
 
         // @ts-expect-error

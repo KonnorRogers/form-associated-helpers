@@ -12,6 +12,8 @@ TextareaMixin.formProperties = Object.freeze(
       readOnly: {attribute: "readonly", type: Boolean, reflect: true},
       placeholder: {reflect: true},
       dirName: {attribute: "dirname", reflect: true},
+      rows: {type: Number},
+      cols: {type: Number},
 
       // Validation
       maxLength: {attribute: "maxlength", type: Number, reflect: true},
@@ -26,13 +28,13 @@ TextareaMixin.formProperties = Object.freeze(
  * A mixin for textareas
  *
  * @see https://webkit.org/blog/13711/elementinternals-and-form-associated-custom-elements/
- * @template {import("./types.js").GConstructable<import("lit").LitElement> & { properties?: import("lit").PropertyValues }} T
+ * @template {import("./types.js").GConstructable<HTMLElement> & {observedAttributes?: string[]}} T
  * @param {T} superclass
  */
 export function TextareaMixin(superclass) {
   return (
     /**
-     * @implements {Omit<HTMLTextAreaElement, "cols" | "rows">}
+     * @implements {HTMLTextAreaElement}
      */
     class extends LitFormAssociatedMixin(superclass) {
       /**
@@ -48,8 +50,13 @@ export function TextareaMixin(superclass) {
       }
 
       static get properties () {
-        if (super.properties) {
-          return {...TextareaMixin.formProperties, ...super.properties}
+        /**
+         * @type {null | import("lit").PropertyValues}
+         */
+        // @ts-expect-error
+        const properties = super.properties
+        if (properties) {
+          return {...TextareaMixin.formProperties, ...properties}
         }
 
 
@@ -123,6 +130,16 @@ export function TextareaMixin(superclass) {
          * @type {string}
          */
         this.pattern = ""
+
+        /**
+         * @type {number}
+         */
+        this.rows = 2
+
+        /**
+         * @type {number}
+         */
+        this.cols = 20
       }
 
       /**

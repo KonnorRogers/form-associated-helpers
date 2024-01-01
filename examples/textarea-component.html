@@ -10,6 +10,7 @@
     {
       "imports": {
         "lit": "../node_modules/lit/index.js",
+        "lit/directives/live.js": "../node_modules/lit/directives/live.js",
         "lit/directives/ref.js": "../node_modules/lit/directives/ref.js"
       },
       "scopes": {
@@ -38,9 +39,11 @@
     <link rel="modulepreload" href="../node_modules/lit-html/development/async-directive.js" />
     <link rel="modulepreload" href="../node_modules/lit-html/development/directive-helpers.js" />
     <link rel="modulepreload" href="../node_modules/lit-html/development/directive.js" />
+    <link rel="modulepreload" href="../node_modules/lit-html/development/directives/live.js" />
     <link rel="modulepreload" href="../node_modules/lit-html/development/directives/ref.js" />
     <link rel="modulepreload" href="../node_modules/lit-html/development/is-server.js" />
     <link rel="modulepreload" href="../node_modules/lit-html/development/lit-html.js" />
+    <link rel="modulepreload" href="../node_modules/lit/directives/live.js" />
     <link rel="modulepreload" href="../node_modules/lit/directives/ref.js" />
     <link rel="modulepreload" href="../node_modules/lit/index.js" />
     <!-- end importmaps -->
@@ -52,7 +55,9 @@
   <body>
     <form>
       <textarea-component name="foo" value="bar"></textarea-component>
+      <br><br>
       <button>Submit</button>
+      <button type="reset">Reset</button>
     </form>
 
     <script>

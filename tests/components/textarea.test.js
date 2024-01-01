@@ -33,7 +33,6 @@ test("Should properly set its form value", async () => {
   const editor = form.querySelector("textarea-component")
   let formData = new FormData(form)
 
-  debugger
   assert.equal(formData.get("test"), editor.value)
 
   editor.value = "yo"
@@ -42,77 +41,77 @@ test("Should properly set its form value", async () => {
   formData = new FormData(form)
   assert.equal(formData.get("test"), editor.value)
 })
-//
-// test("Should prevent submission with custom validity and reset validity", async () => {
-//   const form = await fixture(html`
-//     <form>
-//       <textarea-component name="test" value="sup dude"></textarea-component>
-//       <button>Submit</button>
-//       <button type="reset">Reset</button>
-//     </form>
-//   `)
-//
-//   const editor = form.querySelector("textarea-component")
-//   const button = form.querySelector("button")
-//   const resetButton = form.querySelector("button[type='reset']")
-//
-//   let called = 0
-//
-//   form.addEventListener("submit", () => {
-//     called += 1
-//   })
-//
-//   editor.setCustomValidity("Custom Error Message")
-//
-//   assert.equal(editor.validationMessage, "Custom Error Message")
-//   assert.equal(editor.validity.customError, true)
-//   assert.equal(editor.validity.valid, false)
-//
-//   button.click()
-//
-//   await aTimeout(1)
-//
-//   assert.equal(called, 0)
-//
-//   assert.equal(editor.validationMessage, "Custom Error Message")
-//   assert.equal(editor.validity.customError, true)
-//   assert.equal(editor.validity.valid, false)
-//
-//   editor.value = "Not default value"
-//   resetButton.click()
-//   await aTimeout(1)
-//
-//   assert.equal(editor.validationMessage, "")
-//   assert.equal(editor.validity.customError, false)
-//   assert.equal(editor.validity.valid, true)
-//   assert.equal(editor.getAttribute("value"), "sup dude")
-// })
-//
-// test("Should fail validity check with required and no value", async () => {
-//   const form = await fixture(html`
-//     <form>
-//       <textarea-component required name="test"></textarea-component>
-//       <button>Submit</button>
-//       <button type="reset">Reset</button>
-//     </form>
-//   `)
-//
-//   const editor = form.querySelector("textarea-component")
-//   const button = form.querySelector("button")
-//
-//   let called = 0
-//
-//   form.addEventListener("submit", () => {
-//     called += 1
-//   })
-//
-//   button.click()
-//
-//   await aTimeout(1)
-//
-//   assert.equal(called, 0)
-//
-//   assert.equal(editor.validationMessage, "Please fill out this field.")
-//   assert.equal(editor.validity.valueMissing, true)
-//   assert.equal(editor.validity.valid, false)
-// })
+
+test("Should prevent submission with custom validity and reset validity", async () => {
+  const form = await fixture(html`
+    <form>
+      <textarea-component name="test" value="sup dude"></textarea-component>
+      <button>Submit</button>
+      <button type="reset">Reset</button>
+    </form>
+  `)
+
+  const editor = form.querySelector("textarea-component")
+  const button = form.querySelector("button")
+  const resetButton = form.querySelector("button[type='reset']")
+
+  let called = 0
+
+  form.addEventListener("submit", () => {
+    called += 1
+  })
+
+  editor.setCustomValidity("Custom Error Message")
+
+  assert.equal(editor.validationMessage, "Custom Error Message")
+  assert.equal(editor.validity.customError, true)
+  assert.equal(editor.validity.valid, false)
+
+  button.click()
+
+  await aTimeout(1)
+
+  assert.equal(called, 0)
+
+  assert.equal(editor.validationMessage, "Custom Error Message")
+  assert.equal(editor.validity.customError, true)
+  assert.equal(editor.validity.valid, false)
+
+  editor.value = "Not default value"
+  resetButton.click()
+  await aTimeout(1)
+
+  assert.equal(editor.validationMessage, "")
+  assert.equal(editor.validity.customError, false)
+  assert.equal(editor.validity.valid, true)
+  assert.equal(editor.getAttribute("value"), "sup dude")
+})
+
+test("Should fail validity check with required and no value", async () => {
+  const form = await fixture(html`
+    <form>
+      <textarea-component required name="test"></textarea-component>
+      <button>Submit</button>
+      <button type="reset">Reset</button>
+    </form>
+  `)
+
+  const editor = form.querySelector("textarea-component")
+  const button = form.querySelector("button")
+
+  let called = 0
+
+  form.addEventListener("submit", () => {
+    called += 1
+  })
+
+  button.click()
+
+  await aTimeout(1)
+
+  assert.equal(called, 0)
+
+  assert.equal(editor.validationMessage, "Please fill out this field.")
+  assert.equal(editor.validity.valueMissing, true)
+  assert.equal(editor.validity.valid, false)
+})

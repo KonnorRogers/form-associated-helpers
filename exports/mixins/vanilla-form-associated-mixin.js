@@ -101,6 +101,11 @@ export function VanillaFormAssociatedMixin(superclass) {
         /**
          * @type {boolean}
          */
+        this.valueHasChanged = this.valueHasChanged ?? false
+
+        /**
+         * @type {boolean}
+         */
         this.shouldTrackInteractions = this.shouldTrackInteractions ?? true
 
         /**
@@ -203,10 +208,10 @@ export function VanillaFormAssociatedMixin(superclass) {
           name === "formControl"
           || name === "value"
         ) {
-          const formControl = this.formControl
-          if (formControl) {
-            this.setFormValue(this.value, this.value)
+          if (this.valueHasChanged === false) {
+            this.value = this.defaultValue
           }
+          this.setFormValue(this.value, this.value)
         }
       }
 
@@ -221,8 +226,9 @@ export function VanillaFormAssociatedMixin(superclass) {
 
         this.value = this.defaultValue
         this.hasInteracted = false
-        this.internals.setValidity({})
-        this.internals.setFormValue(this.defaultValue, this.defaultValue)
+        this.valueHasChanged = false
+        this.setValidity({})
+        this.setFormValue(this.defaultValue, this.defaultValue)
       }
 
       /**
@@ -245,6 +251,7 @@ export function VanillaFormAssociatedMixin(superclass) {
       formStateRestoreCallback(state, reason) {
         // @ts-expect-error
         this.value = state
+        this.valueHasChanged = false
       }
 
       // Additional things not added by the `attachInternals()` call.
@@ -280,6 +287,7 @@ export function VanillaFormAssociatedMixin(superclass) {
       setFormValue (...args) {
         this.internals.setFormValue(...args)
         runValidators(this)
+        this.valueHasChanged = true
       }
 
       /**
