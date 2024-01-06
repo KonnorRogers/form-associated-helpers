@@ -21,9 +21,9 @@
     "setup": "pnpm install && cd docs && pnpm install && bundle install",
     "build:docs": "cd docs && pnpm run build && pnpm run build:api",
     "build:api": "typedoc --out ./docs/output/references/api/ ./exports/**/*.js",
-    "build": "npm run clean && tsc && custom-elements-manifest analyze --litelement",
+    "build": "npm run clean && tsc && npm run build:cem",
     "watch:cem": "custom-elements-manifest analyze --litelement --watch",
-    "analyze": "custom-elements-manifest analyze --litelement",
+    "build:cem": "custom-elements-manifest analyze --litelement",
     "clean": "rimraf -g \"./exports/**/*.d.ts\" \"./internal/**/*.d.ts\"",
     "start": "tsc --watch",
     "deploy:patch": "npm run build && npm version patch && npm publish && git push --follow-tags",
@@ -49,9 +49,11 @@
     "access": "public"
   },
   "devDependencies": {
+    "@custom-elements-manifest/analyzer": "^0.9.0",
     "@esm-bundle/chai": "4.3.4-fix.0",
     "@lit/reactive-element": "^2.0.2",
     "@open-wc/testing-helpers": "^3.0.0",
+    "@types/node": "^20.10.6",
     "@web/test-runner": "^0.18.0",
     "@web/test-runner-playwright": "^0.11.0",
     "es-module-shims": "^1.8.2",
@@ -62,5 +64,6 @@
     "playwright": "^1.40.1",
     "rimraf": "^5.0.5",
     "typescript": "^5.3.3"
-  }
+  },
+  "customElements": "custom-elements.json"
 }

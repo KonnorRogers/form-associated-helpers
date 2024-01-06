@@ -1,5 +1,6 @@
 ---
 title: Vanilla Form Associated Mixin
-permalink: /references/mixins/vanilla-form-associated-mixin
-layout: api
+permalink: /references/mixins/vanilla-form-associated-mixin/
 ---
+
+# Hi

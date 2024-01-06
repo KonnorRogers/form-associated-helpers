@@ -1,0 +1,429 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "exports/types.js",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "exports/mixins/form-associated-mixin.js",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "FormAssociatedMixin",
+          "parameters": [
+            {
+              "name": "superclass",
+              "type": {
+                "text": "T"
+              }
+            }
+          ],
+          "description": "A mixin to call `attachInternals()`\nThis is merely an implementation that sets the `formAssociated` static class property and calls `attachInternals()`. It doesn't do anything else. It is intentionally minimal."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "FormAssociatedMixin",
+          "declaration": {
+            "name": "FormAssociatedMixin",
+            "module": "exports/mixins/form-associated-mixin.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "exports/mixins/lit-form-associated-mixin.js",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "LitFormAssociatedMixin",
+          "parameters": [
+            {
+              "name": "superclass",
+              "type": {
+                "text": "T"
+              }
+            }
+          ],
+          "description": "An extension of the VanillaFormAssociatedMixin intended for LitElement by providing formProperties and willUpdate() callbacks with the appropriate properties."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "LitFormAssociatedMixin",
+          "declaration": {
+            "name": "LitFormAssociatedMixin",
+            "module": "exports/mixins/lit-form-associated-mixin.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "exports/mixins/textarea-mixin.js",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "TextareaMixin",
+          "parameters": [
+            {
+              "name": "superclass",
+              "type": {
+                "text": "T"
+              }
+            }
+          ],
+          "description": "A mixin for textareas"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TextareaMixin",
+          "declaration": {
+            "name": "TextareaMixin",
+            "module": "exports/mixins/textarea-mixin.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "exports/mixins/types.js",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "exports/mixins/vanilla-form-associated-mixin.js",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "VanillaFormAssociatedMixin",
+          "parameters": [
+            {
+              "name": "superclass",
+              "type": {
+                "text": "T"
+              }
+            }
+          ],
+          "description": "A mixin of form associated helpers that get added to a class with attachInternals.\nThis opinionated version extends the above formAssociated and handles common conventions I like.\nRequired properties: { value, disabled, formControl }"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VanillaFormAssociatedMixin",
+          "declaration": {
+            "name": "VanillaFormAssociatedMixin",
+            "module": "exports/mixins/vanilla-form-associated-mixin.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "exports/validators/bad-input-validator.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "BadInputValidator",
+          "type": {
+            "text": "Validator<HTMLElement & { formControl?: HTMLElement & ElementInternals }>"
+          },
+          "default": "{\n  // observedAttributes: [],\n  checkValidity (element) {\n    /**\n     * @type {ReturnType<import(\"../types.js\").Validator[\"checkValidity\"]>}\n     */\n    const validity = {\n      message: \"\",\n      isValid: true,\n      invalidKeys: []\n    }\n    const formControl = element.formControl\n\n    if (!formControl) return validity\n\n    formControl.checkValidity()\n    if (formControl.validity.badInput === true) {\n      validity.invalidKeys.push(\"badInput\")\n      validity.isValid = false\n      validity.message = formControl.validationMessage\n      return validity\n    }\n\n    return validity\n  }\n}",
+          "description": "\"The read-only badInput property of a ValidityState object indicates if the user has provided input that the browser is unable to convert. For example, if you have a number input element whose content is a string.\""
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "BadInputValidator",
+          "declaration": {
+            "name": "BadInputValidator",
+            "module": "exports/validators/bad-input-validator.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "exports/validators/custom-error-validator.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "CustomErrorValidator",
+          "type": {
+            "text": "Validator<HTMLElement & { error?: string | boolean }>"
+          },
+          "default": "{\n  observedAttributes: [\"error\"],\n  checkValidity (element) {\n    /**\n     * @type {ReturnType<import(\"../types.js\").Validator[\"checkValidity\"]>}\n     */\n    const validity = {\n      message: \"\",\n      isValid: true,\n      invalidKeys: []\n    }\n\n    if (element.error === true || element.hasAttribute(\"error\")) {\n      const defaultErrorMessage = \"An error has occurred.\"\n      let message = element.error ?? element.getAttribute(\"error\")\n\n      if (!message || message === true) {\n        message = defaultErrorMessage\n      }\n\n      validity.invalidKeys.push(\"customError\")\n      validity.isValid = false\n      validity.message = message\n      return validity\n    }\n\n    return validity\n  }\n}",
+          "description": "A validator for custom errors. This will check if there is an `.error` property or an `error` attribute\n  and append it to the ValidityState of the custom element."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "CustomErrorValidator",
+          "declaration": {
+            "name": "CustomErrorValidator",
+            "module": "exports/validators/custom-error-validator.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "exports/validators/mirror-validator.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "MirrorValidator",
+          "type": {
+            "text": "Validator<HTMLElement & { formControl?: HTMLElement & ElementInternals }>"
+          },
+          "default": "{\n  checkValidity (element) {\n    const formControl = element.formControl\n\n    /**\n     * @type {ReturnType<import(\"../types.js\").Validator[\"checkValidity\"]>}\n     */\n    const validity = {\n      message: \"\",\n      isValid: true,\n      invalidKeys: []\n    }\n\n    if (!formControl) return validity\n\n    const isValid = formControl.checkValidity()\n    if (isValid) return validity\n\n    validity.isValid = false\n    validity.message = formControl.validationMessage\n    for (let key in formControl.validity) {\n      if (key === \"valid\") {\n        continue\n      }\n\n      const checkedKey = /** @type {Exclude<keyof ValidityState, \"valid\">} */ (/** @type {unknown} */ (key))\n\n      if (formControl.validity[checkedKey] === true) {\n        validity.invalidKeys.push(checkedKey)\n      }\n    }\n\n    return validity\n  }\n}",
+          "description": "This validator is for if you have an exact copy of your element in the shadow DOM. Rather than needing\n  custom translations and error messages, you can simply rely on the element \"formControl\" in your shadow dom."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "MirrorValidator",
+          "declaration": {
+            "name": "MirrorValidator",
+            "module": "exports/validators/mirror-validator.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "exports/validators/pattern-mismatch-validator.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "PatternMismatchValidator",
+          "type": {
+            "text": "Validator<HTMLElement & { value?: string | null | File | FormData } & { pattern?: string }>"
+          },
+          "default": "{\n  observedAttributes: [\"pattern\"],\n  checkValidity (element) {\n    /**\n     * @type {ReturnType<import(\"../types.js\").Validator[\"checkValidity\"]>}\n     */\n    const validity = {\n      message: \"\",\n      isValid: true,\n      invalidKeys: []\n    }\n\n    const pattern = element.pattern ?? element.getAttribute(\"pattern\")\n    /** If no value is provided, this validator should return true */\n    if (!(typeof element.value === \"string\") || !pattern) {\n      return validity;\n    }\n\n    const regExp = new RegExp(pattern);\n    const isValid = !!regExp.exec(element.value);\n\n    if (isValid) return validity\n\n    validity.isValid = false\n    validity.message = \"Please match the request format.\"\n    validity.invalidKeys.push(\"patternMismatch\")\n    return validity\n  }\n}"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PatternMismatchValidator",
+          "declaration": {
+            "name": "PatternMismatchValidator",
+            "module": "exports/validators/pattern-mismatch-validator.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "exports/validators/range-overflow-validator.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "RangeOverflowValidator",
+          "type": {
+            "text": "Validator<HTMLElement & {max?: number}>"
+          },
+          "default": "{\n  observedAttributes: [\"max\"],\n  checkValidity (element) {\n    /**\n     * @type {ReturnType<import(\"../types.js\").Validator[\"checkValidity\"]>}\n     */\n    const validity = {\n      message: \"\",\n      isValid: true,\n      invalidKeys: []\n    }\n\n    const max = Number(element.max ?? element.getAttribute(\"max\"))\n    const value = element.value\n\n    // If it's not a number, we can't compare.\n    if (typeof value !== \"number\") return validity\n\n    if (value > max) {\n      validity.message = `Please select a value that is less than or equal to ${max}.`\n      validity.isValid = false\n      validity.invalidKeys.push(\"rangeOverflow\")\n    }\n\n    return validity\n  }\n}"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RangeOverflowValidator",
+          "declaration": {
+            "name": "RangeOverflowValidator",
+            "module": "exports/validators/range-overflow-validator.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "exports/validators/range-underflow-validator.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "RangeUnderflowValidator",
+          "type": {
+            "text": "Validator<HTMLElement & {min?: number}>"
+          },
+          "default": "{\n  observedAttributes: [\"min\"],\n  checkValidity(element) {\n    const min = Number(element.min ?? element.getAttribute(\"min\"))\n    const value = element.value\n\n    /**\n     * @type {ReturnType<import(\"../types.js\").Validator[\"checkValidity\"]>}\n     */\n    const validity = {\n      message: \"\",\n      isValid: true,\n      invalidKeys: []\n    }\n\n    if (typeof value !== \"number\") return validity\n\n    if (value < min) {\n      validity.message = `Please select a value that is more than or equal to ${min}.`\n      validity.isValid = false\n      validity.invalidKeys.push(\"rangeUnderflow\")\n    }\n\n    return validity\n  }\n}"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RangeUnderflowValidator",
+          "declaration": {
+            "name": "RangeUnderflowValidator",
+            "module": "exports/validators/range-underflow-validator.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "exports/validators/step-mismatch-validator.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "StepMismatchValidator",
+          "type": {
+            "text": "Validator<HTMLElement & { min?: number, step?: number }>"
+          },
+          "default": "{\n  observedAttributes: [\"min\", \"step\"],\n  checkValidity (element) {\n    const min = Number(element.min ?? element.getAttribute(\"min\"))\n    const value = Number(element.value ?? element.getAttribute(\"value\"))\n    const step = Number(element.step ?? element.getAttribute(\"step\"))\n\n    /**\n     * @type {ReturnType<import(\"../types.js\").Validator[\"checkValidity\"]>}\n     */\n    const validity = {\n      message: \"\",\n      isValid: true,\n      invalidKeys: []\n    }\n\n    if (isNaN(min) || isNaN(value) || isNaN(step)) {\n      return validity\n    }\n\n    const isValid = isValidStep(min, value, step)\n\n    if (isValid) return validity\n\n    const {low, high} = findClosestSteps(min, value, step)\n\n    validity.message = `Please select a valid value. The two nearest valid values are ${low} and ${high}`\n    validity.isValid = false\n    validity.invalidKeys.push(\"stepMismatch\")\n\n    return validity\n  }\n}"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "StepMismatchValidator",
+          "declaration": {
+            "name": "StepMismatchValidator",
+            "module": "exports/validators/step-mismatch-validator.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "exports/validators/too-long-validator.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "TooLongValidator",
+          "type": {
+            "text": "Validator<HTMLElement & { maxLength?: number, length?: number }>"
+          },
+          "default": "{\n  observedAttributes: [\"maxlength\"],\n  checkValidity (element) {\n    /**\n     * @type {ReturnType<import(\"../types.js\").Validator[\"checkValidity\"]>}\n     */\n    const validity = {\n      message: \"\",\n      isValid: true,\n      invalidKeys: []\n    }\n\n    /** if its not a string, we really can't compare. */\n    let value = element.value ?? \"\"\n    if (typeof value !== \"string\") { return validity }\n\n    const maxLength = Number(element.maxLength || element.getAttribute(\"maxlength\"))\n\n    if (!maxLength) { return validity}\n\n    if (maxLength > value.length) {\n      validity.message = `Please use less than or equal to ${maxLength} characters. You are currently using ${value.length} characters.`;\n      validity.isValid = false\n      validity.invalidKeys.push(\"tooLong\")\n    }\n\n    return validity;\n  }}"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TooLongValidator",
+          "declaration": {
+            "name": "TooLongValidator",
+            "module": "exports/validators/too-long-validator.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "exports/validators/too-short-validator.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "TooShortValidator",
+          "type": {
+            "text": "Validator<HTMLElement & { minLength?: number, length?: number }>"
+          },
+          "default": "{\n  observedAttributes: [\"minlength\"],\n  checkValidity (element) {\n    /**\n     * @type {ReturnType<import(\"../types.js\").Validator[\"checkValidity\"]>}\n     */\n    const validity = {\n      message: \"\",\n      isValid: true,\n      invalidKeys: []\n    }\n\n    /** if its not a string, we really can't compare. */\n    let value = element.value ?? \"\"\n    if (typeof value !== \"string\") { return validity }\n\n    const minLength = Number(element.minLength || element.getAttribute(\"minlength\"))\n\n    if (!minLength) { return validity }\n\n    if (minLength > value.length) {\n      validity.message = `Please use greater than or equal to ${minLength} characters. You are currently using ${value.length} characters.`;\n      validity.isValid = false\n      validity.invalidKeys.push(\"tooShort\")\n    }\n\n    return validity;\n  }}"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TooShortValidator",
+          "declaration": {
+            "name": "TooShortValidator",
+            "module": "exports/validators/too-short-validator.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "exports/validators/type-mismatch-validator.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "TypeMismatchValidator",
+          "type": {
+            "text": "Validator<HTMLElement & { formControl?: HTMLElement & ElementInternals }>"
+          },
+          "default": "{\n  // observedAttributes: [],\n  checkValidity (element) {\n    /**\n     * @type {ReturnType<import(\"../types.js\").Validator[\"checkValidity\"]>}\n     */\n    const validity = {\n      message: \"\",\n      isValid: true,\n      invalidKeys: []\n    }\n    const formControl = element.formControl\n\n    if (!formControl) return validity\n\n    formControl.checkValidity()\n    if (formControl.validity.typeMismatch === true) {\n      validity.invalidKeys.push(\"typeMismatch\")\n      validity.isValid = false\n      validity.message = formControl.validationMessage\n      return validity\n    }\n\n    return validity\n  }\n}"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "TypeMismatchValidator",
+          "declaration": {
+            "name": "TypeMismatchValidator",
+            "module": "exports/validators/type-mismatch-validator.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "exports/validators/value-missing-validator.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "ValueMissingValidator",
+          "type": {
+            "text": "Validator<HTMLElement & { required?: boolean }>"
+          },
+          "default": "{\n  observedAttributes: [\"required\"],\n  checkValidity (element) {\n    /**\n     * @type {ReturnType<import(\"../types.js\").Validator[\"checkValidity\"]>}\n     */\n    const validity = {\n      message: \"\",\n      isValid: true,\n      invalidKeys: []\n    }\n\n    const isRequired = element.required ?? element.hasAttribute(\"required\")\n\n    // Always true if the element isn't required.\n    if (!isRequired) {\n      return validity\n    }\n\n    if (!element.value) {\n      validity.message = \"Please fill out this field.\"\n      validity.isValid = false\n      validity.invalidKeys.push(\"valueMissing\")\n    }\n\n    return validity\n  }\n}"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ValueMissingValidator",
+          "declaration": {
+            "name": "ValueMissingValidator",
+            "module": "exports/validators/value-missing-validator.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "internal/run-validators.js",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "runValidators",
+          "parameters": [
+            {
+              "name": "element",
+              "type": {
+                "text": "T"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "runValidators",
+          "declaration": {
+            "name": "runValidators",
+            "module": "internal/run-validators.js"
+          }
+        }
+      ]
+    }
+  ]
+}

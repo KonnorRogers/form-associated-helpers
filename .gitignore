@@ -132,3 +132,4 @@ dist
 exports/**/*.d.ts
 examples/**/*.d.ts
 internal/**/*.d.ts
+custom-elements.json
