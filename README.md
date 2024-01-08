@@ -10,6 +10,8 @@ A collection of reusable mixins + helpers for working with form associated custo
 
 ## Foreword
 
+This package is currently considered an "alpha" package. Use at your own risk.
+
 Most of these mixins have been tested and intended to work with Lit. Other custom element implementations
 may work, but is not the purpose of this library (currently).
 
