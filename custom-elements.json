@@ -68,11 +68,11 @@
     },
     {
       "kind": "javascript-module",
-      "path": "exports/mixins/textarea-mixin.js",
+      "path": "exports/mixins/lit-textarea-mixin.js",
       "declarations": [
         {
           "kind": "function",
-          "name": "TextareaMixin",
+          "name": "LitTextareaMixin",
           "parameters": [
             {
               "name": "superclass",
@@ -87,10 +87,10 @@
       "exports": [
         {
           "kind": "js",
-          "name": "TextareaMixin",
+          "name": "LitTextareaMixin",
           "declaration": {
-            "name": "TextareaMixin",
-            "module": "exports/mixins/textarea-mixin.js"
+            "name": "LitTextareaMixin",
+            "module": "exports/mixins/lit-textarea-mixin.js"
           }
         }
       ]

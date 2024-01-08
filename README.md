@@ -18,10 +18,18 @@ may work, but is not the purpose of this library (currently).
 The following mixins are available:
 
 ```js
+// General form mixins.
 import { FormAssociatedMixin } from "form-associated-helpers/exports/mixins/form-associated-mixin.js"
-import { OpinionatedFormAssociatedMixin } from "form-associated-helpers/exports/mixins/opinionated-form-associated-mixin.js"
-import { TextareaMixin } from "form-associated-helpers/exports/mixins/textarea-mixin.js"
+import { VanillaFormAssociatedMixin } from "form-associated-helpers/exports/mixins/vanilla-form-associated-mixin.js"
+import { LitFormAssociatedMixin } from "form-associated-helpers/exports/mixins/lit-form-associated-mixin.js"
+
+// Mixins for specific types of form controls.
+import { LitTextareaMixin } from "form-associated-helpers/exports/mixins/lit-textarea-mixin.js"
 ```
+
+### Using mixins
+
+TODO:
 
 ## Validators
 
@@ -43,8 +51,4 @@ import { ValueMissingValidator} from "exports/validators/value-missing-validator
 
 ## Using validators
 
-
-
-```js
-
-```
+TODO:

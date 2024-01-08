@@ -3,8 +3,7 @@ import { TooLongValidator } from "../validators/too-long-validator.js"
 import { TooShortValidator } from "../validators/too-short-validator.js"
 import { LitFormAssociatedMixin } from "./lit-form-associated-mixin.js"
 
-
-TextareaMixin.formProperties = Object.freeze(
+LitTextareaMixin.formProperties = Object.freeze(
   Object.assign(
     {
       autocomplete: {reflect: true},
@@ -31,7 +30,7 @@ TextareaMixin.formProperties = Object.freeze(
  * @template {import("./types.js").GConstructable<HTMLElement> & {observedAttributes?: string[]}} T
  * @param {T} superclass
  */
-export function TextareaMixin(superclass) {
+export function LitTextareaMixin(superclass) {
   return (
     /**
      * @implements {HTMLTextAreaElement}
@@ -56,11 +55,11 @@ export function TextareaMixin(superclass) {
         // @ts-expect-error
         const properties = super.properties
         if (properties) {
-          return {...TextareaMixin.formProperties, ...properties}
+          return {...LitTextareaMixin.formProperties, ...properties}
         }
 
 
-        return TextareaMixin.formProperties
+        return LitTextareaMixin.formProperties
       }
       /**
        * @param {...any} args
