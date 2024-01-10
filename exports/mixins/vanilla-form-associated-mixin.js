@@ -130,6 +130,7 @@ export function VanillaFormAssociatedMixin(superclass) {
       handleInteraction = (e) => {
         if (this.disabled !== true) {
           this.hasInteracted = true
+          this.setAttribute("data-has-interacted", "")
         }
         if (e.type === "focusout") {
           runValidators(this)
@@ -226,6 +227,7 @@ export function VanillaFormAssociatedMixin(superclass) {
 
         this.value = this.defaultValue
         this.hasInteracted = false
+        this.removeAttribute("data-has-interacted")
         this.valueHasChanged = false
         this.setValidity({})
         this.setFormValue(this.defaultValue, this.defaultValue)
@@ -238,8 +240,9 @@ export function VanillaFormAssociatedMixin(superclass) {
       */
       formDisabledCallback(isDisabled) {
         this.disabled = isDisabled
-        this.internals.setValidity({})
+        this.setValidity({})
         this.hasInteracted = false
+        this.removeAttribute("data-has-interacted")
       }
 
       /**
@@ -271,6 +274,22 @@ export function VanillaFormAssociatedMixin(superclass) {
         }
 
         this.internals.setValidity(flags, message, anchor)
+
+        if (this.validity.valid) {
+          this.removeAttribute("data-invalid")
+          this.removeAttribute("data-user-invalid")
+          this.setAttribute("data-valid", "")
+          if (this.hasInteracted) {
+            this.setAttribute("data-valid", "")
+          }
+        } else {
+          this.removeAttribute("data-valid")
+          this.removeAttribute("data-user-valid")
+          this.setAttribute("data-invalid", "")
+          if (this.hasInteracted) {
+            this.setAttribute("data-user-invalid", "")
+          }
+        }
       }
 
       reportValidity () {

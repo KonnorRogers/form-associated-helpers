@@ -111,6 +111,11 @@ test("Should fail validity check with required and no value", async () => {
 
   assert.equal(called, 0)
 
+  assert.equal(editor.hasAttribute("data-has-interacted"), true)
+  assert.equal(editor.hasAttribute("data-invalid"), true)
+  assert.equal(editor.hasAttribute("data-user-invalid"), true)
+  assert.equal(editor.hasAttribute("data-valid"), false)
+  assert.equal(editor.hasAttribute("data-user-valid"), false)
   assert.equal(editor.validationMessage, "Please fill out this field.")
   assert.equal(editor.validity.valueMissing, true)
   assert.equal(editor.validity.valid, false)
