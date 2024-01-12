@@ -6,18 +6,18 @@ import { LitFormAssociatedMixin } from "./lit-form-associated-mixin.js"
 LitTextareaMixin.formProperties = Object.freeze(
   Object.assign(
     {
-      autocomplete: {reflect: true},
-      wrap: {reflect: true},
+      autocomplete: {},
+      wrap: {},
       readOnly: {attribute: "readonly", type: Boolean, reflect: true},
-      placeholder: {reflect: true},
-      dirName: {attribute: "dirname", reflect: true},
+      placeholder: {},
+      dirName: {},
       rows: {type: Number},
       cols: {type: Number},
 
       // Validation
-      maxLength: {attribute: "maxlength", type: Number, reflect: true},
-      minLength: {attribute: "minlength", type: Number, reflect: true},
-      pattern: {reflect: true},
+      maxLength: {attribute: "maxlength", type: Number},
+      minLength: {attribute: "minlength", type: Number},
+      pattern: {},
     },
     LitFormAssociatedMixin.formProperties
   )

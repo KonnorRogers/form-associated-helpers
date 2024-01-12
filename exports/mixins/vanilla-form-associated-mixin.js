@@ -117,9 +117,9 @@ export function VanillaFormAssociatedMixin(superclass) {
         this.validators = []
 
         if (this.shouldTrackInteractions) {
-          this.addEventListener("focusin", this.handleInteraction)
+          // this.addEventListener("focusin", this.handleInteraction)
           this.addEventListener("focusout", this.handleInteraction)
-          this.addEventListener("click", this.handleInteraction)
+          this.addEventListener("blur", this.handleInteraction)
         }
       }
 
@@ -128,13 +128,12 @@ export function VanillaFormAssociatedMixin(superclass) {
        * @param {Event} e
        */
       handleInteraction = (e) => {
-        if (this.disabled !== true) {
+        if (this.disabled !== true && !this.matches(":focus-within")) {
           this.hasInteracted = true
           this.setAttribute("data-has-interacted", "")
         }
-        if (e.type === "focusout") {
-          runValidators(this)
-        }
+
+        runValidators(this)
       }
 
       get allValidators () {

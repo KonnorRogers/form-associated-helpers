@@ -4,4 +4,3 @@ permalink: /references/
 layout: index
 ---
 
-<%= render ComingSoon.new %>

@@ -6,6 +6,12 @@ import { setBasePath } from "@shoelace-style/shoelace/dist/utilities/base-path.j
 
 import LazyLoader from "./src/lazy-loader.js"
 
+import TextareaComponent from "../../../examples/textarea-component.js"
+
+if (!window.customElements.get("textarea-component")) {
+  window.customElements.define("textarea-component", TextareaComponent)
+}
+
 import * as Turbo from "@hotwired/turbo"
 window.Turbo = Turbo
 import "./src/layout.js"
