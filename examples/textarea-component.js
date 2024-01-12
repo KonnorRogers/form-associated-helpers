@@ -46,7 +46,8 @@ export default class TextareaComponent extends LitTextareaMixin(LitElement) {
         pattern=${this.pattern}
         dirname=${this.dirName}
         placeholder=${this.placeholder}
-        readonly=${this.readOnly}
+        ?readonly=${this.readOnly}
+        ?required=${this.required}
         wrap=${this.wrap}
         autocomplete=${this.autocomplete}
         @input=${(/** @type {Event} */ e) => this.value = /** @type {HTMLTextAreaElement} */ (e.target).value}

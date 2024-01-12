@@ -34,6 +34,7 @@ const esbuildOptions = {
   entryPoints: {
     "javascript/index": "frontend/javascript/index.js",
     "javascript/defer": "frontend/javascript/defer.js",
+    "textarea-component": "../examples/textarea-component.js"
   },
   define: {
     "process.env.BASE_PATH": `"${BASE_PATH || "/"}"`
