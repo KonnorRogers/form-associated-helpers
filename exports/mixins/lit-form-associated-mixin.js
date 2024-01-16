@@ -7,7 +7,7 @@ const formProperties = Object.freeze({
   type: {reflect: true},
   disabled: {reflect: true, type: Boolean},
   required: {reflect: true, type: Boolean},
-  hasInteracted: {type: Boolean, attribute: "has-interacted", reflect: true},
+  hasInteracted: {type: Boolean, attribute: "data-has-interacted", reflect: true},
   formControl: {attribute: false, state: true},
   value: {attribute: false, state: true},
   defaultValue: {attribute: "value", reflect: true},

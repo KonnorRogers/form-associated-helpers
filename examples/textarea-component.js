@@ -32,6 +32,29 @@ export default class TextareaComponent extends LitTextareaMixin(LitElement) {
     }
   `
 
+  /**
+   * @template {Event | string} T
+   * @param {T} eventNameOrEvent
+   * @param {null | undefined | EventInit} [options]
+   */
+  emit(eventNameOrEvent, options = {}) {
+    if (eventNameOrEvent instanceof Event) {
+      this.dispatchEvent(eventNameOrEvent)
+      return eventNameOrEvent
+    }
+
+    if (!options) {
+      options = {}
+    }
+
+    if (options.bubbles == null) options.bubbles = true
+    if (options.composed == null) options.composed = true
+
+    const event = new CustomEvent(eventNameOrEvent, options)
+    this.dispatchEvent(event)
+    return event
+  }
+
   render () {
     return html`
       <textarea
@@ -50,9 +73,18 @@ export default class TextareaComponent extends LitTextareaMixin(LitElement) {
         ?required=${this.required}
         wrap=${this.wrap}
         autocomplete=${this.autocomplete}
-        @input=${(/** @type {Event} */ e) => this.value = /** @type {HTMLTextAreaElement} */ (e.target).value}
-        @change=${(/** @type {Event} */ e) => this.value = /** @type {HTMLTextAreaElement} */ (e.target).value}
-        @keydown=${(/** @type {Event} */ e) => this.value = /** @type {HTMLTextAreaElement} */ (e.target).value}
+        @input=${(/** @type {Event} */ e) => {
+          this.value = /** @type {HTMLTextAreaElement} */ (e.target).value
+          // this.emit("input")
+        }}
+        @change=${(/** @type {Event} */ e) => {
+          this.value = /** @type {HTMLTextAreaElement} */ (e.target).value
+          // this.emit("change")
+        }}
+        @keydown=${(/** @type {Event} */ e) => {
+          this.value = /** @type {HTMLTextAreaElement} */ (e.target).value
+          // this.emit("keydown")
+        }}
       ></textarea>
     `
   }

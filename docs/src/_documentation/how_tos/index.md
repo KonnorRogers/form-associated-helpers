@@ -4,4 +4,3 @@ permalink: /how-tos/
 layout: index
 ---
 
-<%= render ComingSoon.new %>

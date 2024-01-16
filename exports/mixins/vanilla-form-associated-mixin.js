@@ -130,7 +130,6 @@ export function VanillaFormAssociatedMixin(superclass) {
       handleInteraction = (e) => {
         if (this.disabled !== true && !this.matches(":focus-within")) {
           this.hasInteracted = true
-          this.setAttribute("data-has-interacted", "")
         }
 
         runValidators(this)
@@ -226,7 +225,6 @@ export function VanillaFormAssociatedMixin(superclass) {
 
         this.value = this.defaultValue
         this.hasInteracted = false
-        this.removeAttribute("data-has-interacted")
         this.valueHasChanged = false
         this.setValidity({})
         this.setFormValue(this.defaultValue, this.defaultValue)
@@ -241,7 +239,6 @@ export function VanillaFormAssociatedMixin(superclass) {
         this.disabled = isDisabled
         this.setValidity({})
         this.hasInteracted = false
-        this.removeAttribute("data-has-interacted")
       }
 
       /**
@@ -279,7 +276,7 @@ export function VanillaFormAssociatedMixin(superclass) {
           this.removeAttribute("data-user-invalid")
           this.setAttribute("data-valid", "")
           if (this.hasInteracted) {
-            this.setAttribute("data-valid", "")
+            this.setAttribute("data-user-valid", "")
           }
         } else {
           this.removeAttribute("data-valid")

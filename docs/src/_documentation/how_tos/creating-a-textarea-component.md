@@ -3,7 +3,13 @@ title: Creating a textarea component
 permalink: /how-tos/creating-a-textarea-component/
 ---
 
-<light-preview style="min-height: 1000px;">
+<style>
+  .form-state-preview::part(preview) {
+    min-height: 400px;
+  }
+</style>
+
+<light-preview class="form-state-preview">
   <template slot="code">
     <style>
       textarea-component::part(form-control):focus-visible {
@@ -65,13 +71,37 @@ permalink: /how-tos/creating-a-textarea-component/
         }
         document.addEventListener("submit", (e) => {
           e.preventDefault()
+          setTimeout(() => document.querySelector("#state").innerText = getState(document.querySelector("textarea-component")))
         })
+
+        document.addEventListener("input", (e) => {
+          setTimeout(() => document.querySelector("#state").innerText = getState(document.querySelector("textarea-component")))
+        })
+
+        document.addEventListener("focusout", (e) => {
+          setTimeout(() => document.querySelector("#state").innerText = getState(document.querySelector("textarea-component")))
+        })
+
+        setTimeout(() => document.querySelector("#state").innerText = getState(document.querySelector("textarea-component")))
 
         function getState (formControl) {
           let text = ""
-          if (e.hasAttribute("data-user-valid")) {
-            text = ""
+          if (formControl.hasAttribute("data-user-valid")) {
+            text += "has-interacted, user-valid"
           }
+
+          if (formControl.hasAttribute("data-user-invalid")) {
+            text += "has-interacted, user-invalid"
+          }
+
+          if (formControl.hasAttribute("data-valid")) {
+            text += " valid"
+          }
+          if (formControl.hasAttribute("data-invalid")) {
+            text += " invalid"
+          }
+
+          return text
         }
       </script>
     </form>
