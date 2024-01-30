@@ -59,6 +59,7 @@
     "@web/test-runner-playwright": "^0.11.0",
     "es-module-shims": "^1.8.2",
     "form-associated-helpers": "link:.",
+    "gh-pages": "^6.1.1",
     "lit": "^3.1.0",
     "lit-element": "^4.0.2",
     "lit-html": "^3.1.0",
