@@ -22,41 +22,55 @@ following are the CSS selectors available and what they mean.
       <tr>
         <td>
           <code>[data-valid]</code>,
-          <code>:state(valid)</code>,
-          <code>:valid</code>
+          <code>:state(valid)</code>
         </td>
         <td>
-          When a form associated is meets all of it's validator requirements.
+          When a form associated element is meets all of it's validator requirements.
+          <br>
+          Equivalent to <code>:valid</code>
+          <br>
+          <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:valid">https://developer.mozilla.org/en-US/docs/Web/CSS/:valid</a>
         </td>
       </tr>
       <tr>
         <td>
           <code>[data-invalid]</code>,
-          <code>:state(invalid)</code>,
-          <code>:invalid</code>
+          <code>:state(invalid)</code>
         </td>
         <td>
-          When a form associated does not meet all of it's validator requirements.
+          When a form associated element does not meet all of it's validator requirements.
+          <br>
+          Equivalent to <code>:invalid</code>
+          <br>
+          <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:invalid">https://developer.mozilla.org/en-US/docs/Web/CSS/:invalid</a>
         </td>
       </tr>
       <tr>
         <td>
           <code>[data-user-valid]</code>,
-          <code>:state(user-invalid)</code>,
-          <code>:user-invalid</code>
+          <code>:state(user-valid)</code>
         </td>
         <td>
-          When a form associated does not meet all of it's validator requirements.
+          When a form associated element does not meet all of it's validator requirements
+          and it has been meaningfully attempted to be interacted with.
+          <br>
+          Equivalent to <code>:user-invalid</code>
+          <br>
+          <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:user-valid">https://developer.mozilla.org/en-US/docs/Web/CSS/:user-valid</a>
         </td>
       </tr>
       <tr>
         <td>
           <code>[data-user-invalid]</code>,
-          <code>:state(user-invalid)</code>,
-          <code>:user-invalid</code>
+          <code>:state(user-invalid)</code>
         </td>
         <td>
-          When a form associated does not meet all of it's validator requirements.
+          When a form associated does not meet all of it's validator requirements,
+          and it has been meaningfully attempted to be interacted with.
+          <br>
+          Equivalent to <code>:user-invalid</code>
+          <br>
+          <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:user-invalid">https://developer.mozilla.org/en-US/docs/Web/CSS/:user-invalid</a>
         </td>
       </tr>
     </tbody>
