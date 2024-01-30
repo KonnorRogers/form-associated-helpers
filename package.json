@@ -55,6 +55,7 @@
     "@open-wc/testing-helpers": "^3.0.0",
     "@types/node": "^20.10.6",
     "@web/test-runner": "^0.18.0",
+    "@web/test-runner-commands": "^0.9.0",
     "@web/test-runner-playwright": "^0.11.0",
     "es-module-shims": "^1.8.2",
     "form-associated-helpers": "link:.",

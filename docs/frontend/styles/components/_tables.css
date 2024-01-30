@@ -1,6 +1,11 @@
-.table-container {
+table-container, .table-container {
+  display: block;
   max-width: 100%;
   overflow-x: auto;
+}
+
+:is(table-container, .table-container) > table {
+  min-width: var(--min-width, 550px);
 }
 
 table {
@@ -16,9 +21,18 @@ th {
 
 th,
 td {
-  text-align: center;
   padding: 1rem;
+  text-align: center;
 }
+
+tr > td {
+  border-inline-end: 1px solid var(--divider-color);
+}
+
+tr > td:first-of-type {
+  border-inline-start: 1px solid var(--divider-color);
+}
+
 
 tr {
   border-bottom: 1px solid var(--divider-color);

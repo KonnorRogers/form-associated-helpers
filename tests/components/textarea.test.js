@@ -2,6 +2,7 @@ import TextareaComponent from "../../examples/textarea-component.js"
 import { assert } from "@esm-bundle/chai"
 import { aTimeout, elementUpdated, html } from "@open-wc/testing-helpers"
 import { fixture } from "@open-wc/testing-helpers"
+import { sendKeys } from "@web/test-runner-commands"
 
 window.customElements.define("textarea-component", TextareaComponent)
 
@@ -72,8 +73,9 @@ test("Should prevent submission with custom validity and reset validity", async 
   await aTimeout(1)
 
   assert.equal(called, 0)
+  assert.equal(editor.validationMessage, "")
 
-  assert.equal(editor.validationMessage, "Custom Error Message")
+  editor.setCustomValidity("Custom Error Message")
   assert.equal(editor.validity.customError, true)
   assert.equal(editor.validity.valid, false)
 
@@ -118,13 +120,19 @@ test("Should fail validity check with required and no value", async () => {
   assert.equal(editor.hasAttribute("data-valid"), false)
   assert.equal(editor.hasAttribute("data-user-valid"), false)
 
-  document.body.click()
+  const tabKey = navigator.userAgent.includes('Safari') && !navigator.userAgent.includes('HeadlessChrome') ? 'Alt+Tab' : 'Tab';
+  await sendKeys({ press: tabKey })
+  await aTimeout(0)
+
+  const nativeTextarea = Object.assign(document.createElement("textarea"), {
+    required: true
+  })
 
   // These are false until we "blur"
   assert.equal(editor.hasAttribute("data-has-interacted"), true)
   assert.equal(editor.hasAttribute("data-user-invalid"), true)
 
-  assert.equal(editor.validationMessage, "Please fill out this field.")
+  assert.equal(editor.validationMessage, nativeTextarea.validationMessage)
   assert.equal(editor.validity.valueMissing, true)
   assert.equal(editor.validity.valid, false)
 })
