@@ -1,0 +1,146 @@
+[
+        {
+          "id": "form-associated-helpers-guides-getting-started",
+          "title": "Getting Started",
+          "collection": {
+            "label": "documentation",
+            "name": "Posts"
+          },
+          "categories": "guides",
+          "tags": "",
+          "url": "/form-associated-helpers/guides/getting-started/",
+          "content": "Installation\n\nnpm install form-associated-helpers\n\n\nUsage"
+        },
+        {
+          "id": "form-associated-helpers-guides-understanding-different-states",
+          "title": "Understanding Different States",
+          "collection": {
+            "label": "documentation",
+            "name": "Posts"
+          },
+          "categories": "guides",
+          "tags": "",
+          "url": "/form-associated-helpers/guides/understanding-different-states/",
+          "content": "There are a number of distinct “states” a form associated component can be in. The\nfollowing are the CSS selectors available and what they mean.\n\n\n  \n    \n      \n        \n          States\n        \n        \n          Description\n        \n      \n    \n    \n      \n        \n          [data-valid],\n          :state(valid)\n        \n        \n          When a form associated element is meets all of it's validator requirements.\n          \n          Equivalent to :valid\n          \n          https://developer.mozilla.org/en-US/docs/Web/CSS/:valid\n        \n      \n      \n        \n          [data-invalid],\n          :state(invalid)\n        \n        \n          When a form associated element does not meet all of it's validator requirements.\n          \n          Equivalent to :invalid\n          \n          https://developer.mozilla.org/en-US/docs/Web/CSS/:invalid\n        \n      \n      \n        \n          [data-user-valid],\n          :state(user-valid)\n        \n        \n          When a form associated element does not meet all of it's validator requirements\n          and it has been meaningfully attempted to be interacted with.\n          \n          Equivalent to :user-invalid\n          \n          https://developer.mozilla.org/en-US/docs/Web/CSS/:user-valid\n        \n      \n      \n        \n          [data-user-invalid],\n          :state(user-invalid)\n        \n        \n          When a form associated does not meet all of it's validator requirements,\n          and it has been meaningfully attempted to be interacted with.\n          \n          Equivalent to :user-invalid\n          \n          https://developer.mozilla.org/en-US/docs/Web/CSS/:user-invalid\n        \n      \n    \n  \n\n\n\n\n\n  \n    \n\n    \n      \n        \n          \n            This is a custom textarea\n          \n          \n          \n        \n\n        \n          \n            This is a regular textarea\n          \n          \n          \n        \n      \n\n      \n\n      Reset\n\n      \n\n      \n        This textarea has different \"states\" based on interactions.\n      \n      \n      \n        Current Form State:"
+        },
+        {
+          "id": "form-associated-helpers-guides",
+          "title": "Guides",
+          "collection": {
+            "label": "documentation",
+            "name": "Posts"
+          },
+          "categories": "guides",
+          "tags": "",
+          "url": "/form-associated-helpers/guides/",
+          "content": ""
+        },
+        {
+          "id": "form-associated-helpers-how-tos",
+          "title": "How To's",
+          "collection": {
+            "label": "documentation",
+            "name": "Posts"
+          },
+          "categories": "how_tos",
+          "tags": "",
+          "url": "/form-associated-helpers/how-tos/",
+          "content": ""
+        },
+        {
+          "id": "form-associated-helpers-references",
+          "title": "References",
+          "collection": {
+            "label": "documentation",
+            "name": "Posts"
+          },
+          "categories": "references",
+          "tags": "",
+          "url": "/form-associated-helpers/references/",
+          "content": ""
+        },
+        {
+          "id": "form-associated-helpers-references-mixins-form-associated-mixin",
+          "title": "Form Associated Mixin",
+          "collection": {
+            "label": "documentation",
+            "name": "Posts"
+          },
+          "categories": "references",
+          "tags": "",
+          "url": "/form-associated-helpers/references/mixins/form-associated-mixin/",
+          "content": ""
+        },
+        {
+          "id": "form-associated-helpers-references-mixins-lit-form-associated-mixin",
+          "title": "Lit Form Associated Mixin",
+          "collection": {
+            "label": "documentation",
+            "name": "Posts"
+          },
+          "categories": "references",
+          "tags": "",
+          "url": "/form-associated-helpers/references/mixins/lit-form-associated-mixin/",
+          "content": ""
+        },
+        {
+          "id": "form-associated-helpers-references-mixins-textarea-mixin",
+          "title": "Textarea Mixin",
+          "collection": {
+            "label": "documentation",
+            "name": "Posts"
+          },
+          "categories": "references",
+          "tags": "",
+          "url": "/form-associated-helpers/references/mixins/textarea-mixin/",
+          "content": ""
+        },
+        {
+          "id": "form-associated-helpers-references-mixins-vanilla-form-associated-mixin",
+          "title": "Vanilla Form Associated Mixin",
+          "collection": {
+            "label": "documentation",
+            "name": "Posts"
+          },
+          "categories": "references",
+          "tags": "",
+          "url": "/form-associated-helpers/references/mixins/vanilla-form-associated-mixin/",
+          "content": ""
+        },
+        {
+          "id": "form-associated-helpers",
+          "title": "Light Pen",
+          "collection": {
+            "label": "pages",
+            "name": "Posts"
+          },
+          "categories": "",
+          "tags": "",
+          "url": "/form-associated-helpers/",
+          "content": "A collection of components that may not fit a design system, but that I wanted to build."
+        },
+        {
+          "id": "form-associated-helpers-bridgetown_quick_search-index.json",
+          "title": "Index",
+          "collection": {
+            "label": "pages",
+            "name": "Posts"
+          },
+          "categories": "",
+          "tags": "",
+          "url": "/form-associated-helpers/bridgetown_quick_search/index.json",
+          "content": "[\n  {%- assign looped = false %}\n  {%- assign documents = site.documents %}\n  {%- if site.content_engine == \"resource\" %}{% assign documents = site.resources %}{% endif %}\n  {%- for document in documents %}\n    {%- if document.title %}\n      {%- unless document.exclude_from_search or document.id == \"\" %}\n        {%- assign url = document.url %}\n        {%- if site.content_engine == \"resource\" %}{% assign url = document.relative_url %}{% endif %}\n        {%- if looped %},{% endif %}\n        {\n          \"id\": \"{{ url | slugify }}\",\n          \"title\": {{ document.title | jsonify }},\n          {%- if document.collection %}\n          \"collection\": {\n            \"label\": {{ document.collection.label | jsonify }},\n            \"name\": {{ document.collection.name | default: \"Posts\" | jsonify }}\n          },\n          {%- endif %}\n          \"categories\": {{ document.categories | join: \", \" | jsonify }},\n          \"tags\": {{ document.tags | join: \", \" | jsonify }},\n          \"url\": {{ url | jsonify }},\n          \"content\": {{ document.content | strip_html | replace_regex: \"[\\s/\\n]+\",\" \" | strip | jsonify }}\n        }\n        {%- assign looped = true %}\n      {%- endunless %}\n    {%- endif %}\n  {%- endfor %}\n  {%- for document in site.generated_pages %}\n    {%- if document.name contains \".md\" or document.name contains \".html\" %}\n      {%- if document.title %}\n        {%- unless document.exclude_from_search %}\n          {%- if looped %},{% endif %}\n          {\n            \"id\": \"{{ document.url | slugify }}\",\n            \"title\": {{ document.title | jsonify }},\n            \"categories\": {{ document.categories | join: \", \" | jsonify }},\n            \"tags\": {{ document.tags | join: \", \" | jsonify }},\n            \"url\": {{ document.url | jsonify }},\n            \"content\": {{ document.content | strip_html | replace_regex: \"[\\s/\\n]+\",\" \" | strip | jsonify }}\n          }\n        {%- endunless %}\n      {%- endif %}\n    {%- endif %}\n  {%- endfor %}\n]"
+        },
+        {
+          "id": "",
+          "title": "A collection of reusable mixins + helpers for working with form associated custom elements.",
+          "collection": {
+            "label": "data",
+            "name": "Posts"
+          },
+          "categories": "",
+          "tags": "",
+          "url": "",
+          "content": ""
+        }
+]
