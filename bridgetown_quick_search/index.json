@@ -9,7 +9,7 @@
           "categories": "guides",
           "tags": "",
           "url": "/form-associated-helpers/guides/getting-started/",
-          "content": "Installation\n\nnpm install form-associated-helpers\n\n\nUsage"
+          "content": "Installation\n\nnpm install form-associated-helpers\n\n\nNext steps\n\nThere are a few paths to take from here. Because the mixins are designed for different levels\nof abstraction, there are some “divergent paths” listed below.\n\nWorking with “vanilla web component” mixins\n\nWorking with a Lit web component mixins\n\nWriting your own “adapter” for your library."
         },
         {
           "id": "form-associated-helpers-guides-understanding-different-states",
@@ -117,7 +117,7 @@
           "categories": "",
           "tags": "",
           "url": "/form-associated-helpers/",
-          "content": ""
+          "content": "Form Associated Helpers is still in beta. Please bear with me while I work on proper documentation, testing, and release!"
         },
         {
           "id": "form-associated-helpers-bridgetown_quick_search-index.json",
