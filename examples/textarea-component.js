@@ -61,7 +61,7 @@ export default class TextareaComponent extends LitTextareaMixin(LitElement) {
         part="form-control"
         ${ref(this.formControlChanged)}
         .defaultValue=${this.defaultValue}
-        .value=${live(this.value)}
+        .value=${this.value}
         rows=${this.rows}
         cols=${this.cols}
         maxlength=${this.maxLength}
@@ -74,15 +74,15 @@ export default class TextareaComponent extends LitTextareaMixin(LitElement) {
         wrap=${this.wrap}
         autocomplete=${this.autocomplete}
         @input=${(/** @type {Event} */ e) => {
-          this.value = /** @type {HTMLTextAreaElement} */ (e.target).value
+          this.value = /** @type {HTMLTextAreaElement} */ (e.currentTarget).value
           // this.emit("input")
         }}
         @change=${(/** @type {Event} */ e) => {
-          this.value = /** @type {HTMLTextAreaElement} */ (e.target).value
+          this.value = /** @type {HTMLTextAreaElement} */ (e.currentTarget).value
           // this.emit("change")
         }}
         @keydown=${(/** @type {Event} */ e) => {
-          this.value = /** @type {HTMLTextAreaElement} */ (e.target).value
+          this.value = /** @type {HTMLTextAreaElement} */ (e.currentTarget).value
           // this.emit("keydown")
         }}
       ></textarea>

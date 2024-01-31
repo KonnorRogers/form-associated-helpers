@@ -104,7 +104,7 @@ following are the CSS selectors available and what they mean.
 
       textarea:user-valid,
       [data-user-valid]::part(form-control) {
-        border-color: green;
+        border-color: blue;
       }
 
       label.required::after {

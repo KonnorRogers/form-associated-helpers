@@ -41,8 +41,8 @@ export function LitFormAssociatedMixin(superclass) {
         }
 
         if (changedProperties.has("formControl")) {
-          this.formControl?.addEventListener("focusin", this.handleInteraction)
           this.formControl?.addEventListener("focusout", this.handleInteraction)
+          this.formControl?.addEventListener("blur", this.handleInteraction)
           this.formControl?.addEventListener("click", this.handleInteraction)
         }
 

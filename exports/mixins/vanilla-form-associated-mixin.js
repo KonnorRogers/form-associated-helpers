@@ -66,6 +66,11 @@ export function VanillaFormAssociatedMixin(superclass) {
         /**
          * @type {string}
          */
+        this.previousValue = this.value
+
+        /**
+         * @type {string}
+         */
         this.defaultValue = ""
 
         /**
@@ -101,11 +106,6 @@ export function VanillaFormAssociatedMixin(superclass) {
         /**
          * @type {boolean}
          */
-        this.valueHasChanged = this.valueHasChanged ?? false
-
-        /**
-         * @type {boolean}
-         */
         this.shouldTrackInteractions = this.shouldTrackInteractions ?? true
 
         /**
@@ -131,8 +131,6 @@ export function VanillaFormAssociatedMixin(superclass) {
         if (this.disabled !== true && !this.matches(":focus-within")) {
           this.hasInteracted = true
         }
-
-        runValidators(this)
       }
 
       get allValidators () {
@@ -207,7 +205,7 @@ export function VanillaFormAssociatedMixin(superclass) {
           name === "formControl"
           || name === "value"
         ) {
-          if (this.valueHasChanged === false) {
+          if (this.hasInteracted !== true) {
             this.value = this.defaultValue
           }
           this.setFormValue(this.value, this.value)
@@ -225,7 +223,6 @@ export function VanillaFormAssociatedMixin(superclass) {
 
         this.value = this.defaultValue
         this.hasInteracted = false
-        this.valueHasChanged = false
         this.setValidity({})
         this.setFormValue(this.defaultValue, this.defaultValue)
       }
@@ -250,7 +247,6 @@ export function VanillaFormAssociatedMixin(superclass) {
       formStateRestoreCallback(state, reason) {
         // @ts-expect-error
         this.value = state
-        this.valueHasChanged = false
       }
 
       // Additional things not added by the `attachInternals()` call.
@@ -275,14 +271,14 @@ export function VanillaFormAssociatedMixin(superclass) {
           this.removeAttribute("data-invalid")
           this.removeAttribute("data-user-invalid")
           this.setAttribute("data-valid", "")
-          if (this.hasInteracted) {
+          if (this.hasInteracted && this.value !== this.defaultValue) {
             this.setAttribute("data-user-valid", "")
           }
         } else {
           this.removeAttribute("data-valid")
           this.removeAttribute("data-user-valid")
           this.setAttribute("data-invalid", "")
-          if (this.hasInteracted) {
+          if (this.hasInteracted && this.value !== this.defaultValue) {
             this.setAttribute("data-user-invalid", "")
           }
         }
@@ -302,7 +298,7 @@ export function VanillaFormAssociatedMixin(superclass) {
       setFormValue (...args) {
         this.internals.setFormValue(...args)
         runValidators(this)
-        this.valueHasChanged = true
+        this.previousValue = this.value
       }
 
       /**
