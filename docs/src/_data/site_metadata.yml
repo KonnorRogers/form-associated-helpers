@@ -10,7 +10,7 @@ slogan: >-
   A collection of reusable mixins + helpers for working with form associated custom elements.
 email: konnor5456@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
-  Lightweight components editing and syntax highlighting.
+  A collection of reusable mixins + helpers for working with form associated custom elements.
 github_url: https://github.com/konnorrogers/form-associated-helpers
 default_branch: main
 doc_location: docs/src
