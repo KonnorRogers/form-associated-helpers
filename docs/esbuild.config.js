@@ -2,6 +2,7 @@
 // const { spawn } = require("child_process");
 
 // const glob = require("glob")
+const globSync = require("glob/sync.js")
 const build = require("./config/esbuild.defaults.js")
 
 const AssetMapper = require("asset-mapper-esbuild").default
@@ -29,12 +30,21 @@ if (!BASE_PATH.endsWith("/")) {
   BASE_PATH += "/"
 }
 
+const entries = {}
+
+globSync("../exports/**/*.js").forEach((fileName) => {
+  const key = path.basename(fileName)
+
+  entries[key] = fileName
+})
+
 const esbuildOptions = {
   target: "es2020",
   entryPoints: {
     "javascript/index": "frontend/javascript/index.js",
     "javascript/defer": "frontend/javascript/defer.js",
-    "textarea-component": "../examples/textarea-component.js"
+    "textarea-component": "../examples/textarea-component.js",
+    ...entries
   },
   define: {
     "process.env.BASE_PATH": `"${BASE_PATH || "/"}"`

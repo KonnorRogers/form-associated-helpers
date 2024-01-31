@@ -14,10 +14,10 @@ npm install form-associated-helpers
 There are a few paths to take from here. Because the mixins are designed for different levels
 of abstraction, there are some "divergent paths" listed below.
 
-[Working with "vanilla web component" mixins](/#)
+[Working with "vanilla web component" mixins](#)
 
-[Working with a Lit web component mixins](/#)
+[Working with a Lit web component mixins](#)
 
-[Writing your own "adapter" for your library.](/#)
+[Writing your own "adapter" for your library.](#)
 
 

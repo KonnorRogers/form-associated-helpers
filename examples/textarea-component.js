@@ -1,6 +1,5 @@
 import { LitElement, css, html } from "lit"
 import { ref } from 'lit/directives/ref.js';
-import { live } from 'lit/directives/live.js';
 import { LitTextareaMixin } from "../exports/mixins/lit-textarea-mixin.js"
 import { MirrorValidator } from "../exports/validators/mirror-validator.js";
 
@@ -66,7 +65,6 @@ export default class TextareaComponent extends LitTextareaMixin(LitElement) {
         cols=${this.cols}
         maxlength=${this.maxLength}
         minlength=${this.minLength}
-        pattern=${this.pattern}
         dirname=${this.dirName}
         placeholder=${this.placeholder}
         ?readonly=${this.readOnly}
@@ -75,15 +73,15 @@ export default class TextareaComponent extends LitTextareaMixin(LitElement) {
         autocomplete=${this.autocomplete}
         @input=${(/** @type {Event} */ e) => {
           this.value = /** @type {HTMLTextAreaElement} */ (e.currentTarget).value
-          // this.emit("input")
+          this.emit("input")
         }}
         @change=${(/** @type {Event} */ e) => {
           this.value = /** @type {HTMLTextAreaElement} */ (e.currentTarget).value
-          // this.emit("change")
+          this.emit("change")
         }}
         @keydown=${(/** @type {Event} */ e) => {
           this.value = /** @type {HTMLTextAreaElement} */ (e.currentTarget).value
-          // this.emit("keydown")
+          this.emit("keydown")
         }}
       ></textarea>
     `

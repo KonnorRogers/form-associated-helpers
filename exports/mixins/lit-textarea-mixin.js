@@ -17,7 +17,6 @@ LitTextareaMixin.formProperties = Object.freeze(
       // Validation
       maxLength: {attribute: "maxlength", type: Number},
       minLength: {attribute: "minlength", type: Number},
-      pattern: {},
     },
     LitFormAssociatedMixin.formProperties
   )

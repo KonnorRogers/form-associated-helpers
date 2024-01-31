@@ -25,7 +25,8 @@ following are the CSS selectors available and what they mean.
           <code>:state(valid)</code>
         </td>
         <td>
-          When a form associated element is meets all of it's validator requirements.
+          When a form associated element meets all of it's validator requirements, regardless of if
+          the control has been interacted with.
           <br>
           Equivalent to <code>:valid</code>
           <br>
@@ -38,7 +39,8 @@ following are the CSS selectors available and what they mean.
           <code>:state(invalid)</code>
         </td>
         <td>
-          When a form associated element does not meet all of it's validator requirements.
+          When a form associated element does not meet all of it's validator requirements,
+          regardless of if the control has been interacted with.
           <br>
           Equivalent to <code>:invalid</code>
           <br>
@@ -77,6 +79,11 @@ following are the CSS selectors available and what they mean.
   </table>
 </table-container>
 
+
+In more simplistic terms, here's the difference between states with the `user-*` prefix, and those without.
+
+`user-*` is active when you `"focusout"` out of the form control, and the `value` of the element is **NOT** equal to the `"defaultValue"`.
+
 <style>
   .form-state-preview::part(preview) {
     min-height: 400px;
@@ -86,25 +93,24 @@ following are the CSS selectors available and what they mean.
 <light-preview class="form-state-preview">
   <template slot="code">
     <style>
-      textarea:focus-visible,
+      :is(textarea, input):focus-visible,
       textarea-component::part(form-control):focus-visible {
         outline: transparent;
       }
 
-      textarea,
+      :is(input, textarea),
       textarea-component::part(form-control) {
-        border: 2px solid gray;
+        border: 3px solid gray;
       }
 
-
-      textarea:valid,
+      :is(textarea, input):valid,
       [data-valid]::part(form-control) {
         background-color: rgba(0, 255, 0, 0.1);
       }
 
-      textarea:user-valid,
+      :is(textarea, input):user-valid,
       [data-user-valid]::part(form-control) {
-        border-color: blue;
+        border-color: rgba(0, 255, 0, 1);
       }
 
       label.required::after {
@@ -113,12 +119,12 @@ following are the CSS selectors available and what they mean.
         font-size: 1em;
       }
 
-      textarea:invalid,
+      :is(textarea, input):invalid,
       [data-invalid]::part(form-control) {
         background-color: rgba(255, 0, 0, 0.1);
       }
 
-      textarea:user-invalid,
+      :is(textarea, input):user-invalid,
       [data-user-invalid]::part(form-control) {
         border-color: red;
       }
@@ -136,6 +142,8 @@ following are the CSS selectors available and what they mean.
             name="textarea-component"
             aria-describedby="help-text form-state"
             required
+            minlength="5"
+            maxlength="7"
           ></textarea-component>
         </div>
 
@@ -149,6 +157,8 @@ following are the CSS selectors available and what they mean.
             name="textarea"
             aria-describedby="help-text"
             required
+            minlength="5"
+            maxlength="7"
           ></textarea>
         </div>
       </div>
@@ -156,6 +166,7 @@ following are the CSS selectors available and what they mean.
       <br>
 
       <button type="reset">Reset</button>
+      <button>Submit</button>
 
       <br>
 
@@ -218,5 +229,21 @@ following are the CSS selectors available and what they mean.
         }
       </script>
     </form>
+
+    <form>
+      <my-textarea></my-textarea>
+    </form>
+
+    <script type="module">
+      import { FormAssociatedMixin } from "<%= find_asset("../exports/mixins/form-associated-mixin.js") %>"
+      window.customElements.define("my-textarea", class extends FormAssociatedMixin(HTMLElement) {
+        constructor () {
+          super()
+          this.attachShadow({ mode: "open", delegatesFocus: true })
+
+          this.shadowRoot.innerHTML = `<textarea required minlength="5" maxlength="7"></textarea>`
+        }
+      })
+    </script>
   </template>
 </light-preview>
