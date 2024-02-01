@@ -11,6 +11,7 @@
     "moduleResolution": "nodenext",
     "module": "NodeNext",
     "lib": ["ESNext", "DOM"],
+    "useDefineForClassFields": false,
     "declaration": true,
     "emitDeclarationOnly": true,
     "allowJs": true,

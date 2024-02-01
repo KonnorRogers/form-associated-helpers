@@ -1,4 +1,3 @@
-import { PatternMismatchValidator } from "../validators/pattern-mismatch-validator.js"
 import { TooLongValidator } from "../validators/too-long-validator.js"
 import { TooShortValidator } from "../validators/too-short-validator.js"
 import { LitFormAssociatedMixin } from "./lit-form-associated-mixin.js"
@@ -43,7 +42,6 @@ export function LitTextareaMixin(superclass) {
           ...super.validators,
           TooLongValidator,
           TooShortValidator,
-          PatternMismatchValidator
         ]
       }
 
@@ -123,11 +121,6 @@ export function LitTextareaMixin(superclass) {
 
         /** @type {HTMLTextAreaElement["selectionDirection"]} */
         this.selectionDirection = "forward"
-
-        /**
-         * @type {string}
-         */
-        this.pattern = ""
 
         /**
          * @type {number}

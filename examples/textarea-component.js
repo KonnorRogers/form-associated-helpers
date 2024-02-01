@@ -1,5 +1,6 @@
 import { LitElement, css, html } from "lit"
 import { ref } from 'lit/directives/ref.js';
+import { live } from 'lit/directives/live.js';
 import { LitTextareaMixin } from "../exports/mixins/lit-textarea-mixin.js"
 import { MirrorValidator } from "../exports/validators/mirror-validator.js";
 
@@ -60,7 +61,7 @@ export default class TextareaComponent extends LitTextareaMixin(LitElement) {
         part="form-control"
         ${ref(this.formControlChanged)}
         .defaultValue=${this.defaultValue}
-        .value=${this.value}
+        .value=${live(this.value)}
         rows=${this.rows}
         cols=${this.cols}
         maxlength=${this.maxLength}

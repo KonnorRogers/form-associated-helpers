@@ -1,10 +1,39 @@
 import TextareaComponent from "../../examples/textarea-component.js"
-import { assert } from "@esm-bundle/chai"
+import { assert, expect } from "@esm-bundle/chai"
 import { aTimeout, elementUpdated, html } from "@open-wc/testing-helpers"
 import { fixture } from "@open-wc/testing-helpers"
 import { sendKeys } from "@web/test-runner-commands"
 
-window.customElements.define("textarea-component", TextareaComponent)
+if (!window.customElements.get("textarea-component")) {
+  window.customElements.define("textarea-component", class extends TextareaComponent {})
+}
+
+// Make sure we get the warning.
+if (!window.customElements.get("textarea-component-disable-check")) {
+  window.customElements.define("textarea-component-disable-check", class extends TextareaComponent {
+    static properties = {
+      ...TextareaComponent.properties,
+      disabled: { reflect: true, type: Boolean }
+    }
+  })
+}
+
+
+
+// https://github.com/whatwg/html/issues/8365
+test("Should emit a warning when 'disabled' is used with 'reflect: true'", async () => {
+  const originalWarn = console.warn
+  let logs = ""
+  console.warn = function(...args) {
+    originalWarn.apply(console, args);
+
+    logs += "\n" + args.join("\n")
+  }
+
+  await fixture(html`<textarea-component-disable-check name="yo" value="hi"></textarea-component>`)
+  assert.include(logs, "The following element has their \"disabled\" property set to reflect.")
+
+})
 
 test("Should be role of textbox", async () => {
   const editor = await fixture(html`<textarea-component name="yo" value="hi"></textarea-component>`)

@@ -21,6 +21,7 @@ following are the CSS selectors available and what they mean.
     <tbody>
       <tr>
         <td>
+          <code>:valid</code>,
           <code>[data-valid]</code>,
           <code>:state(valid)</code>
         </td>
@@ -35,12 +36,13 @@ following are the CSS selectors available and what they mean.
       </tr>
       <tr>
         <td>
+          <code>:invalid</code>,
           <code>[data-invalid]</code>,
           <code>:state(invalid)</code>
         </td>
         <td>
           When a form associated element does not meet all of it's validator requirements,
-          regardless of if the control has been interacted with.
+          regardless of if the form control has been interacted with.
           <br>
           Equivalent to <code>:invalid</code>
           <br>
@@ -49,6 +51,7 @@ following are the CSS selectors available and what they mean.
       </tr>
       <tr>
         <td>
+          <!-- <code>:user-valid</code>, -->
           <code>[data-user-valid]</code>,
           <code>:state(user-valid)</code>
         </td>
@@ -63,6 +66,7 @@ following are the CSS selectors available and what they mean.
       </tr>
       <tr>
         <td>
+          <!-- <code>:user-invalid</code>, -->
           <code>[data-user-invalid]</code>,
           <code>:state(user-invalid)</code>
         </td>
@@ -104,12 +108,12 @@ In more simplistic terms, here's the difference between states with the `user-*`
       }
 
       :is(textarea, input):valid,
-      [data-valid]::part(form-control) {
+      :is(:valid, [data-valid])::part(form-control) {
         background-color: rgba(0, 255, 0, 0.1);
       }
 
       :is(textarea, input):user-valid,
-      [data-user-valid]::part(form-control) {
+      :is([data-user-valid])::part(form-control) {
         border-color: rgba(0, 255, 0, 1);
       }
 
@@ -120,52 +124,61 @@ In more simplistic terms, here's the difference between states with the `user-*`
       }
 
       :is(textarea, input):invalid,
-      [data-invalid]::part(form-control) {
+      :is(:invalid)::part(form-control) {
         background-color: rgba(255, 0, 0, 0.1);
       }
 
       :is(textarea, input):user-invalid,
-      [data-user-invalid]::part(form-control) {
+      :is([data-user-invalid])::part(form-control) {
         border-color: red;
       }
+
+      :disabled {
+        opacity: 0.5;
+      }
+
     </style>
 
     <form>
-      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));">
-        <div>
-          <label class="required" for="textarea-component">
-            This is a custom textarea
-          </label>
-          <br>
-          <textarea-component
-            id="textarea-component"
-            name="textarea-component"
-            aria-describedby="help-text form-state"
-            required
-            minlength="5"
-            maxlength="7"
-          ></textarea-component>
-        </div>
+      <fieldset>
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));">
+          <div>
+            <label class="required" for="textarea-component">
+              This is a custom textarea
+            </label>
+            <br>
+            <textarea-component
+              id="textarea-component"
+              name="textarea-component"
+              aria-describedby="help-text form-state"
+              required
+              minlength="5"
+              maxlength="7"
+              value="default"
+            ></textarea-component>
+          </div>
 
-        <div>
-          <label class="required" for="textarea">
-            This is a regular textarea
-          </label>
-          <br>
-          <textarea
-            id="textarea"
-            name="textarea"
-            aria-describedby="help-text"
-            required
-            minlength="5"
-            maxlength="7"
-          ></textarea>
+          <div>
+            <label class="required" for="textarea">
+              This is a regular textarea
+            </label>
+            <br>
+            <textarea
+              id="textarea"
+              name="textarea"
+              aria-describedby="help-text"
+              required
+              minlength="5"
+              maxlength="7"
+            >default</textarea>
+          </div>
         </div>
-      </div>
+      </fieldset>
 
       <br>
 
       <button type="reset">Reset</button>
+      <button type="button" id="disable">Disable</button>
       <button>Submit</button>
 
       <br>
@@ -189,22 +202,37 @@ In more simplistic terms, here's the difference between states with the `user-*`
 
         document.addEventListener("submit", (e) => {
           e.preventDefault()
-          setTimeout(() => state().innerText = getState(document.querySelector("textarea-component")))
+          updateState()
         })
 
         document.addEventListener("input", (e) => {
-          setTimeout(() => state().innerText = getState(document.querySelector("textarea-component")))
+          updateState()
+        })
+
+        document.addEventListener("click", (e) => {
+          const btn = e.target.closest("#disable")
+
+          if (btn) {
+            const fieldset = document.querySelector("fieldset")
+            const isDisabled = !fieldset.hasAttribute("disabled")
+            fieldset.toggleAttribute("disabled", isDisabled)
+
+            btn.innerText = isDisabled ? "Enable" : "Disable"
+          }
         })
 
         document.addEventListener("focusout", (e) => {
-          setTimeout(() => state().innerText = getState(document.querySelector("textarea-component")))
+          updateState()
         })
 
         document.addEventListener("reset", () => {
-          setTimeout(() => state().innerText = getState(document.querySelector("textarea-component")))
+          updateState()
         })
 
-        setTimeout(() => state().innerText = getState(document.querySelector("textarea-component")))
+
+        function updateState () {
+          setTimeout(() => state().innerText = getState(document.querySelector("textarea-component")))
+        }
 
         function getState (formControl) {
           let states = []
@@ -229,21 +257,16 @@ In more simplistic terms, here's the difference between states with the `user-*`
         }
       </script>
     </form>
-
-    <form>
-      <my-textarea></my-textarea>
-    </form>
-
-    <script type="module">
-      import { FormAssociatedMixin } from "<%= find_asset("../exports/mixins/form-associated-mixin.js") %>"
-      window.customElements.define("my-textarea", class extends FormAssociatedMixin(HTMLElement) {
-        constructor () {
-          super()
-          this.attachShadow({ mode: "open", delegatesFocus: true })
-
-          this.shadowRoot.innerHTML = `<textarea required minlength="5" maxlength="7"></textarea>`
-        }
-      })
-    </script>
   </template>
 </light-preview>
+
+`:user-valid`: Need to have changed the value. If you're in a `user-valid` state, and then start changing the value to an `invalid` value, then it becomes `:invalid`, but not `:user-invalid` until the user `blurs` from the form control.
+
+`:user-invalid`: If we go from `:user-invalid` to a valid state, we become `:user-valid`, unlike `:user-valid` -> `:invalid`
+
+`:user-invalid` -> `:user-valid`
+`:user-valid` -> `:invalid` until `blur` then `:user-invalid`
+
+On a form reset, a form control is only ever `:valid` or `:invalid`. Never `:user-*`.
+
+When disabled, it is neither `:valid` or `:invalid`. Instead it is `:disabled`

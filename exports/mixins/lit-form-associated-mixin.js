@@ -5,7 +5,7 @@ const formProperties = Object.freeze({
   role: {reflect: true},
   name: {reflect: true},
   type: {reflect: true},
-  disabled: {reflect: true, type: Boolean},
+  disabled: {type: Boolean}, // Don't reflect. It breaks the `formDisabledCallback` on formAssociated elements. Better to use `:disabled`
   required: {reflect: true, type: Boolean},
   hasInteracted: {type: Boolean, attribute: "data-has-interacted", reflect: true},
   formControl: {attribute: false, state: true},
@@ -26,6 +26,16 @@ LitFormAssociatedMixin.formProperties = formProperties
 export function LitFormAssociatedMixin(superclass) {
   return (
     class extends VanillaFormAssociatedMixin(superclass) {
+      constructor () {
+        super()
+
+        const ctor = /** @type {{properties?: { disabled?: { reflect?: boolean }}}} */ (/** @type {unknown} */ (this.constructor))
+        if (ctor.properties?.disabled?.reflect === true) {
+          console.warn(`The following element has their "disabled" property set to reflect.`)
+          console.warn(this)
+          console.warn("For further reading: https://github.com/whatwg/html/issues/8365")
+        }
+      }
       /**
        * @protected
        * @param {import("lit").PropertyValues} changedProperties
@@ -51,10 +61,6 @@ export function LitFormAssociatedMixin(superclass) {
           || changedProperties.has("defaultValue")
           || changedProperties.has("value")
         ) {
-          if (this.valueHasChanged === false) {
-            this.value = this.defaultValue
-          }
-
           this.setFormValue(this.value, this.value)
         }
 

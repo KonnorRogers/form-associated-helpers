@@ -3,9 +3,8 @@
  * @param {T} element
  */
 export function runValidators (element) {
-  element.setValidity({})
-
   if (element.disabled || element.getAttribute("disabled")) {
+    element.setValidity({})
     // We don't run validators on disabled elements to be inline with native HTMLElements.
     // https://codepen.io/paramagicdev/pen/PoLogeL
     return
@@ -13,7 +12,10 @@ export function runValidators (element) {
 
   const validators = /** @type {{allValidators?: Array<import("../exports/types.js").Validator>}} */ (/** @type {unknown} */ (element)).allValidators
 
-  if (!validators) return
+  if (!validators) {
+    element.setValidity({})
+    return
+  }
 
   const flags = {}
 
