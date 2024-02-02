@@ -108,7 +108,7 @@ export function VanillaFormAssociatedMixin(superclass) {
          * Dirty tracks if the value has been changed.
          * @type {boolean}
          */
-        this.valueHasChanged = this.hasInteracted ?? false
+        this.valueHasChanged = this.valueHasChanged ?? false
 
         /**
          * While not generally encouraged, you can add instance level validators.
@@ -205,7 +205,7 @@ export function VanillaFormAssociatedMixin(superclass) {
         }
 
         if (name === "value") {
-          if (this.hasInteracted !== true && this.value !== this.defaultValue) {
+          if (!this.hasInteracted && !this.valueHasChanged) {
             this.value = this.defaultValue
           }
           this.setFormValue(this.value, this.value)
@@ -283,12 +283,12 @@ export function VanillaFormAssociatedMixin(superclass) {
           this.removeAttribute("data-invalid")
           this.removeAttribute("data-user-invalid")
           this.setAttribute("data-valid", "")
-          this.toggleAttribute("data-user-valid", this.hasInteracted)
+          this.toggleAttribute("data-user-valid", this.hasInteracted && this.valueHasChanged)
         } else {
           this.removeAttribute("data-valid")
           this.removeAttribute("data-user-valid")
           this.setAttribute("data-invalid", "")
-          this.toggleAttribute("data-user-invalid", this.hasInteracted)
+          this.toggleAttribute("data-user-invalid", this.hasInteracted && this.valueHasChanged)
         }
       }
 
@@ -304,14 +304,14 @@ export function VanillaFormAssociatedMixin(superclass) {
         * @param {Parameters<ElementInternals["setFormValue"]>} args
         */
       setFormValue (...args) {
-        this.internals.setFormValue(...args)
-        runValidators(this)
-        this.previousValue = this.value
-
         // Dirty tracking of values.
-        if (this.previousValue !== this.defaultValue) {
+        if (this.value !== this.defaultValue) {
           this.valueHasChanged = true
         }
+
+        this.internals.setFormValue(...args)
+        runValidators(this)
+
       }
 
       /**

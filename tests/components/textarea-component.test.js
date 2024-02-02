@@ -8,21 +8,20 @@ if (!window.customElements.get("textarea-component")) {
   window.customElements.define("textarea-component", class extends TextareaComponent {})
 }
 
-// Make sure we get the warning.
-if (!window.customElements.get("textarea-component-disable-check")) {
-  window.customElements.define("textarea-component-disable-check", class extends TextareaComponent {
-    static properties = {
-      ...TextareaComponent.properties,
-      disabled: { reflect: true, type: Boolean }
-    }
-  })
-}
-
-
-
 // https://github.com/whatwg/html/issues/8365
 test("Should emit a warning when 'disabled' is used with 'reflect: true'", async () => {
+  // Make sure we get the warning.
+  if (!window.customElements.get("textarea-component-disable-check")) {
+    window.customElements.define("textarea-component-disable-check", class extends TextareaComponent {
+      static properties = {
+        ...TextareaComponent.properties,
+        disabled: { reflect: true, type: Boolean }
+      }
+    })
+  }
+
   const originalWarn = console.warn
+
   let logs = ""
   console.warn = function(...args) {
     originalWarn.apply(console, args);
@@ -33,6 +32,7 @@ test("Should emit a warning when 'disabled' is used with 'reflect: true'", async
   await fixture(html`<textarea-component-disable-check name="yo" value="hi"></textarea-component>`)
   assert.include(logs, "The following element has their \"disabled\" property set to reflect.")
 
+  console.warn = originalWarn
 })
 
 test("Should be role of textbox", async () => {
@@ -102,7 +102,7 @@ test("Should prevent submission with custom validity and reset validity", async 
   await aTimeout(1)
 
   assert.equal(called, 0)
-  assert.equal(editor.validationMessage, "")
+  assert.equal(editor.validationMessage, "Custom Error Message")
 
   editor.setCustomValidity("Custom Error Message")
   assert.equal(editor.validity.customError, true)
