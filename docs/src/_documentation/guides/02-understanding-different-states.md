@@ -154,6 +154,7 @@ In more simplistic terms, here's the difference between states with the `user-*`
               required
               minlength="5"
               maxlength="7"
+              value="def"
             ></textarea-component>
           </div>
 
@@ -169,7 +170,7 @@ In more simplistic terms, here's the difference between states with the `user-*`
               required
               minlength="5"
               maxlength="7"
-            ></textarea>
+            >def</textarea>
           </div>
         </div>
       </fieldset>

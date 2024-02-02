@@ -8,7 +8,7 @@ export default class TextareaComponent extends LitTextareaMixin(LitElement) {
   /**
    * @override
    * Without delegatesFocus, or manually setting a `tabindex`, we get this fun message from the browser:
-   *  "The invalid form control with name=‘editor’ is not focusable."
+   *  "The invalid form control with name=‘editor’ is not focusable."textarea-componen
    */
   static shadowRootOptions = {...LitElement.shadowRootOptions, delegatesFocus: true};
 
@@ -97,7 +97,7 @@ export default class TextareaComponent extends LitTextareaMixin(LitElement) {
       return
     }
 
-    this.focus(options)
+    super.focus(options)
   }
 
   /**
