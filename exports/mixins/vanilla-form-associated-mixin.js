@@ -130,7 +130,7 @@ export function VanillaFormAssociatedMixin(superclass) {
       handleInteraction = (e) => {
         if (this.disabled === true || this.hasAttribute("disabled")) return
 
-        if (!this.matches(":focus-within")) {
+        if (!this.matches(":focus-within") && this.value !== this.defaultValue) {
           this.hasInteracted = true
         }
         runValidators(this)
