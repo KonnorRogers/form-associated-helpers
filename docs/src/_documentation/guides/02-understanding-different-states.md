@@ -154,7 +154,6 @@ In more simplistic terms, here's the difference between states with the `user-*`
               required
               minlength="5"
               maxlength="7"
-              value="default"
             ></textarea-component>
           </div>
 
@@ -231,25 +230,26 @@ In more simplistic terms, here's the difference between states with the `user-*`
 
 
         function updateState () {
+          if (!state()) return
           setTimeout(() => state().innerText = getState(document.querySelector("textarea-component")))
         }
 
         function getState (formControl) {
           let states = []
-          if (formControl.hasAttribute("data-user-valid")) {
+          if (formControl?.hasAttribute("data-user-valid")) {
             states.push("has-interacted")
             states.push("user-valid")
           }
 
-          if (formControl.hasAttribute("data-user-invalid")) {
+          if (formControl?.hasAttribute("data-user-invalid")) {
             states.push("has-interacted")
             states.push("user-invalid")
           }
 
-          if (formControl.hasAttribute("data-valid")) {
+          if (formControl?.hasAttribute("data-valid")) {
             states.push("valid")
           }
-          if (formControl.hasAttribute("data-invalid")) {
+          if (formControl?.hasAttribute("data-invalid")) {
             states.push("invalid")
           }
 

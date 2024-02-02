@@ -89,6 +89,18 @@ export default class TextareaComponent extends LitTextareaMixin(LitElement) {
   }
 
   /**
+   * @param {FocusOptions} options
+   */
+  focus (options) {
+    if (this.formControl) {
+      this.formControl.focus(options)
+      return
+    }
+
+    this.focus(options)
+  }
+
+  /**
    * @param {Element | undefined} textarea
    */
   formControlChanged(textarea) {

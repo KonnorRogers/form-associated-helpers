@@ -118,17 +118,40 @@ test("Should prevent submission with custom validity and reset validity", async 
   assert.equal(editor.getAttribute("value"), "sup dude")
 })
 
+test("Should properly reset to defaultValue", async () => {
+  const form = await fixture(html`
+    <form>
+      <textarea-component required name="test"></textarea-component>
+      <button type="submit">Submit</button>
+      <button type="reset">Reset</button>
+    </form>
+  `)
+})
+
+test("Should set :user-invalid when attempting to submit", async () => {
+  const form = await fixture(html`
+    <form>
+      <textarea-component required name="test"></textarea-component>
+      <button type="submit">Submit</button>
+      <button type="reset">Reset</button>
+    </form>
+  `)
+
+  const resetButton = form.querySelector("[type='reset']")
+  const submitButton = form.querySelector("[type='submit']")
+})
+
 test("Should fail validity check with required and no value", async () => {
   const form = await fixture(html`
     <form>
       <textarea-component required name="test"></textarea-component>
-      <button>Submit</button>
+      <button type="submit">Submit</button>
       <button type="reset">Reset</button>
     </form>
   `)
 
   const editor = form.querySelector("textarea-component")
-  const button = form.querySelector("button")
+  const resetButton = form.querySelector("[type='reset']")
 
   let called = 0
 
@@ -136,7 +159,7 @@ test("Should fail validity check with required and no value", async () => {
     called += 1
   })
 
-  button.click()
+  resetButton.click()
 
   await aTimeout(1)
 
@@ -164,4 +187,7 @@ test("Should fail validity check with required and no value", async () => {
   assert.equal(editor.validationMessage, nativeTextarea.validationMessage)
   assert.equal(editor.validity.valueMissing, true)
   assert.equal(editor.validity.valid, false)
+})
+
+test("Should properly transition states based on interactions", async () => {
 })

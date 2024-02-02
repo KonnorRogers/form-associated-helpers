@@ -121,6 +121,20 @@ export function VanillaFormAssociatedMixin(superclass) {
         // this.addEventListener("focusin", this.handleInteraction)
         this.addEventListener("focusout", this.handleInteraction)
         this.addEventListener("blur", this.handleInteraction)
+        this.addEventListener("invalid", this.handleInvalid)
+      }
+
+      /**
+       * @param {Event} e
+       */
+      handleInvalid = (e) => {
+        if (e.target !== this) return
+        if (this.disabled === true || this.hasAttribute("disabled")) return
+
+        this.valueHasChanged = true
+        this.hasInteracted = true
+
+        runValidators(this)
       }
 
       /**
@@ -311,7 +325,6 @@ export function VanillaFormAssociatedMixin(superclass) {
 
         this.internals.setFormValue(...args)
         runValidators(this)
-
       }
 
       /**
