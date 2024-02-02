@@ -169,7 +169,7 @@ In more simplistic terms, here's the difference between states with the `user-*`
               required
               minlength="5"
               maxlength="7"
-            >default</textarea>
+            ></textarea>
           </div>
         </div>
       </fieldset>

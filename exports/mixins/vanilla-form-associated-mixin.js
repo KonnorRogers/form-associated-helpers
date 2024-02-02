@@ -118,10 +118,13 @@ export function VanillaFormAssociatedMixin(superclass) {
          */
         this.validators = []
 
+        // this.setFormValue(null)
+
         // this.addEventListener("focusin", this.handleInteraction)
         this.addEventListener("focusout", this.handleInteraction)
         this.addEventListener("blur", this.handleInteraction)
         this.addEventListener("invalid", this.handleInvalid)
+
       }
 
       /**
@@ -134,7 +137,7 @@ export function VanillaFormAssociatedMixin(superclass) {
         this.valueHasChanged = true
         this.hasInteracted = true
 
-        runValidators(this)
+        updateInteractionState(this)
       }
 
       /**
@@ -144,7 +147,7 @@ export function VanillaFormAssociatedMixin(superclass) {
       handleInteraction = (e) => {
         if (this.disabled === true || this.hasAttribute("disabled")) return
 
-        if (!this.matches(":focus-within") && this.value !== this.defaultValue) {
+        if (!this.matches(":focus-within") && this.valueHasChanged) {
           this.hasInteracted = true
         }
         runValidators(this)
@@ -284,26 +287,7 @@ export function VanillaFormAssociatedMixin(superclass) {
         }
 
         this.internals.setValidity(flags, message, anchor)
-
-        if (this.disabled || this.hasAttribute("disabled")) {
-          this.removeAttribute("data-invalid")
-          this.removeAttribute("data-user-invalid")
-          this.removeAttribute("data-valid")
-          this.removeAttribute("data-user-valid")
-          return
-        }
-
-        if (this.validity.valid) {
-          this.removeAttribute("data-invalid")
-          this.removeAttribute("data-user-invalid")
-          this.setAttribute("data-valid", "")
-          this.toggleAttribute("data-user-valid", this.hasInteracted && this.valueHasChanged)
-        } else {
-          this.removeAttribute("data-valid")
-          this.removeAttribute("data-user-valid")
-          this.setAttribute("data-invalid", "")
-          this.toggleAttribute("data-user-invalid", this.hasInteracted && this.valueHasChanged)
-        }
+        updateInteractionState(this)
       }
 
       reportValidity () {
@@ -338,3 +322,28 @@ export function VanillaFormAssociatedMixin(superclass) {
   )
 }
 
+
+/**
+ * @param {HTMLElement & { disabled: boolean, validity: ValidityState, hasInteracted: boolean, valueHasChanged: boolean }} el
+ */
+function updateInteractionState (el) {
+  if (el.disabled || el.hasAttribute("disabled")) {
+    el.removeAttribute("data-invalid")
+    el.removeAttribute("data-user-invalid")
+    el.removeAttribute("data-valid")
+    el.removeAttribute("data-user-valid")
+    return
+  }
+
+  if (el.validity.valid) {
+    el.removeAttribute("data-invalid")
+    el.removeAttribute("data-user-invalid")
+    el.setAttribute("data-valid", "")
+    el.toggleAttribute("data-user-valid", el.hasInteracted && el.valueHasChanged)
+  } else {
+    el.removeAttribute("data-valid")
+    el.removeAttribute("data-user-valid")
+    el.setAttribute("data-invalid", "")
+    el.toggleAttribute("data-user-invalid", el.hasInteracted && el.valueHasChanged)
+  }
+}

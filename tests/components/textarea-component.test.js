@@ -152,6 +152,7 @@ test("Should fail validity check with required and no value", async () => {
 
   const editor = form.querySelector("textarea-component")
   const resetButton = form.querySelector("[type='reset']")
+  const submitButton = form.querySelector("[type='submit']")
 
   let called = 0
 
@@ -172,6 +173,8 @@ test("Should fail validity check with required and no value", async () => {
   assert.equal(editor.hasAttribute("data-valid"), false)
   assert.equal(editor.hasAttribute("data-user-valid"), false)
 
+  editor.focus()
+
   const tabKey = navigator.userAgent.includes('Safari') && !navigator.userAgent.includes('HeadlessChrome') ? 'Alt+Tab' : 'Tab';
   await sendKeys({ press: tabKey })
   await aTimeout(0)
@@ -180,7 +183,16 @@ test("Should fail validity check with required and no value", async () => {
     required: true
   })
 
-  // These are false until we "blur"
+  // These are false until we change the value or "submit"
+  assert.equal(editor.hasAttribute("data-has-interacted"), false)
+  assert.equal(editor.hasAttribute("data-user-invalid"), false)
+
+  submitButton.click()
+
+  // Takes an event loop to propagate.
+  await aTimeout(0)
+
+  // These are false until we change the value or "submit"
   assert.equal(editor.hasAttribute("data-has-interacted"), true)
   assert.equal(editor.hasAttribute("data-user-invalid"), true)
 
