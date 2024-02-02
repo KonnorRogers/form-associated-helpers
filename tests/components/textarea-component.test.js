@@ -304,5 +304,6 @@ test("Should fail validity check with required and no value", async () => {
   assert.equal(editor.validity.valid, false)
 })
 
-test("Should properly transition states based on interactions", async () => {
+test.skip("Should not trigger `:user-valid` if we type something, then return to the same defaultValue", async () => {
+
 })
