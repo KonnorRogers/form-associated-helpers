@@ -188,7 +188,7 @@ In more simplistic terms, here's the difference between states with the `user-*`
       </p>
       <br>
       <p id="form-state">
-        Current Form State: <span id="state"></span>
+        Current Custom Textarea State: <span id="state"></span>
       </p>
 
       <script type="module">
