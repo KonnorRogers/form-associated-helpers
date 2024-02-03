@@ -8,6 +8,8 @@ if (!window.customElements.get("textarea-component")) {
   window.customElements.define("textarea-component", class extends TextareaComponent {})
 }
 
+const TAB_KEY = navigator.userAgent.includes('Safari') && !navigator.userAgent.includes('HeadlessChrome') ? 'Alt+Tab' : 'Tab';
+
 function tryMatches (el, str) {
   try {
     return el.matches(str)
@@ -262,8 +264,7 @@ test("Should fail validity check with required and no value", async () => {
 
   editor.focus()
 
-  const tabKey = navigator.userAgent.includes('Safari') && !navigator.userAgent.includes('HeadlessChrome') ? 'Alt+Tab' : 'Tab';
-  await sendKeys({ press: tabKey })
+  await sendKeys({ press: TAB_KEY })
   await aTimeout(0)
 
   const nativeTextarea = Object.assign(document.createElement("textarea"), {
@@ -304,6 +305,50 @@ test("Should fail validity check with required and no value", async () => {
   assert.equal(editor.validity.valid, false)
 })
 
-test.skip("Should not trigger `:user-valid` if we type something, then return to the same defaultValue", async () => {
+test("Should not trigger `:user-valid` if we type something, then return to the same defaultValue", async () => {
+  const form = await fixture(html`
+    <form>
+      <textarea-component required name="test" value="default value" minlength="5"></textarea-component>
+      <button type="submit">Submit</button>
+      <button type="reset">Reset</button>
+    </form>
+  `)
 
+  const editor = form.querySelector("textarea-component")
+  const resetButton = form.querySelector("[type='reset']")
+  const submitButton = form.querySelector("[type='submit']")
+
+  // Just move focus and make sure we don't trigger interactions states.
+  editor.focus()
+
+  // Clear the textarea.
+  editor.select()
+  await sendKeys({ press: "Backspace" })
+  await sendKeys({ type: editor.defaultValue })
+
+  await aTimeout(1)
+  await sendKeys({ press: TAB_KEY })
+
+  assert.isTrue(isValid(editor))
+  // Should not trigger :user-valid
+  // assert.isFalse(isUserValid(editor))
+  assert.isFalse(isInvalid(editor))
+  assert.isFalse(isUserInvalid(editor))
+
+  // Same thing, this time, we wont return to the same val.
+  // Just move focus and make sure we don't trigger interactions states.
+  editor.focus()
+
+  // Clear the textarea.
+  editor.select()
+  await sendKeys({ press: "Backspace" })
+  await sendKeys({ type: "no" })
+
+  await sendKeys({ press: TAB_KEY })
+
+  assert.isTrue(isInvalid(editor))
+  // Should trigger :user-invalid
+  assert.isTrue(isUserInvalid(editor))
+  assert.isFalse(isValid(editor))
+  assert.isFalse(isUserValid(editor))
 })
