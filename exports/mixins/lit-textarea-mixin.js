@@ -31,12 +31,12 @@ LitTextareaMixin.formProperties = Object.freeze(
 export function LitTextareaMixin(superclass) {
   return (
     /**
-     * @implements {HTMLTextAreaElement}
-     */
+      * @implements {HTMLTextAreaElement}
+      */
     class extends LitFormAssociatedMixin(superclass) {
       /**
-       * @override
-       */
+        * @override
+        */
       static get validators () {
         return [
           ...super.validators,
@@ -47,8 +47,8 @@ export function LitTextareaMixin(superclass) {
 
       static get properties () {
         /**
-         * @type {null | import("lit").PropertyValues}
-         */
+          * @type {null | import("lit").PropertyValues}
+          */
         // @ts-expect-error
         const properties = super.properties
         if (properties) {
@@ -59,83 +59,84 @@ export function LitTextareaMixin(superclass) {
         return LitTextareaMixin.formProperties
       }
       /**
-       * @param {...any[]} args
-       */
+        * @param {...any} args
+        */
       constructor (...args) {
+        // @ts-expect-error
         super(...args)
 
         /**
-         * @type {HTMLTextAreaElement["autocomplete"]}
-         */
+          * @type {HTMLTextAreaElement["autocomplete"]}
+          */
         this.autocomplete = ""
 
         /**
-         * @type {HTMLTextAreaElement["wrap"]}
-         */
+          * @type {HTMLTextAreaElement["wrap"]}
+          */
         this.wrap = ""
 
         /**
-         * @type {string}
-         */
+          * @type {string}
+          */
         this.value = ""
 
         /**
-         * @type {string}
-         */
+          * @type {string}
+          */
         this.defaultValue = ""
 
         /**
-         * @type {HTMLTextAreaElement["maxLength"]}
-         */
+          * @type {HTMLTextAreaElement["maxLength"]}
+          */
         this.maxLength = -1
 
         /**
-         * @type {HTMLTextAreaElement["minLength"]}
-         */
+          * @type {HTMLTextAreaElement["minLength"]}
+          */
         this.minLength = -1
 
         /**
-         * @type {HTMLTextAreaElement["readOnly"]}
-         */
+          * @type {HTMLTextAreaElement["readOnly"]}
+          */
         this.readOnly = false
 
         /**
-         * @type {HTMLTextAreaElement["placeholder"]}
-         */
+          * @type {HTMLTextAreaElement["placeholder"]}
+          */
         this.placeholder = ""
 
         /**
-         * @type {HTMLTextAreaElement["required"]}
-         */
+          * @type {HTMLTextAreaElement["required"]}
+          */
         this.required = false
 
         /**
-         * @type {null | HTMLTextAreaElement}
-         */
+          * @type {null | HTMLTextAreaElement}
+          */
         this.formControl = null
 
         /**
-         * @type {HTMLTextAreaElement["dirName"]}
-         */
+          * @type {HTMLTextAreaElement["dirName"]}
+          */
         this.dirName = ""
 
         /** @type {HTMLTextAreaElement["selectionDirection"]} */
         this.selectionDirection = "forward"
 
         /**
-         * @type {number}
-         */
+          * @type {number}
+          */
         this.rows = 2
 
         /**
-         * @type {number}
-         */
+          * @type {number}
+          */
         this.cols = 20
       }
 
       /**
-       * @param {Parameters<HTMLTextAreaElement["setSelectionRange"]>} args
-       */
+        * @param {Parameters<HTMLTextAreaElement["setSelectionRange"]>} args
+        */
       setSelectionRange (...args) {
         const formControl = this.formControl
 
@@ -145,8 +146,8 @@ export function LitTextareaMixin(superclass) {
       }
 
       /**
-       * @param {[replacement: string, start: number, end: number, selectionMode?: SelectionMode] | [replacement: string]} args
-       */
+        * @param {[replacement: string, start: number, end: number, selectionMode?: SelectionMode] | [replacement: string]} args
+        */
       setRangeText (...args) {
         const formControl = this.formControl
 
@@ -157,8 +158,8 @@ export function LitTextareaMixin(superclass) {
       }
 
       /**
-       * @returns {HTMLTextAreaElement["textLength"]}
-       */
+        * @returns {HTMLTextAreaElement["textLength"]}
+        */
       get textLength () {
         const formControl = /** @type {HTMLTextAreaElement} */ (this.formControl)
 
@@ -170,8 +171,8 @@ export function LitTextareaMixin(superclass) {
       }
 
       /**
-       * @returns {HTMLTextAreaElement["selectionStart"]}
-       */
+        * @returns {HTMLTextAreaElement["selectionStart"]}
+        */
       get selectionStart () {
         const formControl = /** @type {HTMLTextAreaElement} */ (this.formControl)
 
@@ -183,8 +184,8 @@ export function LitTextareaMixin(superclass) {
       }
 
       /**
-       * @returns {HTMLTextAreaElement["selectionStart"]}
-       */
+        * @returns {HTMLTextAreaElement["selectionStart"]}
+        */
       get selectionEnd () {
         const formControl = /** @type {HTMLTextAreaElement} */ (this.formControl)
 
@@ -196,8 +197,8 @@ export function LitTextareaMixin(superclass) {
       }
 
       /**
-       * @type {HTMLTextAreaElement["select"]}
-       */
+        * @type {HTMLTextAreaElement["select"]}
+        */
       select () {
         const formControl = this.formControl
 
