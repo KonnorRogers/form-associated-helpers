@@ -3,6 +3,22 @@ layout: default
 ---
 
 <main id="main" style="margin: 0 auto; --main-width: 100ch;">
+  <style>
+    sl-alert[banner]::part(base) {
+      font-size: 1.5rem;
+      padding: 1rem;
+    }
+
+    sl-alert[banner]::part(base) {
+      background-color: var(--sl-color-danger-100);
+      color: var(--sl-color-danger-800)
+    }
+  </style>
+  <sl-alert open variant="danger" banner>
+    <sl-icon slot="icon" name="exclamation-octagon" style=""></sl-icon>
+    This library is still in beta. More documentation to come.
+  </sl-alert>
+
   <div class="hero--mobile">
     <%= render "logo" %>
   </div>

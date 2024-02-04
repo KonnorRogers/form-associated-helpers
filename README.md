@@ -1,4 +1,4 @@
-**This package is still in alpha. Proceed with caution.**
+**This package is still in beta. Proceed with caution.**
 
 If you are looking for a more fully-fledged solution, check out the inspiration for this package:
 
