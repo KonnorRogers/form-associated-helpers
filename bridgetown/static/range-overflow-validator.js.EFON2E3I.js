@@ -1,0 +1,2 @@
+import"/form-associated-helpers/bridgetown/static/chunks/chunk-ENMDFKSV.js";var i={observedAttributes:["max"],checkValidity(a){let e={message:"",isValid:!0,invalidKeys:[]},t=Number(a.max??a.getAttribute("max")),s=a.value;return typeof s!="number"||s>t&&(e.message=`Please select a value that is less than or equal to ${t}.`,e.isValid=!1,e.invalidKeys.push("rangeOverflow")),e}};export{i as RangeOverflowValidator};
+//# sourceMappingURL=/form-associated-helpers/bridgetown/static/range-overflow-validator.js.EFON2E3I.js.map

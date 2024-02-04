@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../exports/validators/too-long-validator.js"],
+  "sourcesContent": ["/**\n * @type {import(\"../types.js\").Validator<HTMLElement & { maxLength?: number, length?: number }>}\n */\nexport const TooLongValidator = {\n  observedAttributes: [\"maxlength\"],\n  checkValidity (element) {\n    /**\n     * @type {ReturnType<import(\"../types.js\").Validator[\"checkValidity\"]>}\n     */\n    const validity = {\n      message: \"\",\n      isValid: true,\n      invalidKeys: []\n    }\n\n    /** if its not a string, we really can't compare. */\n    let value = element.value ?? \"\"\n    if (typeof value !== \"string\") { return validity }\n\n    const maxLength = Number(element.maxLength || element.getAttribute(\"maxlength\"))\n\n    if (!maxLength) { return validity}\n\n    if (maxLength > value.length) {\n      validity.message = `Please use less than or equal to ${maxLength} characters. You are currently using ${value.length} characters.`;\n      validity.isValid = false\n      validity.invalidKeys.push(\"tooLong\")\n    }\n\n    return validity;\n  }}\n\n"],
+  "mappings": "AAGO,IAAMA,EAAmB,CAC9B,mBAAoB,CAAC,WAAW,EAChC,cAAeC,EAAS,CAItB,IAAMC,EAAW,CACf,QAAS,GACT,QAAS,GACT,YAAa,CAAC,CAChB,EAGIC,EAAQF,EAAQ,OAAS,GAC7B,GAAI,OAAOE,GAAU,SAAY,OAAOD,EAExC,IAAME,EAAY,OAAOH,EAAQ,WAAaA,EAAQ,aAAa,WAAW,CAAC,EAE/E,OAAKG,GAEDA,EAAYD,EAAM,SACpBD,EAAS,QAAU,oCAAoCE,CAAS,wCAAwCD,EAAM,MAAM,eACpHD,EAAS,QAAU,GACnBA,EAAS,YAAY,KAAK,SAAS,GAG9BA,CACT,CAAC",
+  "names": ["TooLongValidator", "element", "validity", "value", "maxLength"]
+}

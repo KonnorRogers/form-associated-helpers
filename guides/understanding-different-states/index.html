@@ -6,7 +6,7 @@
 <!-- <base href="/form-associated-helpers/"> -->
 
 <meta name="description" content="A collection of reusable mixins + helpers for working with form associated custom elements.">
-<link rel="modulepreload" href="/form-associated-helpers/bridgetown/static/javascript/index.X7NRLSW5.js">
+<link rel="modulepreload" href="/form-associated-helpers/bridgetown/static/javascript/index.CWGHMELK.js">
 <link rel="modulepreload" href="/form-associated-helpers/bridgetown/static/javascript/defer.HDJDL4GL.js">
 <link rel="preload" href="/form-associated-helpers/bridgetown/static/javascript/defer.L7RBZ4I2.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <!-- Critical CSS -->
@@ -15,7 +15,7 @@
 <noscript><link rel="stylesheet" href="/form-associated-helpers/bridgetown/static/javascript/defer.L7RBZ4I2.css"></noscript>
 
 <!-- Entrypoints -->
-<script data-turbo-track="reload" src="/form-associated-helpers/bridgetown/static/javascript/index.X7NRLSW5.js" type="module"></script>
+<script data-turbo-track="reload" src="/form-associated-helpers/bridgetown/static/javascript/index.CWGHMELK.js" type="module"></script>
 <script data-turbo-track="reload" src="/form-associated-helpers/bridgetown/static/javascript/defer.HDJDL4GL.js" type="module"></script>
 
 <!-- Favicons -->
@@ -288,11 +288,13 @@ following are the CSS selectors available and what they mean.</p>
     <tbody>
       <tr>
         <td>
+          <code>:valid</code>,
           <code>[data-valid]</code>,
           <code>:state(valid)</code>
         </td>
         <td>
-          When a form associated element is meets all of it's validator requirements.
+          When a form associated element meets all of it's validator requirements, regardless of if
+          the control has been interacted with.
           <br>
           Equivalent to <code>:valid</code>
           <br>
@@ -301,11 +303,13 @@ following are the CSS selectors available and what they mean.</p>
       </tr>
       <tr>
         <td>
+          <code>:invalid</code>,
           <code>[data-invalid]</code>,
           <code>:state(invalid)</code>
         </td>
         <td>
-          When a form associated element does not meet all of it's validator requirements.
+          When a form associated element does not meet all of it's validator requirements,
+          regardless of if the form control has been interacted with.
           <br>
           Equivalent to <code>:invalid</code>
           <br>
@@ -314,6 +318,7 @@ following are the CSS selectors available and what they mean.</p>
       </tr>
       <tr>
         <td>
+          <!-- <code>:user-valid</code>, -->
           <code>[data-user-valid]</code>,
           <code>:state(user-valid)</code>
         </td>
@@ -328,6 +333,7 @@ following are the CSS selectors available and what they mean.</p>
       </tr>
       <tr>
         <td>
+          <!-- <code>:user-invalid</code>, -->
           <code>[data-user-invalid]</code>,
           <code>:state(user-invalid)</code>
         </td>
@@ -344,6 +350,10 @@ following are the CSS selectors available and what they mean.</p>
   </table>
 </table-container>
 
+<p>In more simplistic terms, here’s the difference between states with the <code class="highlighter-rouge">user-*</code> prefix, and those without.</p>
+
+<p><code class="highlighter-rouge">user-*</code> is active when you <code class="highlighter-rouge">"focusout"</code> out of the form control, and the <code class="highlighter-rouge">value</code> of the element is <strong>NOT</strong> equal to the <code class="highlighter-rouge">"defaultValue"</code>.</p>
+
 <style>
   .form-state-preview::part(preview) {
     min-height: 400px;
@@ -353,25 +363,24 @@ following are the CSS selectors available and what they mean.</p>
 <light-preview class="form-state-preview">
   <template slot="code">
     <style>
-      textarea:focus-visible,
+      :is(textarea, input):focus-visible,
       textarea-component::part(form-control):focus-visible {
         outline: transparent;
       }
 
-      textarea,
+      :is(input, textarea),
       textarea-component::part(form-control) {
-        border: 2px solid gray;
+        border: 3px solid gray;
       }
 
-
-      textarea:valid,
-      [data-valid]::part(form-control) {
+      :is(textarea, input):valid,
+      :is(:valid, [data-valid])::part(form-control) {
         background-color: rgba(0, 255, 0, 0.1);
       }
 
-      textarea:user-valid,
-      [data-user-valid]::part(form-control) {
-        border-color: green;
+      :is(textarea, input):user-valid,
+      :is([data-user-valid])::part(form-control) {
+        border-color: rgba(0, 255, 0, 1);
       }
 
       label.required::after {
@@ -380,39 +389,48 @@ following are the CSS selectors available and what they mean.</p>
         font-size: 1em;
       }
 
-      textarea:invalid,
-      [data-invalid]::part(form-control) {
+      :is(textarea, input):invalid,
+      :is(:invalid)::part(form-control) {
         background-color: rgba(255, 0, 0, 0.1);
       }
 
-      textarea:user-invalid,
-      [data-user-invalid]::part(form-control) {
+      :is(textarea, input):user-invalid,
+      :is([data-user-invalid])::part(form-control) {
         border-color: red;
       }
+
+      :disabled {
+        opacity: 0.5;
+      }
+
     </style>
 
     <form>
-      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));">
-        <div>
-          <label class="required" for="textarea-component">
-            This is a custom textarea
-          </label>
-          <br>
-          <textarea-component id="textarea-component" name="textarea-component" aria-describedby="help-text form-state" required=""></textarea-component>
-        </div>
+      <fieldset>
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));">
+          <div>
+            <label class="required" for="textarea-component">
+              This is a custom textarea
+            </label>
+            <br>
+            <textarea-component id="textarea-component" name="textarea-component" aria-describedby="help-text form-state" required="" minlength="5" maxlength="7" value="def"></textarea-component>
+          </div>
 
-        <div>
-          <label class="required" for="textarea">
-            This is a regular textarea
-          </label>
-          <br>
-          <textarea id="textarea" name="textarea" aria-describedby="help-text" required=""></textarea>
+          <div>
+            <label class="required" for="textarea">
+              This is a regular textarea
+            </label>
+            <br>
+            <textarea id="textarea" name="textarea" aria-describedby="help-text" required="" minlength="5" maxlength="7">def</textarea>
+          </div>
         </div>
-      </div>
+      </fieldset>
 
       <br>
 
       <button type="reset">Reset</button>
+      <button type="button" id="disable">Disable</button>
+      <button>Submit</button>
 
       <br>
 
@@ -421,11 +439,11 @@ following are the CSS selectors available and what they mean.</p>
       </p>
       <br>
       <p id="form-state">
-        Current Form State: <span id="state"></span>
+        Current Custom Textarea State: <span id="state"></span>
       </p>
 
       <script type="module">
-        import TextareaComponent from "/form-associated-helpers/bridgetown/static/textarea-component.YIHMMNHU.js"
+        import TextareaComponent from "/form-associated-helpers/bridgetown/static/textarea-component.3QVYF6US.js"
 
         const state = () => document.querySelector("#state")
 
@@ -435,39 +453,55 @@ following are the CSS selectors available and what they mean.</p>
 
         document.addEventListener("submit", (e) => {
           e.preventDefault()
-          setTimeout(() => state().innerText = getState(document.querySelector("textarea-component")))
+          updateState()
         })
 
         document.addEventListener("input", (e) => {
-          setTimeout(() => state().innerText = getState(document.querySelector("textarea-component")))
+          updateState()
+        })
+
+        document.addEventListener("click", (e) => {
+          const btn = e.target.closest("#disable")
+
+          if (btn) {
+            const fieldset = document.querySelector("fieldset")
+            const isDisabled = !fieldset.hasAttribute("disabled")
+            fieldset.toggleAttribute("disabled", isDisabled)
+
+            btn.innerText = isDisabled ? "Enable" : "Disable"
+          }
         })
 
         document.addEventListener("focusout", (e) => {
-          setTimeout(() => state().innerText = getState(document.querySelector("textarea-component")))
+          updateState()
         })
 
         document.addEventListener("reset", () => {
-          setTimeout(() => state().innerText = getState(document.querySelector("textarea-component")))
+          updateState()
         })
 
-        setTimeout(() => state().innerText = getState(document.querySelector("textarea-component")))
+
+        function updateState () {
+          if (!state()) return
+          setTimeout(() => state().innerText = getState(document.querySelector("textarea-component")))
+        }
 
         function getState (formControl) {
           let states = []
-          if (formControl.hasAttribute("data-user-valid")) {
+          if (formControl?.hasAttribute("data-user-valid")) {
             states.push("has-interacted")
             states.push("user-valid")
           }
 
-          if (formControl.hasAttribute("data-user-invalid")) {
+          if (formControl?.hasAttribute("data-user-invalid")) {
             states.push("has-interacted")
             states.push("user-invalid")
           }
 
-          if (formControl.hasAttribute("data-valid")) {
+          if (formControl?.hasAttribute("data-valid")) {
             states.push("valid")
           }
-          if (formControl.hasAttribute("data-invalid")) {
+          if (formControl?.hasAttribute("data-invalid")) {
             states.push("invalid")
           }
 
@@ -477,6 +511,17 @@ following are the CSS selectors available and what they mean.</p>
     </form>
   </template>
 </light-preview>
+
+<p><code class="highlighter-rouge">:user-valid</code>: Need to have changed the value. If you’re in a <code class="highlighter-rouge">user-valid</code> state, and then start changing the value to an <code class="highlighter-rouge">invalid</code> value, then it becomes <code class="highlighter-rouge">:invalid</code>, but not <code class="highlighter-rouge">:user-invalid</code> until the user <code class="highlighter-rouge">blurs</code> from the form control.</p>
+
+<p><code class="highlighter-rouge">:user-invalid</code>: If we go from <code class="highlighter-rouge">:user-invalid</code> to a valid state, we become <code class="highlighter-rouge">:user-valid</code>, unlike <code class="highlighter-rouge">:user-valid</code> -&gt; <code class="highlighter-rouge">:invalid</code></p>
+
+<p><code class="highlighter-rouge">:user-invalid</code> -&gt; <code class="highlighter-rouge">:user-valid</code>
+<code class="highlighter-rouge">:user-valid</code> -&gt; <code class="highlighter-rouge">:invalid</code> until <code class="highlighter-rouge">blur</code> then <code class="highlighter-rouge">:user-invalid</code></p>
+
+<p>On a form reset, a form control is only ever <code class="highlighter-rouge">:valid</code> or <code class="highlighter-rouge">:invalid</code>. Never <code class="highlighter-rouge">:user-*</code>.</p>
+
+<p>When disabled, it is neither <code class="highlighter-rouge">:valid</code> or <code class="highlighter-rouge">:invalid</code>. Instead it is <code class="highlighter-rouge">:disabled</code></p>
 
 
     <div class="pagination-footer">
