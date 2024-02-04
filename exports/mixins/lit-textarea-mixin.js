@@ -59,7 +59,7 @@ export function LitTextareaMixin(superclass) {
         return LitTextareaMixin.formProperties
       }
       /**
-       * @param {...any} args
+       * @param {...any[]} args
        */
       constructor (...args) {
         super(...args)
