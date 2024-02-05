@@ -172,18 +172,19 @@
 
       <main id="main" style="margin: 0 auto; --main-width: 100ch;">
   <style>
-    sl-alert[banner]::part(base) {
-      font-size: 1.5rem;
-      padding: 1rem;
+    sl-alert[banner] {
+      --font-size: 1.5rem;
     }
-
     sl-alert[banner]::part(base) {
+      font-size: var(--font-size);
+      padding-top: 1rem;
+      padding-bottom: 1rem;
       background-color: var(--sl-color-danger-100);
       color: var(--sl-color-danger-800)
     }
   </style>
   <sl-alert open="" variant="danger" banner="">
-    <sl-icon slot="icon" name="exclamation-octagon" style=""></sl-icon>
+    <sl-icon slot="icon" name="exclamation-octagon" style="font-size: calc(1.5 * var(--font-size));"></sl-icon>
     This library is still in beta. More documentation to come.
   </sl-alert>
 
@@ -213,8 +214,7 @@
   <section class="reason__grid">
   </section>
 
-  <p>Form Associated Helpers is still in beta. Please bear with me while I work on proper documentation, testing, and release!</p>
-
+  
 
 </main>
 
