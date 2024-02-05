@@ -1,16 +1,18 @@
-<!DOCTYPE html><html class="sl-theme-light" lang="en"><head>
-    <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>How To's</title>
+<!doctype html>
+<html class="sl-theme-light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Type Mismatch Validator</title>
 
 <!-- <base href="/form-associated-helpers/"> -->
 
-<meta name="description" content="A collection of reusable mixins + helpers for working with form associated custom elements.">
+<meta name="description" content="A collection of reusable mixins + helpers for working with form associated custom elements." />
 <link rel="modulepreload" href="/form-associated-helpers/bridgetown/static/javascript/index.C6PG6XXU.js">
 <link rel="modulepreload" href="/form-associated-helpers/bridgetown/static/javascript/defer.HDJDL4GL.js">
 <link rel="preload" href="/form-associated-helpers/bridgetown/static/javascript/defer.L7RBZ4I2.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <!-- Critical CSS -->
-<link rel="stylesheet" data-turbo-track="reload" href="/form-associated-helpers/bridgetown/static/javascript/index.YT33F75Y.css">
+<link rel="stylesheet" data-turbo-track="reload" href="/form-associated-helpers/bridgetown/static/javascript/index.YT33F75Y.css" />
 <!-- Deferred CSS -->
 <noscript><link rel="stylesheet" href="/form-associated-helpers/bridgetown/static/javascript/defer.L7RBZ4I2.css"></noscript>
 
@@ -26,7 +28,7 @@
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#ec4899">
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
-<meta name="turbo-cache-control" content="no-preview">
+<meta name="turbo-cache-control" content="no-preview" />
 
 <!-- Social stuff -->
 
@@ -82,7 +84,7 @@
 
 
   </head>
-  <body class="index " data-controller="search">
+  <body class='doc ' data-controller="search">
     <kr-layout main-id="main">
       <header class="nav-header" slot="header">
   <nav class="top-nav" aria-labelledby="top-nav-label">
@@ -107,10 +109,19 @@
     </div>
 
     <div class="top-nav__search">
-      <sl-icon-button class="top-nav__search__button" name="search" label="Search" data-action="click->search#show">
+      <sl-icon-button
+         class="top-nav__search__button"
+         name="search"
+         label="Search"
+         data-action="click->search#show">
       </sl-icon-button>
 
-      <sl-button class="top-nav__command-palette-button" data-action="click->search#show" style="min-width: 100px;" size="medium">
+      <sl-button
+        class="top-nav__command-palette-button"
+        data-action="click->search#show"
+        style="min-width: 100px;"
+        size="medium"
+      >
         <sl-icon slot="prefix" name="search"></sl-icon>
         <span>Search...</span>
         <kbd slot="suffix" style="color: var(--sl-color-neutral-600); padding: 8px">
@@ -126,14 +137,14 @@
   <a class="nav-link" href="/form-associated-helpers/references">References</a>
 
       </div>
-      <a target="_blank" rel="nofollow noopener noreferrer" aria-label="Link to GitHub" href="https://github.com/konnorrogers/form-associated-helpers" class="nav-link top-nav__github" no-external-icon="">
+      <a target="_blank" rel="noreferrer noopener" aria-label="Link to GitHub" href="https://github.com/konnorrogers/form-associated-helpers" class="nav-link top-nav__github" no-external-icon>
         <sl-icon name="github"></sl-icon>
       </a>
       <sl-dropdown style="margin-inline-start: 8px;" data-controller="theme-switcher" aria-label="Change site theme">
-        <sl-button slot="trigger" caret="">
+        <sl-button slot="trigger" caret>
           <sl-icon id="light-theme__icon" name="sun"></sl-icon>
-          <sl-icon hidden="" id="dark-theme__icon" name="moon-stars"></sl-icon>
-          <sl-icon hidden="" id="auto-theme__icon" name="display"></sl-icon>
+          <sl-icon hidden id="dark-theme__icon" name="moon-stars"></sl-icon>
+          <sl-icon hidden id="auto-theme__icon" name="display"></sl-icon>
         </sl-button>
         <sl-menu>
           <sl-menu-label>
@@ -142,7 +153,7 @@
 
           <sl-divider></sl-divider>
 
-          <sl-menu-item type="checkbox" id="light-theme__menu-item" checked="" value="light">
+          <sl-menu-item type="checkbox" id="light-theme__menu-item" checked value="light">
             <span class="theme-item">
               <sl-icon name="sun"></sl-icon>
               <span>Light</span>
@@ -170,7 +181,16 @@
 </header>
 
 
-      <sl-drawer id="side-nav-drawer" hidden="" no-header="" placement="start" class="drawer-placement-start side-nav__drawer" style="--size: clamp(400px, 75%, 1536px);" data-controller="side-nav" slot="dialog">
+      <sl-drawer
+  id="side-nav-drawer"
+  hidden
+  no-header
+  placement="start"
+  class="drawer-placement-start side-nav__drawer"
+  style="--size: clamp(400px, 75%, 1536px);"
+  data-controller="side-nav"
+  slot="dialog"
+>
   <div class="side-nav__drawer__header">
     <div style="display: flex; align-items: center;">
       <a class="nav-link logo__link" href="/form-associated-helpers">
@@ -187,7 +207,7 @@
     <sl-icon-button name="x-lg" label="Close" data-action="click->side-nav#close"></sl-icon-button>
   </div>
 
-  <nav id="side-nav--mobile" slot="" aria-label="Side Nav" tabindex="-1" class="side-nav side-nav--mobile" data-preserve-scroll="">
+  <nav id="side-nav--mobile" slot="" aria-label="Side Nav" tabindex="-1" class="side-nav side-nav--mobile" data-preserve-scroll>
   <ul class="side-nav__menu">
       <ul class="side-nav__category-menu">
         <li class="side-nav__category-header"><a class="side-nav__category-link" href="/form-associated-helpers/guides">Guides</a></li>
@@ -241,7 +261,7 @@
   <li class="side-nav__item ">
     <a class="side-nav__link" href="/form-associated-helpers/references/validators/too-short-validator.md">Too Short Validator</a>
   </li>
-  <li class="side-nav__item ">
+  <li class="side-nav__item is-active">
     <a class="side-nav__link" href="/form-associated-helpers/references/validators/type-mismatch-validator.md">Type Mismatch Validator</a>
   </li>
   <li class="side-nav__item ">
@@ -258,7 +278,7 @@
   <sl-button slot="footer" type="primary" data-action="click->side-nav#close">Close</sl-button>
 </sl-drawer>
 
-<nav id="side-nav--desktop" slot="menu" aria-label="Side Nav" tabindex="-1" class="side-nav side-nav--desktop" data-preserve-scroll="">
+<nav id="side-nav--desktop" slot="menu" aria-label="Side Nav" tabindex="-1" class="side-nav side-nav--desktop" data-preserve-scroll>
   <ul class="side-nav__menu">
       <ul class="side-nav__category-menu">
         <li class="side-nav__category-header"><a class="side-nav__category-link" href="/form-associated-helpers/guides">Guides</a></li>
@@ -312,7 +332,7 @@
   <li class="side-nav__item ">
     <a class="side-nav__link" href="/form-associated-helpers/references/validators/too-short-validator.md">Too Short Validator</a>
   </li>
-  <li class="side-nav__item ">
+  <li class="side-nav__item is-active">
     <a class="side-nav__link" href="/form-associated-helpers/references/validators/type-mismatch-validator.md">Type Mismatch Validator</a>
   </li>
   <li class="side-nav__item ">
@@ -329,26 +349,45 @@
 
 
 <main id="main" class="documentation-content flow">
-  <h1 id="how-to's">
-    <a href="#how-to's">
-      How To's
+  <h1 id="type-mismatch-validator">
+    <a href="#type-mismatch-validator">
+      Type Mismatch Validator
     </a>
   </h1>
 
 
-  <ul class="list">
   
-</ul>
-
-
-
 
 
     <div class="pagination-footer">
 
-      <div></div>
+      <sl-button class="previous-page" href="/form-associated-helpers/references/validators/too-short-validator.md">
+        <span slot="prefix">
+          <sl-icon name="arrow-left" style="font-size: 1.5rem; display: block;"></sl-icon>
+        </span>
 
-      <div></div>
+        <span style="text-align: end; display: block;">
+          <span style="display: block; color: var(--sl-color-neutral-500); font-size: 0.85rem;">
+            Previous Page
+          </span>
+          <pagination-title>Too Short Validator</pagination-title>
+        </span>
+
+      </sl-button>
+
+      <sl-button class="next-page" href="/form-associated-helpers/references/validators/value-missing-validator.md">
+        <span style="text-align: start; display: block;">
+          <span style="display: block; color: var(--sl-color-neutral-500); font-size: 0.85rem;">Next Page</span>
+          <pagination-title>
+            Value Missing Validator
+          </pagination-title>
+        </span>
+
+        <span slot="suffix">
+          <sl-icon name="arrow-right" style="font-size: 1.5rem; display: block;"></sl-icon>
+        </span>
+
+      </sl-button>
   </div>
 
 
@@ -356,7 +395,7 @@
 
 <nav slot="aside" class="table-of-contents" id="table-of-contents" aria-label="Table of contents" tabindex="-1" data-controller="scroll-spy">
   <h2 class="table-of-contents__header">
-    How To's
+    Type Mismatch Validator
   </h2>
   <ol class="table-of-contents__list">
   </ol>
@@ -367,18 +406,27 @@
       <footer slot="main-footer">
   <div class="footer">
     Found a mistake? Want to contribute?
-    <a href="https://github.com/konnorrogers/form-associated-helpers/tree/main/docs/src/_documentation/how_tos/index.md" target="_blank" rel="nofollow noopener noreferrer"> Edit this page on GitHub  <external-icon></external-icon></a>
+    <a href="https://github.com/konnorrogers/form-associated-helpers/tree/main/docs/src/_documentation/references/validators/type-mismatch-validator.md"> Edit this page on GitHub </a>
 
     <div style="margin: 1.5rem 0;"></div>
 
-    Built with <a href="https://www.bridgetownrb.com/" rel="nofollow noopener noreferrer" external="" target="_blank">Bridgetown <external-icon></external-icon></a> and <a href="https://shoelace.style" rel="nofollow noopener noreferrer" external="" target="_blank">Shoelace <external-icon></external-icon></a>.
+    Built with <a href="https://www.bridgetownrb.com/" rel="noopener noreferrer" external>Bridgetown</a> and <a href="https://shoelace.style" rel="noopener noreferrer" external>Shoelace</a>.
   </div>
 </footer>
 
 
     </kr-layout>
 
-    <sl-drawer id="side-nav-drawer" hidden="" no-header="" placement="start" class="drawer-placement-start side-nav__drawer" style="--size: clamp(400px, 75%, 1536px);" data-controller="side-nav" slot="dialog">
+    <sl-drawer
+  id="side-nav-drawer"
+  hidden
+  no-header
+  placement="start"
+  class="drawer-placement-start side-nav__drawer"
+  style="--size: clamp(400px, 75%, 1536px);"
+  data-controller="side-nav"
+  slot="dialog"
+>
   <div class="side-nav__drawer__header">
     <div style="display: flex; align-items: center;">
       <a class="nav-link logo__link" href="/form-associated-helpers">
@@ -395,7 +443,7 @@
     <sl-icon-button name="x-lg" label="Close" data-action="click->side-nav#close"></sl-icon-button>
   </div>
 
-  <nav id="side-nav--mobile" slot="" aria-label="Side Nav" tabindex="-1" class="side-nav side-nav--mobile" data-preserve-scroll="">
+  <nav id="side-nav--mobile" slot="" aria-label="Side Nav" tabindex="-1" class="side-nav side-nav--mobile" data-preserve-scroll>
   <ul class="side-nav__menu">
       <ul class="side-nav__category-menu">
         <li class="side-nav__category-header"><a class="side-nav__category-link" href="/form-associated-helpers/guides">Guides</a></li>
@@ -449,7 +497,7 @@
   <li class="side-nav__item ">
     <a class="side-nav__link" href="/form-associated-helpers/references/validators/too-short-validator.md">Too Short Validator</a>
   </li>
-  <li class="side-nav__item ">
+  <li class="side-nav__item is-active">
     <a class="side-nav__link" href="/form-associated-helpers/references/validators/type-mismatch-validator.md">Type Mismatch Validator</a>
   </li>
   <li class="side-nav__item ">
@@ -467,6 +515,5 @@
 </sl-drawer>
 
     <bridgetown-ninja-keys endpoint="/form-associated-helpers/bridgetown_quick_search/index.json"></bridgetown-ninja-keys>
-  
-
-</body></html>
+  </body>
+</html>
