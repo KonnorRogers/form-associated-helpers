@@ -22,7 +22,7 @@ LitTextareaMixin.formProperties = Object.freeze(
 )
 
 /**
- * A mixin for textareas
+ * A mixin for build a `<textarea>` specifically for Lit.
  *
  * @see https://webkit.org/blog/13711/elementinternals-and-form-associated-custom-elements/
  * @template {import("./types.js").GConstructable<HTMLElement> & {observedAttributes?: string[]}} T
