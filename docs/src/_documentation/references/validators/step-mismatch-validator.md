@@ -1,4 +1,4 @@
 ---
 title: Step Mismatch Validator
-permalink: /references/validators/step-mismatch-validator.md
+permalink: /references/validators/step-mismatch-validator/
 ---

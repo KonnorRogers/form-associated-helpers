@@ -1,4 +1,4 @@
 ---
 title: Pattern Mismatch Validator
-permalink: /references/validators/pattern-mismatch-validator.md
+permalink: /references/validators/pattern-mismatch-validator/
 ---

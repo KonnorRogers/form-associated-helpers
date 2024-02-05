@@ -1,4 +1,4 @@
 ---
 title: Mirror Validator
-permalink: /references/validators/mirror-validator.md
+permalink: /references/validators/mirror-validator/
 ---

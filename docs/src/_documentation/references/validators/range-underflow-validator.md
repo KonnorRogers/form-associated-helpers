@@ -1,4 +1,4 @@
 ---
 title: Range Underflow Validator
-permalink: /references/validators/range-underflow-validator.md
+permalink: /references/validators/range-underflow-validator/
 ---

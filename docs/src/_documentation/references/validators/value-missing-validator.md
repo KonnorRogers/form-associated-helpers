@@ -1,4 +1,4 @@
 ---
 title: Value Missing Validator
-permalink: /references/validators/value-missing-validator.md
+permalink: /references/validators/value-missing-validator/
 ---
