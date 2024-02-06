@@ -1,6 +1,6 @@
 ---
 title: Understanding Different States
-permalink: /guides/understanding-different-states/
+permalink: /references/understanding-form-states/
 ---
 
 There are a number of distinct "states" a form associated component can be in. The
@@ -82,7 +82,6 @@ following are the CSS selectors available and what they mean.
     </tbody>
   </table>
 </table-container>
-
 
 In more simplistic terms, here's the difference between states with the `user-*` prefix, and those without.
 

@@ -9,15 +9,17 @@ permalink: /guides/getting-started/
 npm install form-associated-helpers
 ```
 
-## Next steps
+## Next Steps
 
 There are a few paths to take from here. Because the mixins are designed for different levels
 of abstraction, there are some "divergent paths" listed below.
 
-[Working with "vanilla web component" mixins](#)
+[Creating your own form associated "vanilla" web components](/guides/create-a-vanilla-textarea/)
 
-[Working with a Lit web component mixins](#)
+[Creating your own form associated Lit web components](/guides/create-a-lit-textarea/)
 
-[Writing your own "adapter" for your library.](#)
+[Learn more about how form associated element "states"](/references/understanding-form-states)
+
+<!-- [Writing your own "adapter" for your library.](/guides/writing-your-own-adapter/) -->
 
 

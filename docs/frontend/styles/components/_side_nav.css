@@ -48,12 +48,23 @@ ul.side-nav__menu li::marker {
   padding-top: 1rem;
 }
 
+.side-nav__drawer::part(body) {
+  padding: 0;
+}
+
+.side-nav__drawer::part(footer) {
+  display: none;
+}
+
 .side-nav__drawer__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid var(--sl-color-neutral-200);
-  padding-bottom: 1rem;
+  position: sticky;
+  top: 0px;
+  padding: 1rem;
+  background-color: var(--sl-color-neutral-0);
 }
 
 .side-nav__item.is-active {

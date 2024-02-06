@@ -46,3 +46,16 @@ defaults:
     values:
       category: references
       category_order: 30
+
+  - scope:
+      path: "_documentation/references/mixins"
+    values:
+      category: mixins
+      category_order: 40
+
+  - scope:
+      path: "_documentation/references/validators"
+    values:
+      category: validators
+      category_order: 50
+

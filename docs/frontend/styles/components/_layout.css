@@ -5,7 +5,8 @@
 /* .documentation-content {} */
 
 body:is(.index, .doc, .page, .post) kr-layout::part(main-content) {
-	background: var(--body-color);
+  background: var(--body-color);
+  margin-bottom: 1rem;
 }
 
 kr-layout > [slot='aside'] {
