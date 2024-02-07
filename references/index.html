@@ -6,17 +6,17 @@
 <!-- <base href="/form-associated-helpers/"> -->
 
 <meta name="description" content="A collection of reusable mixins + helpers for working with form associated custom elements.">
-<link rel="modulepreload" href="/form-associated-helpers/bridgetown/static/javascript/index.C6PG6XXU.js">
-<link rel="modulepreload" href="/form-associated-helpers/bridgetown/static/javascript/defer.HDJDL4GL.js">
-<link rel="preload" href="/form-associated-helpers/bridgetown/static/javascript/defer.L7RBZ4I2.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="modulepreload" href="/form-associated-helpers/bridgetown/static/javascript/index.IWCFSPU5.js">
+<link rel="modulepreload" href="/form-associated-helpers/bridgetown/static/javascript/defer.3ON6KUR3.js">
+<link rel="preload" href="/form-associated-helpers/bridgetown/static/javascript/defer.EUHXJT54.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <!-- Critical CSS -->
-<link rel="stylesheet" data-turbo-track="reload" href="/form-associated-helpers/bridgetown/static/javascript/index.YT33F75Y.css">
+<link rel="stylesheet" data-turbo-track="reload" href="/form-associated-helpers/bridgetown/static/javascript/index.UWEHSWD3.css">
 <!-- Deferred CSS -->
-<noscript><link rel="stylesheet" href="/form-associated-helpers/bridgetown/static/javascript/defer.L7RBZ4I2.css"></noscript>
+<noscript><link rel="stylesheet" href="/form-associated-helpers/bridgetown/static/javascript/defer.EUHXJT54.css"></noscript>
 
 <!-- Entrypoints -->
-<script data-turbo-track="reload" src="/form-associated-helpers/bridgetown/static/javascript/index.C6PG6XXU.js" type="module"></script>
-<script data-turbo-track="reload" src="/form-associated-helpers/bridgetown/static/javascript/defer.HDJDL4GL.js" type="module"></script>
+<script data-turbo-track="reload" src="/form-associated-helpers/bridgetown/static/javascript/index.IWCFSPU5.js" type="module"></script>
+<script data-turbo-track="reload" src="/form-associated-helpers/bridgetown/static/javascript/defer.3ON6KUR3.js" type="module"></script>
 
 <!-- Favicons -->
 <link rel="apple-touch-icon" sizes="180x180" href="https://KonnorRogers.github.io/form-associated-helpers/apple-touch-icon.png">
@@ -120,12 +120,14 @@
     </div>
 
     <div class="top-nav__links">
-      <div class="top-nav__categories">
-          <a class="nav-link" href="/form-associated-helpers/guides">Guides</a>
+      <!-- <div class="top-nav__categories"> -->
+      <!--     <a class="nav-link" href="/form-associated-helpers/guides">Guides</a>
   <a class="nav-link" href="/form-associated-helpers/how-tos">How Tos</a>
   <a class="nav-link" href="/form-associated-helpers/references">References</a>
-
-      </div>
+  <a class="nav-link" href="/form-associated-helpers/mixins">Mixins</a>
+  <a class="nav-link" href="/form-associated-helpers/validators">Validators</a>
+ -->
+      <!-- </div> -->
       <a target="_blank" rel="nofollow noopener noreferrer" aria-label="Link to GitHub" href="https://github.com/konnorrogers/form-associated-helpers" class="nav-link top-nav__github" no-external-icon="">
         <sl-icon name="github"></sl-icon>
       </a>
@@ -171,7 +173,7 @@
 
 
       <sl-drawer id="side-nav-drawer" hidden="" no-header="" placement="start" class="drawer-placement-start side-nav__drawer" style="--size: clamp(400px, 75%, 1536px);" data-controller="side-nav" slot="dialog">
-  <div class="side-nav__drawer__header">
+  <div class="side-nav__drawer__header" autofocus="" tabindex="-1">
     <div style="display: flex; align-items: center;">
       <a class="nav-link logo__link" href="/form-associated-helpers">
   <span class="logo__text">
@@ -195,7 +197,10 @@
     <a class="side-nav__link" href="/form-associated-helpers/guides/getting-started/">Getting Started</a>
   </li>
   <li class="side-nav__item ">
-    <a class="side-nav__link" href="/form-associated-helpers/guides/understanding-different-states/">Understanding Different States</a>
+    <a class="side-nav__link" href="/form-associated-helpers/guides/creating-a-vanilla-textarea/">Creating a 'vanilla' textarea</a>
+  </li>
+  <li class="side-nav__item ">
+    <a class="side-nav__link" href="/form-associated-helpers/guides/creating-a-lit-textarea/">Creating a Lit textarea</a>
   </li>
 
       </ul>
@@ -206,16 +211,33 @@
       <ul class="side-nav__category-menu">
         <li class="side-nav__category-header"><a class="side-nav__category-link" href="/form-associated-helpers/references">References</a></li>
           <li class="side-nav__item ">
-    <a class="side-nav__link" href="/form-associated-helpers/references/validators/bad-input-validator/">Bad Input Validator</a>
+    <a class="side-nav__link" href="/form-associated-helpers/references/understanding-form-states/">Understanding Form States</a>
   </li>
-  <li class="side-nav__item ">
-    <a class="side-nav__link" href="/form-associated-helpers/references/validators/custom-error-validator/">Custom Error Validator</a>
-  </li>
-  <li class="side-nav__item ">
+
+      </ul>
+      <ul class="side-nav__category-menu">
+        <li class="side-nav__category-header"><a class="side-nav__category-link" href="/form-associated-helpers/mixins">Mixins</a></li>
+          <li class="side-nav__item ">
     <a class="side-nav__link" href="/form-associated-helpers/references/mixins/form-associated-mixin/">Form Associated Mixin</a>
   </li>
   <li class="side-nav__item ">
     <a class="side-nav__link" href="/form-associated-helpers/references/mixins/lit-form-associated-mixin/">Lit Form Associated Mixin</a>
+  </li>
+  <li class="side-nav__item ">
+    <a class="side-nav__link" href="/form-associated-helpers/references/mixins/textarea-mixin/">Textarea Mixin</a>
+  </li>
+  <li class="side-nav__item ">
+    <a class="side-nav__link" href="/form-associated-helpers/references/mixins/vanilla-form-associated-mixin/">Vanilla Form Associated Mixin</a>
+  </li>
+
+      </ul>
+      <ul class="side-nav__category-menu">
+        <li class="side-nav__category-header"><a class="side-nav__category-link" href="/form-associated-helpers/validators">Validators</a></li>
+          <li class="side-nav__item ">
+    <a class="side-nav__link" href="/form-associated-helpers/references/validators/bad-input-validator/">Bad Input Validator</a>
+  </li>
+  <li class="side-nav__item ">
+    <a class="side-nav__link" href="/form-associated-helpers/references/validators/custom-error-validator/">Custom Error Validator</a>
   </li>
   <li class="side-nav__item ">
     <a class="side-nav__link" href="/form-associated-helpers/references/validators/mirror-validator/">Mirror Validator</a>
@@ -233,9 +255,6 @@
     <a class="side-nav__link" href="/form-associated-helpers/references/validators/step-mismatch-validator/">Step Mismatch Validator</a>
   </li>
   <li class="side-nav__item ">
-    <a class="side-nav__link" href="/form-associated-helpers/references/mixins/textarea-mixin/">Textarea Mixin</a>
-  </li>
-  <li class="side-nav__item ">
     <a class="side-nav__link" href="/form-associated-helpers/references/validators/too-long-validator/">Too Long Validator</a>
   </li>
   <li class="side-nav__item ">
@@ -246,9 +265,6 @@
   </li>
   <li class="side-nav__item ">
     <a class="side-nav__link" href="/form-associated-helpers/references/validators/value-missing-validator/">Value Missing Validator</a>
-  </li>
-  <li class="side-nav__item ">
-    <a class="side-nav__link" href="/form-associated-helpers/references/mixins/vanilla-form-associated-mixin/">Vanilla Form Associated Mixin</a>
   </li>
 
       </ul>
@@ -266,7 +282,10 @@
     <a class="side-nav__link" href="/form-associated-helpers/guides/getting-started/">Getting Started</a>
   </li>
   <li class="side-nav__item ">
-    <a class="side-nav__link" href="/form-associated-helpers/guides/understanding-different-states/">Understanding Different States</a>
+    <a class="side-nav__link" href="/form-associated-helpers/guides/creating-a-vanilla-textarea/">Creating a 'vanilla' textarea</a>
+  </li>
+  <li class="side-nav__item ">
+    <a class="side-nav__link" href="/form-associated-helpers/guides/creating-a-lit-textarea/">Creating a Lit textarea</a>
   </li>
 
       </ul>
@@ -277,16 +296,33 @@
       <ul class="side-nav__category-menu">
         <li class="side-nav__category-header"><a class="side-nav__category-link" href="/form-associated-helpers/references">References</a></li>
           <li class="side-nav__item ">
-    <a class="side-nav__link" href="/form-associated-helpers/references/validators/bad-input-validator/">Bad Input Validator</a>
+    <a class="side-nav__link" href="/form-associated-helpers/references/understanding-form-states/">Understanding Form States</a>
   </li>
-  <li class="side-nav__item ">
-    <a class="side-nav__link" href="/form-associated-helpers/references/validators/custom-error-validator/">Custom Error Validator</a>
-  </li>
-  <li class="side-nav__item ">
+
+      </ul>
+      <ul class="side-nav__category-menu">
+        <li class="side-nav__category-header"><a class="side-nav__category-link" href="/form-associated-helpers/mixins">Mixins</a></li>
+          <li class="side-nav__item ">
     <a class="side-nav__link" href="/form-associated-helpers/references/mixins/form-associated-mixin/">Form Associated Mixin</a>
   </li>
   <li class="side-nav__item ">
     <a class="side-nav__link" href="/form-associated-helpers/references/mixins/lit-form-associated-mixin/">Lit Form Associated Mixin</a>
+  </li>
+  <li class="side-nav__item ">
+    <a class="side-nav__link" href="/form-associated-helpers/references/mixins/textarea-mixin/">Textarea Mixin</a>
+  </li>
+  <li class="side-nav__item ">
+    <a class="side-nav__link" href="/form-associated-helpers/references/mixins/vanilla-form-associated-mixin/">Vanilla Form Associated Mixin</a>
+  </li>
+
+      </ul>
+      <ul class="side-nav__category-menu">
+        <li class="side-nav__category-header"><a class="side-nav__category-link" href="/form-associated-helpers/validators">Validators</a></li>
+          <li class="side-nav__item ">
+    <a class="side-nav__link" href="/form-associated-helpers/references/validators/bad-input-validator/">Bad Input Validator</a>
+  </li>
+  <li class="side-nav__item ">
+    <a class="side-nav__link" href="/form-associated-helpers/references/validators/custom-error-validator/">Custom Error Validator</a>
   </li>
   <li class="side-nav__item ">
     <a class="side-nav__link" href="/form-associated-helpers/references/validators/mirror-validator/">Mirror Validator</a>
@@ -304,9 +340,6 @@
     <a class="side-nav__link" href="/form-associated-helpers/references/validators/step-mismatch-validator/">Step Mismatch Validator</a>
   </li>
   <li class="side-nav__item ">
-    <a class="side-nav__link" href="/form-associated-helpers/references/mixins/textarea-mixin/">Textarea Mixin</a>
-  </li>
-  <li class="side-nav__item ">
     <a class="side-nav__link" href="/form-associated-helpers/references/validators/too-long-validator/">Too Long Validator</a>
   </li>
   <li class="side-nav__item ">
@@ -317,9 +350,6 @@
   </li>
   <li class="side-nav__item ">
     <a class="side-nav__link" href="/form-associated-helpers/references/validators/value-missing-validator/">Value Missing Validator</a>
-  </li>
-  <li class="side-nav__item ">
-    <a class="side-nav__link" href="/form-associated-helpers/references/mixins/vanilla-form-associated-mixin/">Vanilla Form Associated Mixin</a>
   </li>
 
       </ul>
@@ -338,49 +368,7 @@
 
   <ul class="list">
     <li class=" ">
-    <a class="" href="/form-associated-helpers/references/validators/bad-input-validator/">Bad Input Validator</a>
-  </li>
-  <li class=" ">
-    <a class="" href="/form-associated-helpers/references/validators/custom-error-validator/">Custom Error Validator</a>
-  </li>
-  <li class=" ">
-    <a class="" href="/form-associated-helpers/references/mixins/form-associated-mixin/">Form Associated Mixin</a>
-  </li>
-  <li class=" ">
-    <a class="" href="/form-associated-helpers/references/mixins/lit-form-associated-mixin/">Lit Form Associated Mixin</a>
-  </li>
-  <li class=" ">
-    <a class="" href="/form-associated-helpers/references/validators/mirror-validator/">Mirror Validator</a>
-  </li>
-  <li class=" ">
-    <a class="" href="/form-associated-helpers/references/validators/pattern-mismatch-validator/">Pattern Mismatch Validator</a>
-  </li>
-  <li class=" ">
-    <a class="" href="/form-associated-helpers/references/validators/range-overflow-validator/">Range Overflow Validator</a>
-  </li>
-  <li class=" ">
-    <a class="" href="/form-associated-helpers/references/validators/range-underflow-validator/">Range Underflow Validator</a>
-  </li>
-  <li class=" ">
-    <a class="" href="/form-associated-helpers/references/validators/step-mismatch-validator/">Step Mismatch Validator</a>
-  </li>
-  <li class=" ">
-    <a class="" href="/form-associated-helpers/references/mixins/textarea-mixin/">Textarea Mixin</a>
-  </li>
-  <li class=" ">
-    <a class="" href="/form-associated-helpers/references/validators/too-long-validator/">Too Long Validator</a>
-  </li>
-  <li class=" ">
-    <a class="" href="/form-associated-helpers/references/validators/too-short-validator/">Too Short Validator</a>
-  </li>
-  <li class=" ">
-    <a class="" href="/form-associated-helpers/references/validators/type-mismatch-validator/">Type Mismatch Validator</a>
-  </li>
-  <li class=" ">
-    <a class="" href="/form-associated-helpers/references/validators/value-missing-validator/">Value Missing Validator</a>
-  </li>
-  <li class=" ">
-    <a class="" href="/form-associated-helpers/references/mixins/vanilla-form-associated-mixin/">Vanilla Form Associated Mixin</a>
+    <a class="" href="/form-associated-helpers/references/understanding-form-states/">Understanding Form States</a>
   </li>
 
 </ul>
@@ -424,7 +412,7 @@
     </kr-layout>
 
     <sl-drawer id="side-nav-drawer" hidden="" no-header="" placement="start" class="drawer-placement-start side-nav__drawer" style="--size: clamp(400px, 75%, 1536px);" data-controller="side-nav" slot="dialog">
-  <div class="side-nav__drawer__header">
+  <div class="side-nav__drawer__header" autofocus="" tabindex="-1">
     <div style="display: flex; align-items: center;">
       <a class="nav-link logo__link" href="/form-associated-helpers">
   <span class="logo__text">
@@ -448,7 +436,10 @@
     <a class="side-nav__link" href="/form-associated-helpers/guides/getting-started/">Getting Started</a>
   </li>
   <li class="side-nav__item ">
-    <a class="side-nav__link" href="/form-associated-helpers/guides/understanding-different-states/">Understanding Different States</a>
+    <a class="side-nav__link" href="/form-associated-helpers/guides/creating-a-vanilla-textarea/">Creating a 'vanilla' textarea</a>
+  </li>
+  <li class="side-nav__item ">
+    <a class="side-nav__link" href="/form-associated-helpers/guides/creating-a-lit-textarea/">Creating a Lit textarea</a>
   </li>
 
       </ul>
@@ -459,16 +450,33 @@
       <ul class="side-nav__category-menu">
         <li class="side-nav__category-header"><a class="side-nav__category-link" href="/form-associated-helpers/references">References</a></li>
           <li class="side-nav__item ">
-    <a class="side-nav__link" href="/form-associated-helpers/references/validators/bad-input-validator/">Bad Input Validator</a>
+    <a class="side-nav__link" href="/form-associated-helpers/references/understanding-form-states/">Understanding Form States</a>
   </li>
-  <li class="side-nav__item ">
-    <a class="side-nav__link" href="/form-associated-helpers/references/validators/custom-error-validator/">Custom Error Validator</a>
-  </li>
-  <li class="side-nav__item ">
+
+      </ul>
+      <ul class="side-nav__category-menu">
+        <li class="side-nav__category-header"><a class="side-nav__category-link" href="/form-associated-helpers/mixins">Mixins</a></li>
+          <li class="side-nav__item ">
     <a class="side-nav__link" href="/form-associated-helpers/references/mixins/form-associated-mixin/">Form Associated Mixin</a>
   </li>
   <li class="side-nav__item ">
     <a class="side-nav__link" href="/form-associated-helpers/references/mixins/lit-form-associated-mixin/">Lit Form Associated Mixin</a>
+  </li>
+  <li class="side-nav__item ">
+    <a class="side-nav__link" href="/form-associated-helpers/references/mixins/textarea-mixin/">Textarea Mixin</a>
+  </li>
+  <li class="side-nav__item ">
+    <a class="side-nav__link" href="/form-associated-helpers/references/mixins/vanilla-form-associated-mixin/">Vanilla Form Associated Mixin</a>
+  </li>
+
+      </ul>
+      <ul class="side-nav__category-menu">
+        <li class="side-nav__category-header"><a class="side-nav__category-link" href="/form-associated-helpers/validators">Validators</a></li>
+          <li class="side-nav__item ">
+    <a class="side-nav__link" href="/form-associated-helpers/references/validators/bad-input-validator/">Bad Input Validator</a>
+  </li>
+  <li class="side-nav__item ">
+    <a class="side-nav__link" href="/form-associated-helpers/references/validators/custom-error-validator/">Custom Error Validator</a>
   </li>
   <li class="side-nav__item ">
     <a class="side-nav__link" href="/form-associated-helpers/references/validators/mirror-validator/">Mirror Validator</a>
@@ -486,9 +494,6 @@
     <a class="side-nav__link" href="/form-associated-helpers/references/validators/step-mismatch-validator/">Step Mismatch Validator</a>
   </li>
   <li class="side-nav__item ">
-    <a class="side-nav__link" href="/form-associated-helpers/references/mixins/textarea-mixin/">Textarea Mixin</a>
-  </li>
-  <li class="side-nav__item ">
     <a class="side-nav__link" href="/form-associated-helpers/references/validators/too-long-validator/">Too Long Validator</a>
   </li>
   <li class="side-nav__item ">
@@ -499,9 +504,6 @@
   </li>
   <li class="side-nav__item ">
     <a class="side-nav__link" href="/form-associated-helpers/references/validators/value-missing-validator/">Value Missing Validator</a>
-  </li>
-  <li class="side-nav__item ">
-    <a class="side-nav__link" href="/form-associated-helpers/references/mixins/vanilla-form-associated-mixin/">Vanilla Form Associated Mixin</a>
   </li>
 
       </ul>

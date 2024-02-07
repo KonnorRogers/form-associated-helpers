@@ -9,19 +9,31 @@
           "categories": "guides",
           "tags": "",
           "url": "/form-associated-helpers/guides/getting-started/",
-          "content": "Installation\n\nnpm install form-associated-helpers\n\n\nNext steps\n\nThere are a few paths to take from here. Because the mixins are designed for different levels\nof abstraction, there are some “divergent paths” listed below.\n\nWorking with “vanilla web component” mixins\n\nWorking with a Lit web component mixins\n\nWriting your own “adapter” for your library."
+          "content": "Installation\n\nFirst step is to install the helpers.\n\nnpm install form-associated-helpers\n\n\nNext Steps\n\nWith the helpers installed, there are a few paths to take from here. Because the mixins are designed for different levels\nof abstraction, there are some “divergent paths” listed below.\n\nCreating your own form associated “vanilla” web components\n\nCreating your own form associated Lit web components\n\nLearn about form associated “states”"
         },
         {
-          "id": "form-associated-helpers-guides-understanding-different-states",
-          "title": "Understanding Different States",
+          "id": "form-associated-helpers-guides-creating-a-vanilla-textarea",
+          "title": "Creating a 'vanilla' textarea",
           "collection": {
             "label": "documentation",
             "name": "Posts"
           },
           "categories": "guides",
           "tags": "",
-          "url": "/form-associated-helpers/guides/understanding-different-states/",
-          "content": "There are a number of distinct “states” a form associated component can be in. The\nfollowing are the CSS selectors available and what they mean.\n\n\n  \n    \n      \n        \n          States\n        \n        \n          Description\n        \n      \n    \n    \n      \n        \n          :valid,\n          [data-valid],\n          :state(valid)\n        \n        \n          When a form associated element meets all of it's validator requirements, regardless of if\n          the control has been interacted with.\n          \n          Equivalent to :valid\n          \n          https://developer.mozilla.org/en-US/docs/Web/CSS/:valid\n        \n      \n      \n        \n          :invalid,\n          [data-invalid],\n          :state(invalid)\n        \n        \n          When a form associated element does not meet all of it's validator requirements,\n          regardless of if the form control has been interacted with.\n          \n          Equivalent to :invalid\n          \n          https://developer.mozilla.org/en-US/docs/Web/CSS/:invalid\n        \n      \n      \n        \n          \n          [data-user-valid],\n          :state(user-valid)\n        \n        \n          When a form associated element does not meet all of it's validator requirements\n          and it has been meaningfully attempted to be interacted with.\n          \n          Equivalent to :user-invalid\n          \n          https://developer.mozilla.org/en-US/docs/Web/CSS/:user-valid\n        \n      \n      \n        \n          \n          [data-user-invalid],\n          :state(user-invalid)\n        \n        \n          When a form associated does not meet all of it's validator requirements,\n          and it has been meaningfully attempted to be interacted with.\n          \n          Equivalent to :user-invalid\n          \n          https://developer.mozilla.org/en-US/docs/Web/CSS/:user-invalid\n        \n      \n    \n  \n\n\nIn more simplistic terms, here’s the difference between states with the user-* prefix, and those without.\n\nuser-* is active when you \"focusout\" out of the form control, and the value of the element is NOT equal to the \"defaultValue\".\n\n\n\n\n  \n    \n\n    \n      \n        \n          \n            \n              This is a custom textarea\n            \n            \n            \n          \n\n          \n            \n              This is a regular textarea\n            \n            \n            def\n          \n        \n      \n\n      \n\n      Reset\n      Disable\n      Submit\n\n      \n\n      \n        This textarea has different \"states\" based on interactions.\n      \n      \n      \n        Current Custom Textarea State: \n      \n\n      \n    \n  \n\n\n:user-valid: Need to have changed the value. If you’re in a user-valid state, and then start changing the value to an invalid value, then it becomes :invalid, but not :user-invalid until the user blurs from the form control.\n\n:user-invalid: If we go from :user-invalid to a valid state, we become :user-valid, unlike :user-valid -&gt; :invalid\n\n:user-invalid -&gt; :user-valid\n:user-valid -&gt; :invalid until blur then :user-invalid\n\nOn a form reset, a form control is only ever :valid or :invalid. Never :user-*.\n\nWhen disabled, it is neither :valid or :invalid. Instead it is :disabled"
+          "url": "/form-associated-helpers/guides/creating-a-vanilla-textarea/",
+          "content": ""
+        },
+        {
+          "id": "form-associated-helpers-guides-creating-a-lit-textarea",
+          "title": "Creating a Lit textarea",
+          "collection": {
+            "label": "documentation",
+            "name": "Posts"
+          },
+          "categories": "guides",
+          "tags": "",
+          "url": "/form-associated-helpers/guides/creating-a-lit-textarea/",
+          "content": "The first step to building a Lit textarea is to create a component with some minimal markup.\n\nimport { LitElement, css, html } from \"lit\"\n\nexport default class TextareaComponent extends LitElement {\n  static styles = css`\n    :host {\n      display: inline-block;\n    }\n  `\n  render () {\n    return html`\n      &lt;textarea part=\"form-control\"&gt;&lt;/textarea&gt;\n    `\n  }\n}\n\n\nNow that we have initial parts in place, let’s look at how we can “enhance” the\ncomponent to work with form association.\n\nFinal component:\n\nimport { LitElement, css, html } from \"lit\"\nimport { ref } from 'lit/directives/ref.js';\nimport { live } from 'lit/directives/live.js';\nimport { LitTextareaMixin } from \"form-associated-helpers/exports/mixins/lit-textarea-mixin.js\"\nimport { MirrorValidator } from \"form-associated-helpers/exports/validators/mirror-validator.js\";\n\nexport default class TextareaComponent extends LitTextareaMixin(LitElement) {\n  /**\n   * @override\n   * Without delegatesFocus, or manually setting a `tabindex`, we get this fun message from the browser:\n   *  \"The invalid form control with name=‘editor’ is not focusable.\"textarea-componen\n   */\n  static shadowRootOptions = {...LitElement.shadowRootOptions, delegatesFocus: true};\n\n  static validators = [MirrorValidator]\n\n  static get properties () {\n    return {\n      ...super.properties,\n      // Your properties here.\n    }\n  }\n\n  constructor () {\n    super()\n    // ...\n  }\n\n  static styles = css`\n    :host {\n      display: inline-block;\n    }\n  `\n\n  /**\n   * @template {Event | string} T\n   * @param {T} eventNameOrEvent\n   * @param {null | undefined | EventInit} [options]\n   */\n  emit(eventNameOrEvent, options = {}) {\n    if (eventNameOrEvent instanceof Event) {\n      this.dispatchEvent(eventNameOrEvent)\n      return eventNameOrEvent\n    }\n\n    if (!options) {\n      options = {}\n    }\n\n    if (options.bubbles == null) options.bubbles = true\n    if (options.composed == null) options.composed = true\n\n    const event = new CustomEvent(eventNameOrEvent, options)\n    this.dispatchEvent(event)\n    return event\n  }\n\n  render () {\n    return html`\n      &lt;textarea\n        part=\"form-control\"\n        ${ref(this.formControlChanged)}\n        .defaultValue=${this.defaultValue}\n        .value=${live(this.value)}\n        rows=${this.rows}\n        cols=${this.cols}\n        maxlength=${this.maxLength}\n        minlength=${this.minLength}\n        dirname=${this.dirName}\n        placeholder=${this.placeholder}\n        ?readonly=${this.readOnly}\n        ?required=${this.required}\n        wrap=${this.wrap}\n        autocomplete=${this.autocomplete}\n        @input=${(/** @type {Event} */ e) =&gt; {\n          this.value = /** @type {HTMLTextAreaElement} */ (e.currentTarget).value\n          this.emit(\"input\")\n        }}\n        @change=${(/** @type {Event} */ e) =&gt; {\n          this.value = /** @type {HTMLTextAreaElement} */ (e.currentTarget).value\n          this.emit(\"change\")\n        }}\n        @keydown=${(/** @type {Event} */ e) =&gt; {\n          this.value = /** @type {HTMLTextAreaElement} */ (e.currentTarget).value\n          this.emit(\"keydown\")\n        }}\n      &gt;&lt;/textarea&gt;\n    `\n  }\n\n  /**\n   * @param {FocusOptions} options\n   */\n  focus (options) {\n    if (this.formControl) {\n      this.formControl.focus(options)\n      return\n    }\n\n    super.focus(options)\n  }\n\n  /**\n   * @param {Element | undefined} textarea\n   */\n  formControlChanged(textarea) {\n    if (!textarea) {\n      this.formControl = null\n      return\n    }\n\n    this.formControl = /** @type {HTMLTextAreaElement} */ (textarea)\n  }\n}"
         },
         {
           "id": "form-associated-helpers-guides",
@@ -37,7 +49,7 @@
         },
         {
           "id": "form-associated-helpers-how-tos",
-          "title": "How To's",
+          "title": "How Tos",
           "collection": {
             "label": "documentation",
             "name": "Posts"
@@ -46,6 +58,18 @@
           "tags": "",
           "url": "/form-associated-helpers/how-tos/",
           "content": ""
+        },
+        {
+          "id": "form-associated-helpers-references-understanding-form-states",
+          "title": "Understanding Form States",
+          "collection": {
+            "label": "documentation",
+            "name": "Posts"
+          },
+          "categories": "references",
+          "tags": "",
+          "url": "/form-associated-helpers/references/understanding-form-states/",
+          "content": "There are a number of distinct “states” a form associated component can be in. The\nfollowing are the CSS selectors available and what they mean.\n\n\n  \n    \n      \n        \n          States\n        \n        \n          Description\n        \n      \n    \n    \n      \n        \n          :valid,\n          [data-valid],\n          :state(valid)\n        \n        \n          When a form associated element meets all of it's validator requirements, regardless of if\n          the control has been interacted with.\n          \n          Equivalent to :valid\n          \n          https://developer.mozilla.org/en-US/docs/Web/CSS/:valid\n        \n      \n      \n        \n          :invalid,\n          [data-invalid],\n          :state(invalid)\n        \n        \n          When a form associated element does not meet all of it's validator requirements,\n          regardless of if the form control has been interacted with.\n          \n          Equivalent to :invalid\n          \n          https://developer.mozilla.org/en-US/docs/Web/CSS/:invalid\n        \n      \n      \n        \n          \n          [data-user-valid],\n          :state(user-valid)\n        \n        \n          When a form associated element does not meet all of it's validator requirements\n          and it has been meaningfully attempted to be interacted with.\n          \n          Equivalent to :user-invalid\n          \n          https://developer.mozilla.org/en-US/docs/Web/CSS/:user-valid\n        \n      \n      \n        \n          \n          [data-user-invalid],\n          :state(user-invalid)\n        \n        \n          When a form associated does not meet all of it's validator requirements,\n          and it has been meaningfully attempted to be interacted with.\n          \n          Equivalent to :user-invalid\n          \n          https://developer.mozilla.org/en-US/docs/Web/CSS/:user-invalid\n        \n      \n    \n  \n\n\nIn more simplistic terms, here’s the difference between states with the user-* prefix, and those without.\n\nuser-* is active when you \"focusout\" out of the form control, and the value of the element is NOT equal to the \"defaultValue\".\n\n\n\n\n  \n    \n\n    \n      \n        \n          \n            \n              This is a custom textarea\n            \n            \n            \n          \n\n          \n            \n              This is a regular textarea\n            \n            \n            def\n          \n        \n      \n\n      \n\n      Reset\n      Disable\n      Submit\n\n      \n\n      \n        This textarea has different \"states\" based on interactions.\n      \n      \n      \n        Current Custom Textarea State: \n      \n\n      \n    \n  \n\n\n:user-valid: Need to have changed the value. If you’re in a user-valid state, and then start changing the value to an invalid value, then it becomes :invalid, but not :user-invalid until the user blurs from the form control.\n\n:user-invalid: If we go from :user-invalid to a valid state, we become :user-valid, unlike :user-valid -&gt; :invalid\n\n:user-invalid -&gt; :user-valid\n:user-valid -&gt; :invalid until blur then :user-invalid\n\nOn a form reset, a form control is only ever :valid or :invalid. Never :user-*.\n\nWhen disabled, it is neither :valid or :invalid. Instead it is :disabled"
         },
         {
           "id": "form-associated-helpers-references",
@@ -66,7 +90,7 @@
             "label": "documentation",
             "name": "Posts"
           },
-          "categories": "references",
+          "categories": "mixins",
           "tags": "",
           "url": "/form-associated-helpers/references/mixins/form-associated-mixin/",
           "content": ""
@@ -78,7 +102,7 @@
             "label": "documentation",
             "name": "Posts"
           },
-          "categories": "references",
+          "categories": "mixins",
           "tags": "",
           "url": "/form-associated-helpers/references/mixins/lit-form-associated-mixin/",
           "content": ""
@@ -90,7 +114,7 @@
             "label": "documentation",
             "name": "Posts"
           },
-          "categories": "references",
+          "categories": "mixins",
           "tags": "",
           "url": "/form-associated-helpers/references/mixins/textarea-mixin/",
           "content": ""
@@ -102,9 +126,21 @@
             "label": "documentation",
             "name": "Posts"
           },
-          "categories": "references",
+          "categories": "mixins",
           "tags": "",
           "url": "/form-associated-helpers/references/mixins/vanilla-form-associated-mixin/",
+          "content": ""
+        },
+        {
+          "id": "form-associated-helpers-references-validators",
+          "title": "References",
+          "collection": {
+            "label": "documentation",
+            "name": "Posts"
+          },
+          "categories": "validators",
+          "tags": "",
+          "url": "/form-associated-helpers/references/validators/",
           "content": ""
         },
         {
@@ -114,7 +150,7 @@
             "label": "documentation",
             "name": "Posts"
           },
-          "categories": "references",
+          "categories": "validators",
           "tags": "",
           "url": "/form-associated-helpers/references/validators/bad-input-validator/",
           "content": ""
@@ -126,7 +162,7 @@
             "label": "documentation",
             "name": "Posts"
           },
-          "categories": "references",
+          "categories": "validators",
           "tags": "",
           "url": "/form-associated-helpers/references/validators/custom-error-validator/",
           "content": ""
@@ -138,7 +174,7 @@
             "label": "documentation",
             "name": "Posts"
           },
-          "categories": "references",
+          "categories": "validators",
           "tags": "",
           "url": "/form-associated-helpers/references/validators/mirror-validator/",
           "content": ""
@@ -150,7 +186,7 @@
             "label": "documentation",
             "name": "Posts"
           },
-          "categories": "references",
+          "categories": "validators",
           "tags": "",
           "url": "/form-associated-helpers/references/validators/pattern-mismatch-validator/",
           "content": ""
@@ -162,7 +198,7 @@
             "label": "documentation",
             "name": "Posts"
           },
-          "categories": "references",
+          "categories": "validators",
           "tags": "",
           "url": "/form-associated-helpers/references/validators/range-overflow-validator/",
           "content": ""
@@ -174,7 +210,7 @@
             "label": "documentation",
             "name": "Posts"
           },
-          "categories": "references",
+          "categories": "validators",
           "tags": "",
           "url": "/form-associated-helpers/references/validators/range-underflow-validator/",
           "content": ""
@@ -186,7 +222,7 @@
             "label": "documentation",
             "name": "Posts"
           },
-          "categories": "references",
+          "categories": "validators",
           "tags": "",
           "url": "/form-associated-helpers/references/validators/step-mismatch-validator/",
           "content": ""
@@ -198,7 +234,7 @@
             "label": "documentation",
             "name": "Posts"
           },
-          "categories": "references",
+          "categories": "validators",
           "tags": "",
           "url": "/form-associated-helpers/references/validators/too-long-validator/",
           "content": ""
@@ -210,7 +246,7 @@
             "label": "documentation",
             "name": "Posts"
           },
-          "categories": "references",
+          "categories": "validators",
           "tags": "",
           "url": "/form-associated-helpers/references/validators/too-short-validator/",
           "content": ""
@@ -222,7 +258,7 @@
             "label": "documentation",
             "name": "Posts"
           },
-          "categories": "references",
+          "categories": "validators",
           "tags": "",
           "url": "/form-associated-helpers/references/validators/type-mismatch-validator/",
           "content": ""
@@ -234,7 +270,7 @@
             "label": "documentation",
             "name": "Posts"
           },
-          "categories": "references",
+          "categories": "validators",
           "tags": "",
           "url": "/form-associated-helpers/references/validators/value-missing-validator/",
           "content": ""
