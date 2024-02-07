@@ -1,6 +1,5 @@
 ---
-title: Understanding Different States
-permalink: /references/understanding-form-states/
+title: Understanding Form States
 ---
 
 There are a number of distinct "states" a form associated component can be in. The
