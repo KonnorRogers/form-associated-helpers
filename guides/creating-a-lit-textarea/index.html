@@ -373,12 +373,12 @@
             JavaScript
           </div>
 
-          <clipboard-copy for="36f26da0-d534-4cb6-80d7-76bc32ab0818" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="d8d7dfec-946d-49ee-b372-8588fabbdf0e" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="36f26da0-d534-4cb6-80d7-76bc32ab0818" hidden="">import { LitElement, css, html } from "lit"
+          <textarea id="d8d7dfec-946d-49ee-b372-8588fabbdf0e" hidden="">import { LitElement, css, html } from "lit"
 
 export default class TextareaComponent extends LitElement {
   static styles = css`
@@ -413,6 +413,60 @@ export default class TextareaComponent extends LitElement {
 <p>Now that we have initial parts in place, let’s look at how we can “enhance” the
 component to work with form association.</p>
 
+<p>The first step is to “import” the <a href="/references/lit-textarea-mixin">LitTextareaMixin</a>. There are many mixins which you can find here: <a href="/references/mixins/">Mixins</a></p>
+
+<p>The <code class="highlighter-rouge">LitTextareaMixin</code> is an opinionated mixin that provides all the same functions a <code class="highlighter-rouge">&lt;textarea&gt;</code> has out of the box.</p>
+
+<p>There are less opinionated mixins, that do less, but we’ll cover that at a later time. For now, let’s get something up and running.</p>
+
+<div class="syntax-block">        <div class="syntax-block__actions">
+          <div class="syntax-block__badge">
+            diff
+          </div>
+
+          <clipboard-copy for="51023cb2-696b-4a7a-9abc-bcb0654619ea" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
+            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
+          </clipboard-copy>
+
+          <textarea id="51023cb2-696b-4a7a-9abc-bcb0654619ea" hidden="">import { LitElement, css, html } from "lit"
++ import { LitTextareaMixin } from "form-associated-helpers/exports/mixins/lit-textarea-mixin.js"
+
++ export default class TextareaComponent extends LitTextareaMixin(LitElement) {
+  static styles = css`
+    :host {
+      display: inline-block;
+    }
+  `
+  render () {
+    return html`
+      &lt;textarea part="form-control"&gt;</textarea>
+    `
+  }
+}
+
+        </div>
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">import { LitElement, css, html } from "lit"
+</span><span class="gi">+ import { LitTextareaMixin } from "form-associated-helpers/exports/mixins/lit-textarea-mixin.js"
+</span>
++ export default class TextareaComponent extends LitTextareaMixin(LitElement) {
+  static styles = css`
+    :host {
+      display: inline-block;
+    }
+  `
+  render () {
+    return html`
+      &lt;textarea part="form-control"&gt;&lt;/textarea&gt;
+    `
+  }
+<span class="err">}</span>
+</code></pre></div></div></div>
+
+<p>It also expects you to <code class="highlighter-rouge">bind</code> a native <code class="highlighter-rouge">&lt;textarea&gt;</code> element to a property called <code class="highlighter-rouge">formControl</code>. This
+is an opinion that the mixin has. It will use this <code class="highlighter-rouge">formControl</code> as its <code class="highlighter-rouge">validationTarget</code> for displaying
+validation errors in the native constraint popup.</p>
+
 <p>Final component:</p>
 
 <div class="syntax-block">        <div class="syntax-block__actions">
@@ -420,12 +474,12 @@ component to work with form association.</p>
             JavaScript
           </div>
 
-          <clipboard-copy for="edd92d7d-883e-4faf-9045-58822674f487" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="a2e08df8-335d-423a-a363-aafabfa3aa4d" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="edd92d7d-883e-4faf-9045-58822674f487" hidden="">import { LitElement, css, html } from "lit"
+          <textarea id="a2e08df8-335d-423a-a363-aafabfa3aa4d" hidden="">import { LitElement, css, html } from "lit"
 import { ref } from 'lit/directives/ref.js';
 import { live } from 'lit/directives/live.js';
 import { LitTextareaMixin } from "form-associated-helpers/exports/mixins/lit-textarea-mixin.js"
