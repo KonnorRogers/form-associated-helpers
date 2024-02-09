@@ -24,6 +24,36 @@ export default class TextareaComponent extends LitElement {
 Now that we have initial parts in place, let's look at how we can "enhance" the
 component to work with form association.
 
+The first step is to "import" the [LitTextareaMixin](/references/lit-textarea-mixin). There are many mixins which you can find here: [Mixins](/references/mixins/)
+
+The `LitTextareaMixin` is an opinionated mixin that provides all the same functions a `<textarea>` has out of the box.
+
+There are less opinionated mixins, that do less, but we'll cover that at a later time. For now, let's get something up and running.
+
+```diff
+import { LitElement, css, html } from "lit"
++ import { LitTextareaMixin } from "form-associated-helpers/exports/mixins/lit-textarea-mixin.js"
+
++ export default class TextareaComponent extends LitTextareaMixin(LitElement) {
+  static styles = css`
+    :host {
+      display: inline-block;
+    }
+  `
+  render () {
+    return html`
+      <textarea part="form-control"></textarea>
+    `
+  }
+}
+```
+
+It also expects you to `bind` a native `<textarea>` element to a property called `formControl`. This
+is an opinion that the mixin has. It will use this `formControl` as its `validationTarget` for displaying
+validation errors in the native constraint popup.
+
+
+
 Final component:
 
 ```js
