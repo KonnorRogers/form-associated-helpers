@@ -1,3 +1,4 @@
+require "cgi"
 require "securerandom"
 
 class Syntax < Bridgetown::Component
@@ -25,6 +26,10 @@ class Syntax < Bridgetown::Component
 
   def id
     @id ||= "syntax-#{SecureRandom.uuid}"
+  end
+
+  def escaped_content
+    CGI.escape_html(content)
   end
 end
 

@@ -34,6 +34,7 @@ There are less opinionated mixins, that do less, but we'll cover that at a later
 import { LitElement, css, html } from "lit"
 + import { LitTextareaMixin } from "form-associated-helpers/exports/mixins/lit-textarea-mixin.js"
 
+- export default class TextareaComponent extends LitElement {
 + export default class TextareaComponent extends LitTextareaMixin(LitElement) {
   static styles = css`
     :host {

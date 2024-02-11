@@ -1,3 +1,4 @@
+require "cgi"
 class Builders::Inspectors < SiteBuilder
   def build
     inspect_html do |document|
@@ -28,7 +29,7 @@ class Builders::Inspectors < SiteBuilder
 
       lang = lang.strip.split("-")[1] if lang
 
-      lang = Syntax.full_language(lang)
+      lexer = Rouge::Lexer.find(lang)
       id = SecureRandom.uuid
 
       el.wrap("<div class='syntax-block'></div>")
@@ -36,7 +37,7 @@ class Builders::Inspectors < SiteBuilder
       actions = <<-HTML
         <div class='syntax-block__actions'>
           <div class='syntax-block__badge'>
-            #{lang}
+            #{lexer.title}
           </div>
 
           <clipboard-copy
@@ -49,7 +50,7 @@ class Builders::Inspectors < SiteBuilder
             <sl-icon class='clipboard__icon--idle' name='clipboard'></sl-icon>
           </clipboard-copy>
 
-          <textarea id='#{id}' hidden>#{text}</textarea>
+          <textarea id='#{id}' hidden>#{CGI.escape_html(text)}</textarea>
         </div>
       HTML
 
