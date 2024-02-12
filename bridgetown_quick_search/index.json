@@ -276,6 +276,18 @@
           "content": ""
         },
         {
+          "id": "form-associated-helpers-references-changelog",
+          "title": "Changelog",
+          "collection": {
+            "label": "documentation",
+            "name": "Posts"
+          },
+          "categories": "references",
+          "tags": "",
+          "url": "/form-associated-helpers/references/changelog/",
+          "content": "Next\n\nHowdy there partner"
+        },
+        {
           "id": "form-associated-helpers",
           "title": "Form Associated Helpers",
           "collection": {
