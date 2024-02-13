@@ -111,11 +111,6 @@ export function LitTextareaMixin(superclass) {
         this.required = false
 
         /**
-          * @type {null | HTMLTextAreaElement}
-          */
-        this.formControl = null
-
-        /**
           * @type {HTMLTextAreaElement["dirName"]}
           */
         this.dirName = ""

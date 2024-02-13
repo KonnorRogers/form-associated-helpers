@@ -105,7 +105,7 @@ export default class TextareaComponent extends LitTextareaMixin(LitElement) {
    */
   formControlChanged(textarea) {
     if (!textarea) {
-      this.formControl = null
+      this.formControl = undefined
       return
     }
 
