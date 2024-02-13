@@ -6,10 +6,10 @@ import { FormAssociatedMixin } from "./form-associated-mixin.js"
 /**
  * A mixin of form associated helpers that get added to a class with attachInternals.
  * This opinionated version extends the above formAssociated and handles common conventions I like.
- * Required properties: { value, disabled, formControl }
+ * Required properties: { value, disabled, formControl, validationTarget }
  *
  * @see https://webkit.org/blog/13711/elementinternals-and-form-associated-custom-elements/
- * @template {import("./types.js").GConstructable<HTMLElement> & { observedAttributes?: string[] }} T
+ * @template {import("./types.js").GConstructable<HTMLElement & { validationTarget?: undefined | HTMLElement, formControl?: undefined | (HTMLElement & { value: any, defaultValue: any }) }> & { observedAttributes?: string[] }} T
  * @param {T} superclass
  */
 export function VanillaFormAssociatedMixin(superclass) {
@@ -79,21 +79,31 @@ export function VanillaFormAssociatedMixin(superclass) {
         this.name = ""
 
         /**
-         * @type {null | (HTMLElement & { defaultValue: any, value: any })}
+         * The `formControl` allows for resetting default values and a few other conventions.
+         * @type {undefined | (HTMLElement & { defaultValue: any, value: any })}
          */
-        this.formControl = null
+        this.formControl = undefined
 
         /**
+         * `validationTarget` is used for displaying native validation popups as the "anchor"
+         * @type {undefined | HTMLElement}
+         */
+        this.validationTarget = undefined
+
+        /**
+         * `this.type` is used by ElementInternals.
          * @type {string}
          */
         this.type = this.localName || ""
 
         /**
+         * Make sure if you're using a library that "reflects" properties to attributes, you don't reflect this `disabled.`
          * @type {boolean}
          */
         this.disabled = false
 
         /**
+         * Generally forms can have "required", this may not be necessary here, but is a nice convention.
          * @type {boolean}
          */
         this.required = false
@@ -282,8 +292,8 @@ export function VanillaFormAssociatedMixin(superclass) {
         let anchor = params[2]
 
         if (!anchor) {
-          const formControl = /** @type {{formControl: undefined | HTMLElement}} */ (/** @type {unknown} */ (this)).formControl
-          anchor = formControl || undefined
+          const validationTarget = this.validationTarget
+          anchor = validationTarget
         }
 
         this.internals.setValidity(flags, message, anchor)

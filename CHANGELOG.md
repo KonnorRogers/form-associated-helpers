@@ -1,3 +1,4 @@
-## Next
+## 0.0.3 02/13/2024
 
-Howdy there partner
+- Added multiple tests around states.
+
