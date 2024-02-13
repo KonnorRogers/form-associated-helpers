@@ -3,7 +3,7 @@ import { ValueMissingValidator } from "../validators/value-missing-validator.js"
 import { FormAssociatedMixin } from "./form-associated-mixin.js"
 
 /**
- * @typedef {import("./types.js").GConstructable<HTMLElement & Partial<{ get formControl(): undefined | (HTMLElement & { value: any, defaultValue: any }), formControl: undefined | any }>> & { observedAttributes?: string[] }} FormAssociatedElement
+ * @typedef {import("./types.js").GConstructable<HTMLElement & Partial<{ formControl?: null | undefined | (HTMLElement & { value: any, defaultValue: any })}>> & { observedAttributes?: string[] }} FormAssociatedElement
  */
 
 /**
