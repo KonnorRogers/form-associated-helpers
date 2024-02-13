@@ -6,17 +6,17 @@
 <!-- <base href="/form-associated-helpers/"> -->
 
 <meta name="description" content="A collection of reusable mixins + helpers for working with form associated custom elements.">
-<link rel="modulepreload" href="/form-associated-helpers/bridgetown/static/javascript/index.LWH7H3AE.js">
-<link rel="modulepreload" href="/form-associated-helpers/bridgetown/static/javascript/defer.3ON6KUR3.js">
-<link rel="preload" href="/form-associated-helpers/bridgetown/static/javascript/defer.EUHXJT54.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="modulepreload" href="/form-associated-helpers/bridgetown/static/javascript/index.F3JGQUTG.js">
+<link rel="modulepreload" href="/form-associated-helpers/bridgetown/static/javascript/defer.YE7LWH5C.js">
+<link rel="preload" href="/form-associated-helpers/bridgetown/static/javascript/defer.CREW5JGX.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <!-- Critical CSS -->
-<link rel="stylesheet" data-turbo-track="reload" href="/form-associated-helpers/bridgetown/static/javascript/index.EBBY7A2C.css">
+<link rel="stylesheet" data-turbo-track="reload" href="/form-associated-helpers/bridgetown/static/javascript/index.EFLRS4O2.css">
 <!-- Deferred CSS -->
-<noscript><link rel="stylesheet" href="/form-associated-helpers/bridgetown/static/javascript/defer.EUHXJT54.css"></noscript>
+<noscript><link rel="stylesheet" href="/form-associated-helpers/bridgetown/static/javascript/defer.CREW5JGX.css"></noscript>
 
 <!-- Entrypoints -->
-<script data-turbo-track="reload" src="/form-associated-helpers/bridgetown/static/javascript/index.LWH7H3AE.js" type="module"></script>
-<script data-turbo-track="reload" src="/form-associated-helpers/bridgetown/static/javascript/defer.3ON6KUR3.js" type="module"></script>
+<script data-turbo-track="reload" src="/form-associated-helpers/bridgetown/static/javascript/index.F3JGQUTG.js" type="module"></script>
+<script data-turbo-track="reload" src="/form-associated-helpers/bridgetown/static/javascript/defer.YE7LWH5C.js" type="module"></script>
 
 <!-- Favicons -->
 <link rel="apple-touch-icon" sizes="180x180" href="https://KonnorRogers.github.io/form-associated-helpers/apple-touch-icon.png">
@@ -379,12 +379,12 @@
             JavaScript
           </div>
 
-          <clipboard-copy for="eb6f4564-85bf-49b0-b351-0d0af384b9df" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="9b7011f1-5a2e-4ed7-894f-c98947c35371" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="eb6f4564-85bf-49b0-b351-0d0af384b9df" hidden="">import { LitElement, css, html } from "lit"
+          <textarea id="9b7011f1-5a2e-4ed7-894f-c98947c35371" hidden="">import { LitElement, css, html } from "lit"
 
 export default class TextareaComponent extends LitElement {
   static styles = css`
@@ -427,15 +427,15 @@ component to work with form association.</p>
 
 <div class="syntax-block">        <div class="syntax-block__actions">
           <div class="syntax-block__badge">
-            diff
+            JavaScript
           </div>
 
-          <clipboard-copy for="69ff175d-a93d-4a4a-bfc5-1ddaf50fde12" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="7bb24d0c-c037-4d1f-a02d-e697c1fa101f" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="69ff175d-a93d-4a4a-bfc5-1ddaf50fde12" hidden="">import { LitElement, css, html } from "lit"
+          <textarea id="7bb24d0c-c037-4d1f-a02d-e697c1fa101f" hidden="">import { LitElement, css, html } from "lit"
 + import { LitTextareaMixin } from "form-associated-helpers/exports/mixins/lit-textarea-mixin.js"
 
 - export default class TextareaComponent extends LitElement {
@@ -453,11 +453,11 @@ component to work with form association.</p>
 }
 </textarea>
         </div>
-<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">import { LitElement, css, html } from "lit"
-</span><span class="gi">+ import { LitTextareaMixin } from "form-associated-helpers/exports/mixins/lit-textarea-mixin.js"
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">LitElement</span><span class="p">,</span> <span class="nx">css</span><span class="p">,</span> <span class="nx">html</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">lit</span><span class="dl">"</span>
+<span class="gi">+ import { LitTextareaMixin } from "form-associated-helpers/exports/mixins/lit-textarea-mixin.js"
 </span>
-- export default class TextareaComponent extends LitElement {
-<span class="gi">+ export default class TextareaComponent extends LitTextareaMixin(LitElement) {
+<span class="gd">- export default class TextareaComponent extends LitElement {
+</span><span class="gi">+ export default class TextareaComponent extends LitTextareaMixin(LitElement) {
 </span>  static styles = css`
     :host {
       display: inline-block;
@@ -468,12 +468,145 @@ component to work with form association.</p>
       &lt;textarea part="form-control"&gt;&lt;/textarea&gt;
     `
   }
-<span class="err">}</span>
+<span class="p">}</span>
 </code></pre></div></div></div>
 
-<p>It also expects you to <code class="highlighter-rouge">bind</code> a native <code class="highlighter-rouge">&lt;textarea&gt;</code> element to a property called <code class="highlighter-rouge">formControl</code>. This
-is an opinion that the mixin has. It will use this <code class="highlighter-rouge">formControl</code> as its <code class="highlighter-rouge">validationTarget</code> for displaying
-validation errors in the native constraint popup.</p>
+<p>You’ll notice we import the <a href="/references/lit-textarea-mixin">LitTextareaMixin</a> and add
+it to our <code class="highlighter-rouge">LitElement</code>. This mixin will provide all the same functions as a regular <code class="highlighter-rouge">textarea</code></p>
+
+<p>Up next, we need to add a <code class="highlighter-rouge">delegatesFocus: true</code> option to our custom textarea. The reason
+is if we don’t add this, when validations fail, the browser will throw a “form control element is not focusable” error.</p>
+
+<p>The other option is to add a <code class="highlighter-rouge">tabindex</code> to the host element, but that’s generally not recommended since you’re usually trying to focus something <em>inside</em> of the custom element, and not the custom element itself.</p>
+
+<div class="syntax-block">        <div class="syntax-block__actions">
+          <div class="syntax-block__badge">
+            JavaScript
+          </div>
+
+          <clipboard-copy for="6d1e7212-e06d-4a5c-af90-d3f532fc82fe" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
+            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
+          </clipboard-copy>
+
+          <textarea id="6d1e7212-e06d-4a5c-af90-d3f532fc82fe" hidden="">import { LitElement, css, html } from "lit"
+import { LitTextareaMixin } from "form-associated-helpers/exports/mixins/lit-textarea-mixin.js"
+
+export default class TextareaComponent extends LitTextareaMixin(LitElement) {
++   /**
++    * Without delegatesFocus, or manually setting a `tabindex`, we get this fun message from the browser:
++    *  "The invalid form control with name=‘editor’ is not focusable.
++    */
++   static shadowRootOptions = {...LitElement.shadowRootOptions, delegatesFocus: true};
+
+  static styles = css`
+    :host {
+      display: inline-block;
+    }
+  `
+  render () {
+    return html`
+      &lt;textarea part="form-control"&gt;&lt;/textarea&gt;
+    `
+  }
+}
+</textarea>
+        </div>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">LitElement</span><span class="p">,</span> <span class="nx">css</span><span class="p">,</span> <span class="nx">html</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">lit</span><span class="dl">"</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">LitTextareaMixin</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">form-associated-helpers/exports/mixins/lit-textarea-mixin.js</span><span class="dl">"</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="kd">class</span> <span class="nx">TextareaComponent</span> <span class="kd">extends</span> <span class="nx">LitTextareaMixin</span><span class="p">(</span><span class="nx">LitElement</span><span class="p">)</span> <span class="p">{</span>
+<span class="gi">+   /**
++    * Without delegatesFocus, or manually setting a `tabindex`, we get this fun message from the browser:
++    *  "The invalid form control with name=‘editor’ is not focusable.
++    */
++   static shadowRootOptions = {...LitElement.shadowRootOptions, delegatesFocus: true};
+</span>
+  <span class="kd">static</span> <span class="nx">styles</span> <span class="o">=</span> <span class="nx">css</span><span class="s2">`
+    :host {
+      display: inline-block;
+    }
+  `</span>
+  <span class="nx">render</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">html</span><span class="s2">`
+      &lt;textarea part="form-control"&gt;&lt;/textarea&gt;
+    `</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div></div>
+
+<p>With our delegated focus out of the way, now we start looking at some of the “conventions” of the <code class="highlighter-rouge">LitTextareaMixin</code>.
+Because it is an opinionated component, it expects to find a <code class="highlighter-rouge">this.formControl</code>. This is used for things like <code class="highlighter-rouge">validationTarget</code>
+which tells you where to “anchor” native constraint validation popups for when <code class="highlighter-rouge">element.reportValidity()</code> is called.</p>
+
+<p>The easiest way to do this in Lit is to use a <code class="highlighter-rouge">ref</code> and when the shadow dom element connects, we
+assign it to <code class="highlighter-rouge">this.formControl</code>. Like so:</p>
+
+<div class="syntax-block">        <div class="syntax-block__actions">
+          <div class="syntax-block__badge">
+            JavaScript
+          </div>
+
+          <clipboard-copy for="53e64a1c-e45e-4940-bf68-b9ab1d2f4e70" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
+            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
+          </clipboard-copy>
+
+          <textarea id="53e64a1c-e45e-4940-bf68-b9ab1d2f4e70" hidden="">import { LitElement, css, html } from "lit"
+import { LitTextareaMixin } from "form-associated-helpers/exports/mixins/lit-textarea-mixin.js"
++ import { ref } from 'lit/directives/ref.js';
+
+export default class TextareaComponent extends LitTextareaMixin(LitElement) {
+  static shadowRootOptions = {...LitElement.shadowRootOptions, delegatesFocus: true};
+
+  static styles = css`
+    :host {
+      display: inline-block;
+    }
+  `
+  render () {
+    + return html`
+      &lt;textarea
+        part="form-control"
+        ${ref(this.formControlChanged)}
+      &gt;&lt;/textarea&gt;
+    `
+  }
+
++  formControlChanged (el) {
++    this.formControl = el
++  }
+}
+</textarea>
+        </div>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">LitElement</span><span class="p">,</span> <span class="nx">css</span><span class="p">,</span> <span class="nx">html</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">lit</span><span class="dl">"</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">LitTextareaMixin</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">form-associated-helpers/exports/mixins/lit-textarea-mixin.js</span><span class="dl">"</span>
+<span class="gi">+ import { ref } from 'lit/directives/ref.js';
+</span>
+<span class="k">export</span> <span class="k">default</span> <span class="kd">class</span> <span class="nx">TextareaComponent</span> <span class="kd">extends</span> <span class="nx">LitTextareaMixin</span><span class="p">(</span><span class="nx">LitElement</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">static</span> <span class="nx">shadowRootOptions</span> <span class="o">=</span> <span class="p">{...</span><span class="nx">LitElement</span><span class="p">.</span><span class="nx">shadowRootOptions</span><span class="p">,</span> <span class="na">delegatesFocus</span><span class="p">:</span> <span class="kc">true</span><span class="p">};</span>
+
+  <span class="kd">static</span> <span class="nx">styles</span> <span class="o">=</span> <span class="nx">css</span><span class="s2">`
+    :host {
+      display: inline-block;
+    }
+  `</span>
+  <span class="nx">render</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="gi">+ return html`
+</span>      &lt;textarea
+        part="form-control"
+        ${ref(this.formControlChanged)}
+      &gt;&lt;/textarea&gt;
+    `
+  }
+
+<span class="gi">+  formControlChanged (el) {
++    this.formControl = el
++  }
+</span><span class="p">}</span>
+</code></pre></div></div></div>
+
+<p>We should start now having validations working and anchored off of our textarea!!</p>
 
 <p>Final component:</p>
 
@@ -482,12 +615,12 @@ validation errors in the native constraint popup.</p>
             JavaScript
           </div>
 
-          <clipboard-copy for="3d8f92dd-da84-49a0-ba9c-2ec172afa217" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="f3988f25-1428-4f0b-8528-23951d035c2e" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="3d8f92dd-da84-49a0-ba9c-2ec172afa217" hidden="">import { LitElement, css, html } from "lit"
+          <textarea id="f3988f25-1428-4f0b-8528-23951d035c2e" hidden="">import { LitElement, css, html } from "lit"
 import { ref } from 'lit/directives/ref.js';
 import { live } from 'lit/directives/live.js';
 import { LitTextareaMixin } from "form-associated-helpers/exports/mixins/lit-textarea-mixin.js"
@@ -495,13 +628,18 @@ import { MirrorValidator } from "form-associated-helpers/exports/validators/mirr
 
 export default class TextareaComponent extends LitTextareaMixin(LitElement) {
   /**
-   * @override
    * Without delegatesFocus, or manually setting a `tabindex`, we get this fun message from the browser:
-   *  "The invalid form control with name=‘editor’ is not focusable."textarea-componen
+   *  "The invalid form control with name=‘editor’ is not focusable.
    */
   static shadowRootOptions = {...LitElement.shadowRootOptions, delegatesFocus: true};
 
-  static validators = [MirrorValidator]
+  static validators get () {
+    return [
+      // Contains validators for `required`, `minlength`, and `maxlength`
+      ...super.validators,
+      // Additional validators here:
+    ]
+  }
 
   static get properties () {
     return {
@@ -594,7 +732,7 @@ export default class TextareaComponent extends LitTextareaMixin(LitElement) {
    */
   formControlChanged(textarea) {
     if (!textarea) {
-      this.formControl = null
+      this.formControl = undefined
       return
     }
 
@@ -611,13 +749,18 @@ export default class TextareaComponent extends LitTextareaMixin(LitElement) {
 
 <span class="k">export</span> <span class="k">default</span> <span class="kd">class</span> <span class="nx">TextareaComponent</span> <span class="kd">extends</span> <span class="nx">LitTextareaMixin</span><span class="p">(</span><span class="nx">LitElement</span><span class="p">)</span> <span class="p">{</span>
   <span class="cm">/**
-   * @override
    * Without delegatesFocus, or manually setting a `tabindex`, we get this fun message from the browser:
-   *  "The invalid form control with name=‘editor’ is not focusable."textarea-componen
+   *  "The invalid form control with name=‘editor’ is not focusable.
    */</span>
   <span class="kd">static</span> <span class="nx">shadowRootOptions</span> <span class="o">=</span> <span class="p">{...</span><span class="nx">LitElement</span><span class="p">.</span><span class="nx">shadowRootOptions</span><span class="p">,</span> <span class="na">delegatesFocus</span><span class="p">:</span> <span class="kc">true</span><span class="p">};</span>
 
-  <span class="kd">static</span> <span class="nx">validators</span> <span class="o">=</span> <span class="p">[</span><span class="nx">MirrorValidator</span><span class="p">]</span>
+  <span class="kd">static</span> <span class="nx">validators</span> <span class="kd">get</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">[</span>
+      <span class="c1">// Contains validators for `required`, `minlength`, and `maxlength`</span>
+      <span class="p">...</span><span class="k">super</span><span class="p">.</span><span class="nx">validators</span><span class="p">,</span>
+      <span class="c1">// Additional validators here:</span>
+    <span class="p">]</span>
+  <span class="p">}</span>
 
   <span class="kd">static</span> <span class="kd">get</span> <span class="nx">properties</span> <span class="p">()</span> <span class="p">{</span>
     <span class="k">return</span> <span class="p">{</span>
@@ -677,21 +820,21 @@ export default class TextareaComponent extends LitTextareaMixin(LitElement) {
         ?required=</span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">required</span><span class="p">}</span><span class="s2">
         wrap=</span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">wrap</span><span class="p">}</span><span class="s2">
         autocomplete=</span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">autocomplete</span><span class="p">}</span><span class="s2">
-        @input=</span><span class="p">${(</span><span class="cm">/** @type {Event} */</span> <span class="nx">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-          <span class="k">this</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="cm">/** @type {HTMLTextAreaElement} */</span> <span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">currentTarget</span><span class="p">).</span><span class="nx">value</span>
-          <span class="k">this</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="dl">"</span><span class="s2">input</span><span class="dl">"</span><span class="p">)</span>
-        <span class="p">}}</span><span class="s2">
-        @change=</span><span class="p">${(</span><span class="cm">/** @type {Event} */</span> <span class="nx">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-          <span class="k">this</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="cm">/** @type {HTMLTextAreaElement} */</span> <span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">currentTarget</span><span class="p">).</span><span class="nx">value</span>
-          <span class="k">this</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="dl">"</span><span class="s2">change</span><span class="dl">"</span><span class="p">)</span>
-        <span class="p">}}</span><span class="s2">
-        @keydown=</span><span class="p">${(</span><span class="cm">/** @type {Event} */</span> <span class="nx">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-          <span class="k">this</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="cm">/** @type {HTMLTextAreaElement} */</span> <span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">currentTarget</span><span class="p">).</span><span class="nx">value</span>
-          <span class="k">this</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="dl">"</span><span class="s2">keydown</span><span class="dl">"</span><span class="p">)</span>
-        <span class="p">}}</span><span class="s2">
+        @input=</span><span class="p">${(</span><span class="cm">/** @type {Event} */</span> <span class="nx">e</span><span class="p">)</span> <span class="o">=</span><span class="gi">&gt; {
+</span>          this.value = /** @type {HTMLTextAreaElement} */ (e.currentTarget).value
+          this.emit("input")
+        }}
+        @change=${(/** @type {Event} */ e) =&gt; {
+          this.value = /** @type {HTMLTextAreaElement} */ (e.currentTarget).value
+          this.emit("change")
+        }}
+        @keydown=${(/** @type {Event} */ e) =&gt; {
+          this.value = /** @type {HTMLTextAreaElement} */ (e.currentTarget).value
+          this.emit("keydown")
+        }}
       &gt;&lt;/textarea&gt;
-    `</span>
-  <span class="p">}</span>
+    `
+  }
 
   <span class="cm">/**
    * @param {FocusOptions} options
@@ -700,24 +843,24 @@ export default class TextareaComponent extends LitTextareaMixin(LitElement) {
     <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">formControl</span><span class="p">)</span> <span class="p">{</span>
       <span class="k">this</span><span class="p">.</span><span class="nx">formControl</span><span class="p">.</span><span class="nx">focus</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span>
       <span class="k">return</span>
-    <span class="p">}</span>
+    <span class="p">}</span><span class="s2">
 
-    <span class="k">super</span><span class="p">.</span><span class="nx">focus</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span>
-  <span class="p">}</span>
+    super.focus(options)
+  }
 
-  <span class="cm">/**
+  /**
    * @param {Element | undefined} textarea
-   */</span>
-  <span class="nx">formControlChanged</span><span class="p">(</span><span class="nx">textarea</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">textarea</span><span class="p">)</span> <span class="p">{</span>
-      <span class="k">this</span><span class="p">.</span><span class="nx">formControl</span> <span class="o">=</span> <span class="kc">null</span>
-      <span class="k">return</span>
-    <span class="p">}</span>
+   */
+  formControlChanged(textarea) {
+    if (!textarea) {
+      this.formControl = undefined
+      return
+    }
 
-    <span class="k">this</span><span class="p">.</span><span class="nx">formControl</span> <span class="o">=</span> <span class="cm">/** @type {HTMLTextAreaElement} */</span> <span class="p">(</span><span class="nx">textarea</span><span class="p">)</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div></div></div>
+    this.formControl = /** @type {HTMLTextAreaElement} */ (textarea)
+  }
+}
+</span></code></pre></div></div></div>
 
 
     <div class="pagination-footer">
