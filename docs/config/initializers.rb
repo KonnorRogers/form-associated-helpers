@@ -41,12 +41,37 @@ module Rouge
       # Ruleset courtesy of this issue:
       # https://github.com/rouge-ruby/rouge/issues/642
       lexer.prepend :root do
-        rule(/^\+.*$\n?/, lexer::Generic::Inserted)
-        rule(/^-+.*$\n?/, lexer::Generic::Deleted)
+        # rule(/^\+.*\n?$/, lexer::Generic::Inserted)
+        # rule(/^-+.*\n?$/, lexer::Generic::Deleted)
+        # rule(/^!.*$\n?/, lexer::Generic::Strong)
+        # rule(/^@.*$\n?/, lexer::Generic::Subheading)
+        # rule(/^([Ii]ndex|diff).*$\n?/, lexer::Generic::Heading)
+        # rule(/^=.*$\n?/, lexer::Generic::Heading)
+        # rule(/\n/, lexer::Generic::Heading)
+
+        rule(/^ .*$\n?/, lexer::Text)
+        rule(/^---$\n?/, lexer::Punctuation)
+
+        rule %r(
+          (^\++.*$\n?) |
+          (^>+[ \t]+.*$\n?) |
+          (^>+$\n?)
+        )x, lexer::Generic::Inserted
+
+        rule %r(
+          (^-+.*$\n?) |
+          (^<+[ \t]+.*$\n?) |
+          (^<+$\n?)
+        )x, lexer::Generic::Deleted
+
         rule(/^!.*$\n?/, lexer::Generic::Strong)
-        rule(/^@.*$\n?/, lexer::Generic::Subheading)
         rule(/^([Ii]ndex|diff).*$\n?/, lexer::Generic::Heading)
+        # rule(/^(@@[^@]*@@)([^\n]*\n)/) do
+        #   groups lexer::Punctuation, lexer::Text
+        # end
+        # rule(/^\w.*$\n?/, lexer::Punctuation)
         rule(/^=.*$\n?/, lexer::Generic::Heading)
+        # rule(/.+$\n?/, lexer::Text)
       end
     end
   end

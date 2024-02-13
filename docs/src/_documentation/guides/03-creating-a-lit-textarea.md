@@ -30,7 +30,7 @@ The `LitTextareaMixin` is an opinionated mixin that provides all the same functi
 
 There are less opinionated mixins, that do less, but we'll cover that at a later time. For now, let's get something up and running.
 
-```diff
+```js
 import { LitElement, css, html } from "lit"
 + import { LitTextareaMixin } from "form-associated-helpers/exports/mixins/lit-textarea-mixin.js"
 
@@ -49,11 +49,74 @@ import { LitElement, css, html } from "lit"
 }
 ```
 
-It also expects you to `bind` a native `<textarea>` element to a property called `formControl`. This
-is an opinion that the mixin has. It will use this `formControl` as its `validationTarget` for displaying
-validation errors in the native constraint popup.
+You'll notice we import the [LitTextareaMixin](/references/lit-textarea-mixin) and add
+it to our `LitElement`. This mixin will provide all the same functions as a regular `textarea`
 
+Up next, we need to add a `delegatesFocus: true` option to our custom textarea. The reason
+is if we don't add this, when validations fail, the browser will throw a "form control element is not focusable" error.
 
+The other option is to add a `tabindex` to the host element, but that's generally not recommended since you're usually trying to focus something _inside_ of the custom element, and not the custom element itself.
+
+```js
+import { LitElement, css, html } from "lit"
+import { LitTextareaMixin } from "form-associated-helpers/exports/mixins/lit-textarea-mixin.js"
+
+export default class TextareaComponent extends LitTextareaMixin(LitElement) {
++   /**
++    * Without delegatesFocus, or manually setting a `tabindex`, we get this fun message from the browser:
++    *  "The invalid form control with name=‘editor’ is not focusable.
++    */
++   static shadowRootOptions = {...LitElement.shadowRootOptions, delegatesFocus: true};
+
+  static styles = css`
+    :host {
+      display: inline-block;
+    }
+  `
+  render () {
+    return html`
+      <textarea part="form-control"></textarea>
+    `
+  }
+}
+```
+
+With our delegated focus out of the way, now we start looking at some of the "conventions" of the `LitTextareaMixin`.
+Because it is an opinionated component, it expects to find a `this.formControl`. This is used for things like `validationTarget`
+which tells you where to "anchor" native constraint validation popups for when `element.reportValidity()` is called.
+
+The easiest way to do this in Lit is to use a `ref` and when the shadow dom element connects, we
+assign it to `this.formControl`. Like so:
+
+```js
+import { LitElement, css, html } from "lit"
+import { LitTextareaMixin } from "form-associated-helpers/exports/mixins/lit-textarea-mixin.js"
++ import { ref } from 'lit/directives/ref.js';
+
+export default class TextareaComponent extends LitTextareaMixin(LitElement) {
+  static shadowRootOptions = {...LitElement.shadowRootOptions, delegatesFocus: true};
+
+  static styles = css`
+    :host {
+      display: inline-block;
+    }
+  `
+  render () {
+    + return html`
+      <textarea
+        part="form-control"
+        ${ref(this.formControlChanged)}
+      ></textarea>
+    `
+  }
+
++  formControlChanged (el) {
++    this.formControl = el
++  }
+}
+```
+
+We should start now having validations working and anchored off of our textarea!!
 
 Final component:
 
@@ -66,13 +129,18 @@ import { MirrorValidator } from "form-associated-helpers/exports/validators/mirr
 
 export default class TextareaComponent extends LitTextareaMixin(LitElement) {
   /**
-   * @override
    * Without delegatesFocus, or manually setting a `tabindex`, we get this fun message from the browser:
-   *  "The invalid form control with name=‘editor’ is not focusable."textarea-componen
+   *  "The invalid form control with name=‘editor’ is not focusable.
    */
   static shadowRootOptions = {...LitElement.shadowRootOptions, delegatesFocus: true};
 
-  static validators = [MirrorValidator]
+  static validators get () {
+    return [
+      // Contains validators for `required`, `minlength`, and `maxlength`
+      ...super.validators,
+      // Additional validators here:
+    ]
+  }
 
   static get properties () {
     return {
@@ -165,7 +233,7 @@ export default class TextareaComponent extends LitTextareaMixin(LitElement) {
    */
   formControlChanged(textarea) {
     if (!textarea) {
-      this.formControl = null
+      this.formControl = undefined
       return
     }
 

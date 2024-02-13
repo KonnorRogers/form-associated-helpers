@@ -2,6 +2,9 @@ import { runValidators } from "../../internal/run-validators.js"
 import { ValueMissingValidator } from "../validators/value-missing-validator.js"
 import { FormAssociatedMixin } from "./form-associated-mixin.js"
 
+/**
+ * @typedef {import("./types.js").GConstructable<HTMLElement & Partial<{ get formControl(): undefined | (HTMLElement & { value: any, defaultValue: any }), formControl: undefined | any }>> & { observedAttributes?: string[] }} FormAssociatedElement
+ */
 
 /**
  * A mixin of form associated helpers that get added to a class with attachInternals.
@@ -9,7 +12,7 @@ import { FormAssociatedMixin } from "./form-associated-mixin.js"
  * Required properties: { value, disabled, formControl, validationTarget }
  *
  * @see https://webkit.org/blog/13711/elementinternals-and-form-associated-custom-elements/
- * @template {import("./types.js").GConstructable<HTMLElement & { validationTarget?: undefined | HTMLElement, formControl?: undefined | (HTMLElement & { value: any, defaultValue: any }) }> & { observedAttributes?: string[] }} T
+ * @template {FormAssociatedElement} T
  * @param {T} superclass
  */
 export function VanillaFormAssociatedMixin(superclass) {
@@ -77,18 +80,6 @@ export function VanillaFormAssociatedMixin(superclass) {
          * @type {HTMLInputElement["name"]}
          */
         this.name = ""
-
-        /**
-         * The `formControl` allows for resetting default values and a few other conventions.
-         * @type {undefined | (HTMLElement & { defaultValue: any, value: any })}
-         */
-        this.formControl = undefined
-
-        /**
-         * `validationTarget` is used for displaying native validation popups as the "anchor"
-         * @type {undefined | HTMLElement}
-         */
-        this.validationTarget = undefined
 
         /**
          * `this.type` is used by ElementInternals.
@@ -306,6 +297,15 @@ export function VanillaFormAssociatedMixin(superclass) {
 
       checkValidity () {
         return this.internals.checkValidity()
+      }
+
+
+      /**
+        * `validationTarget` is used for displaying native validation popups as the "anchor"
+        * @type {undefined | HTMLElement}
+        */
+      get validationTarget () {
+        return this.formControl || undefined
       }
 
       /**
