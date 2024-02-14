@@ -1,8 +1,13 @@
 /**
- * @type {import("../types.js").Validator<HTMLElement & { minLength?: number, length?: number }>}
+ * @type {import("../types.js").Validator<HTMLElement & { minLength?: number, length?: number }> & {
+ *  errorMessage: (minLength: number, stringLength: number) => string
+ * }}
  */
 export const TooShortValidator = {
   observedAttributes: ["minlength"],
+  errorMessage (minLength, stringLength) {
+    return `Please use greater than or equal to ${minLength} characters. You are currently using ${stringLength} characters.`;
+  },
   checkValidity (element) {
     /**
      * @type {ReturnType<import("../types.js").Validator["checkValidity"]>}
@@ -22,7 +27,7 @@ export const TooShortValidator = {
     if (!minLength) { return validity }
 
     if (minLength > value.length) {
-      validity.message = `Please use greater than or equal to ${minLength} characters. You are currently using ${value.length} characters.`;
+      validity.message = this.errorMessage(minLength, value.length)
       validity.isValid = false
       validity.invalidKeys.push("tooShort")
     }
