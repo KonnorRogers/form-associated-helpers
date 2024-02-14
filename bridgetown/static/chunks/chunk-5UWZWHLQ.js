@@ -1,0 +1,2 @@
+var i={observedAttributes:["minlength"],errorMessage(t,e){return`Please use greater than or equal to ${t} characters. You are currently using ${e} characters.`},checkValidity(t){let e={message:"",isValid:!0,invalidKeys:[]},r=t.value??"";if(typeof r!="string")return e;let s=Number(t.minLength||t.getAttribute("minlength"));return s&&s>r.length&&(e.message=this.errorMessage(s,r.length),e.isValid=!1,e.invalidKeys.push("tooShort")),e}};export{i as a};
+//# sourceMappingURL=/form-associated-helpers/bridgetown/static/chunks/chunk-5UWZWHLQ.js.map
