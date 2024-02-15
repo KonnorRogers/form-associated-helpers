@@ -379,12 +379,12 @@
             JavaScript
           </div>
 
-          <clipboard-copy for="4089fd70-9ba4-4cd1-9e3a-c9f96eb1a42b" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="880e4423-c2f3-4df4-87f2-78bca54d3631" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="4089fd70-9ba4-4cd1-9e3a-c9f96eb1a42b" hidden="">import { LitElement, css, html } from "lit"
+          <textarea id="880e4423-c2f3-4df4-87f2-78bca54d3631" hidden="">import { LitElement, css, html } from "lit"
 
 export default class TextareaComponent extends LitElement {
   static styles = css`
@@ -419,6 +419,10 @@ export default class TextareaComponent extends LitElement {
 <p>Now that we have initial parts in place, let’s look at how we can “enhance” the
 component to work with form association.</p>
 
+<h2 id="adding-the-littextareamixin">
+          <a href="#adding-the-littextareamixin">Adding the LitTextareaMixin</a>
+        </h2>
+
 <p>The first step is to “import” the <a href="/references/lit-textarea-mixin">LitTextareaMixin</a>. There are many mixins which you can find here: <a href="/references/mixins/">Mixins</a></p>
 
 <p>The <code class="highlighter-rouge">LitTextareaMixin</code> is an opinionated mixin that provides all the same functions a <code class="highlighter-rouge">&lt;textarea&gt;</code> has out of the box.</p>
@@ -430,12 +434,12 @@ component to work with form association.</p>
             JavaScript
           </div>
 
-          <clipboard-copy for="0a6e3b1b-df79-41f2-932b-9702f45fcd0e" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="57c40b17-80b6-4512-b20d-9e31502caf45" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="0a6e3b1b-df79-41f2-932b-9702f45fcd0e" hidden="">import { LitElement, css, html } from "lit"
+          <textarea id="57c40b17-80b6-4512-b20d-9e31502caf45" hidden="">import { LitElement, css, html } from "lit"
 + import { LitTextareaMixin } from "form-associated-helpers/exports/mixins/lit-textarea-mixin.js"
 
 - export default class TextareaComponent extends LitElement {
@@ -474,6 +478,10 @@ component to work with form association.</p>
 <p>You’ll notice we import the <a href="/references/lit-textarea-mixin">LitTextareaMixin</a> and add
 it to our <code class="highlighter-rouge">LitElement</code>. This mixin will provide all the same functions as a regular <code class="highlighter-rouge">textarea</code></p>
 
+<h2 id="setting-delegatesfocus">
+          <a href="#setting-delegatesfocus">Setting delegatesFocus</a>
+        </h2>
+
 <p>Up next, we need to add a <code class="highlighter-rouge">delegatesFocus: true</code> option to our custom textarea. The reason
 is if we don’t add this, when validations fail, the browser will throw a “form control element is not focusable” error.</p>
 
@@ -484,12 +492,12 @@ is if we don’t add this, when validations fail, the browser will throw a “fo
             JavaScript
           </div>
 
-          <clipboard-copy for="ea469aca-618a-42a2-9063-4584be84c048" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="93f2c1ff-8887-4638-a26e-dea1aa28588a" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="ea469aca-618a-42a2-9063-4584be84c048" hidden="">import { LitElement, css, html } from "lit"
+          <textarea id="93f2c1ff-8887-4638-a26e-dea1aa28588a" hidden="">import { LitElement, css, html } from "lit"
 import { LitTextareaMixin } from "form-associated-helpers/exports/mixins/lit-textarea-mixin.js"
 
 export default class TextareaComponent extends LitTextareaMixin(LitElement) {
@@ -539,6 +547,10 @@ export default class TextareaComponent extends LitTextareaMixin(LitElement) {
 Because it is an opinionated component, it expects to find a <code class="highlighter-rouge">this.formControl</code>. This is used for things like <code class="highlighter-rouge">validationTarget</code>
 which tells you where to “anchor” native constraint validation popups for when <code class="highlighter-rouge">element.reportValidity()</code> is called.</p>
 
+<h2 id="setting-thisformcontrol">
+          <a href="#setting-thisformcontrol">Setting this.formControl</a>
+        </h2>
+
 <p>The easiest way to do this in Lit is to use a <code class="highlighter-rouge">ref</code> and when the shadow dom element connects, we
 assign it to <code class="highlighter-rouge">this.formControl</code>. Like so:</p>
 
@@ -547,12 +559,12 @@ assign it to <code class="highlighter-rouge">this.formControl</code>. Like so:</
             JavaScript
           </div>
 
-          <clipboard-copy for="61e7c470-9b9d-4d2b-8b27-3d35676c7229" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="eb366605-ba07-4ed3-93c4-6ef7ee234a51" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="61e7c470-9b9d-4d2b-8b27-3d35676c7229" hidden="">import { LitElement, css, html } from "lit"
+          <textarea id="eb366605-ba07-4ed3-93c4-6ef7ee234a51" hidden="">import { LitElement, css, html } from "lit"
 import { LitTextareaMixin } from "form-associated-helpers/exports/mixins/lit-textarea-mixin.js"
 + import { ref } from 'lit/directives/ref.js';
 
@@ -608,22 +620,61 @@ export default class TextareaComponent extends LitTextareaMixin(LitElement) {
 
 <p>We should start now having validations working and anchored off of our textarea!!</p>
 
-<p>The <code class="highlighter-rouge">LitTextareaMixin</code> contains some “prebuilt” validators. The 3 supported out of the box validators
+<p>It’s important to note, under the hood there is a <code class="highlighter-rouge">get validationTarget() {}</code> getter that
+returns the <code class="highlighter-rouge">this.formControl</code>. This doesn’t mean much right now, but if you did want to change where native
+validations are anchored, it is important to know.</p>
+
+<h2 id="validations">
+          <a href="#validations">Validations</a>
+        </h2>
+
+<p>Moving on, The <code class="highlighter-rouge">LitTextareaMixin</code> contains some “prebuilt” validators. The 3 supported out of the box validators
 are <code class="highlighter-rouge">minlength</code>, <code class="highlighter-rouge">maxlength</code> and <code class="highlighter-rouge">required</code>.</p>
 
-<p>Final component:</p>
+<p>So for example we could do the following:</p>
+
+<div class="syntax-block">        <div class="syntax-block__actions">
+          <div class="syntax-block__badge">
+            HTML
+          </div>
+
+          <clipboard-copy for="5ab631b5-07b9-46b3-be5e-019d0319640b" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
+            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
+          </clipboard-copy>
+
+          <textarea id="5ab631b5-07b9-46b3-be5e-019d0319640b" hidden="">&lt;example-textarea required minlength="5" maxlength="10"&gt;
+&lt;/example-textarea&gt;
+</textarea>
+        </div>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;example-textarea</span> <span class="na">required</span> <span class="na">minlength=</span><span class="s">"5"</span> <span class="na">maxlength=</span><span class="s">"10"</span><span class="nt">&gt;</span><span class="gh">
+</span><span class="nt">&lt;/example-textarea&gt;</span><span class="gh">
+</span></code></pre></div></div></div>
+
+<p>And the native constraint validations will kick in when the user goes to “submit” the form,
+or if you call <code class="highlighter-rouge">customTextarea.reportValidity()</code></p>
+
+<p>The <code class="highlighter-rouge">LitTextareaMixin</code> does quite a bit out of the box, for example, it will call <code class="highlighter-rouge">setFormValue</code> any time the <code class="highlighter-rouge">this.value</code>
+is changed in a Lit <code class="highlighter-rouge">willUpdate</code> lifecycle callback. The hope is that by setting up these conventions, it is easy to add
+formAssociation to your elements and you generally won’t have to think about it except for edge cases.</p>
+
+<h2 id="final-component">
+          <a href="#final-component">Final Component</a>
+        </h2>
+
+<p>Here’s what our final component might look like:</p>
 
 <div class="syntax-block">        <div class="syntax-block__actions">
           <div class="syntax-block__badge">
             JavaScript
           </div>
 
-          <clipboard-copy for="cbb090a3-aab4-4194-a0e9-67cfbc36003d" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="4f90e615-674c-4305-ac64-baf9a3ef2d0e" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="cbb090a3-aab4-4194-a0e9-67cfbc36003d" hidden="">import { LitElement, css, html } from "lit"
+          <textarea id="4f90e615-674c-4305-ac64-baf9a3ef2d0e" hidden="">import { LitElement, css, html } from "lit"
 import { ref } from 'lit/directives/ref.js';
 import { live } from 'lit/directives/live.js';
 import { LitTextareaMixin } from "form-associated-helpers/exports/mixins/lit-textarea-mixin.js"
@@ -692,27 +743,7 @@ export default class TextareaComponent extends LitTextareaMixin(LitElement) {
     `
   }
 
-  /**
-   * @param {FocusOptions} options
-   */
-  focus (options) {
-    if (this.formControl) {
-      this.formControl.focus(options)
-      return
-    }
-
-    super.focus(options)
-  }
-
-  /**
-   * @param {Element | undefined} textarea
-   */
   formControlChanged(textarea) {
-    if (!textarea) {
-      this.formControl = undefined
-      return
-    }
-
     this.formControl = /** @type {HTMLTextAreaElement} */ (textarea)
   }
 }
@@ -787,31 +818,92 @@ export default class TextareaComponent extends LitTextareaMixin(LitElement) {
     `</span><span class="gh">
 </span>  <span class="p">}</span>
 
-  <span class="cm">/**
-   * @param {FocusOptions} options
-   */</span>
-  <span class="nx">focus</span> <span class="p">(</span><span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">formControl</span><span class="p">)</span> <span class="p">{</span>
-      <span class="k">this</span><span class="p">.</span><span class="nx">formControl</span><span class="p">.</span><span class="nx">focus</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span><span class="gh">
-</span>      <span class="k">return</span>
-    <span class="p">}</span>
-
-    <span class="k">super</span><span class="p">.</span><span class="nx">focus</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span><span class="gh">
-</span>  <span class="p">}</span>
-
-  <span class="cm">/**
-   * @param {Element | undefined} textarea
-   */</span>
   <span class="nx">formControlChanged</span><span class="p">(</span><span class="nx">textarea</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">textarea</span><span class="p">)</span> <span class="p">{</span>
-      <span class="k">this</span><span class="p">.</span><span class="nx">formControl</span> <span class="o">=</span> <span class="kc">undefined</span><span class="gh">
-</span>      <span class="k">return</span>
-    <span class="p">}</span>
-
     <span class="k">this</span><span class="p">.</span><span class="nx">formControl</span> <span class="o">=</span> <span class="cm">/** @type {HTMLTextAreaElement} */</span> <span class="p">(</span><span class="nx">textarea</span><span class="p">)</span><span class="gh">
 </span>  <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div></div>
+
+<h2 id="final-component-preview">
+          <a href="#final-component-preview">Final Component Preview</a>
+        </h2>
+
+<p>And here’s a preview of it in action:</p>
+
+<light-preview>
+  <template slot="code">
+    <style>
+      textarea-component::part(form-control):focus-visible {
+        outline: transparent;
+      }
+
+      textarea-component::part(form-control) {
+        border: 3px solid gray;
+      }
+
+      :is(:valid, [data-valid])::part(form-control) {
+        background-color: rgba(0, 255, 0, 0.1);
+      }
+
+      :is([data-user-valid])::part(form-control) {
+        border-color: rgba(0, 255, 0, 1);
+      }
+
+      label.required::after {
+        content: "*";
+        color: red;
+        font-size: 1em;
+      }
+
+      :is(:invalid)::part(form-control) {
+        background-color: rgba(255, 0, 0, 0.1);
+      }
+
+      :is([data-user-invalid])::part(form-control) {
+        border-color: red;
+      }
+
+      :disabled {
+        opacity: 0.5;
+      }
+    </style>
+
+    <form>
+      <fieldset>
+        <label class="required" for="textarea-component">
+          This is a custom textarea
+        </label>
+        <br>
+        <textarea-component id="textarea-component" name="textarea-component" aria-describedby="help-text form-state" required="" minlength="5" maxlength="7" value="def"></textarea-component>
+      </fieldset>
+
+      <br>
+
+      <button type="reset">Reset</button>
+      <button type="button" id="disable">Disable</button>
+      <button>Submit</button>
+
+      <script type="module">
+        import TextareaComponent from "/form-associated-helpers/bridgetown/static/textarea-component.EY7OYLPK.js"
+
+        if (!window.customElements.get("textarea-component")) {
+          window.customElements.define("textarea-component", TextareaComponent)
+        }
+
+        document.querySelector("form").addEventListener("submit", (event) => {
+          event.preventDefault()
+          const customTextarea = document.querySelector("textarea-component")
+
+          // Simulate a submission.
+          customTextarea.hasInteracted = true
+          customTextarea.valueHasChanged = true
+          customTextarea.setFormValue(customTextarea.value)
+        })
+      </script>
+    </form>
+  </template>
+
+</light-preview>
 
 
     <div class="pagination-footer">
@@ -841,7 +933,19 @@ export default class TextareaComponent extends LitTextareaMixin(LitElement) {
     Creating A Lit Textarea
   </h2>
   <ol class="table-of-contents__list">
-  </ol>
+  <li class="side-nav__item">
+        <a href="#adding-the-littextareamixin" class="side-nav__link">Adding the LitTextareaMixin</a>
+      </li><li class="side-nav__item">
+        <a href="#setting-delegatesfocus" class="side-nav__link">Setting delegatesFocus</a>
+      </li><li class="side-nav__item">
+        <a href="#setting-thisformcontrol" class="side-nav__link">Setting this.formControl</a>
+      </li><li class="side-nav__item">
+        <a href="#validations" class="side-nav__link">Validations</a>
+      </li><li class="side-nav__item">
+        <a href="#final-component" class="side-nav__link">Final Component</a>
+      </li><li class="side-nav__item">
+        <a href="#final-component-preview" class="side-nav__link">Final Component Preview</a>
+      </li></ol>
 </nav>
 
 
