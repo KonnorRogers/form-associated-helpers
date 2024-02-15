@@ -21,3 +21,30 @@ may work, but is not the purpose of this library (currently).
 Documentation can be found here:
 
 <https://konnorrogers.github.io/form-associated-helpers/>
+
+## Local Development
+
+### Prerequisites
+
+- Ruby 3.2
+- NodeJS v20
+- PNPM
+
+### Setup
+
+```bash
+git clone https://github.com/konnorrogers/form-associated-helpers
+cd form-associated-helpers
+pnpm run setup # This will install the main package dependencies, and the documentation dependencies
+```
+
+### Starting the dev server
+
+```bash
+pnpm run start:docs
+
+# OR
+
+cd docs && bin/bridgetown start
+```
+

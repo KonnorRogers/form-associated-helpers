@@ -24,6 +24,8 @@ export default class TextareaComponent extends LitElement {
 Now that we have initial parts in place, let's look at how we can "enhance" the
 component to work with form association.
 
+## Adding the LitTextareaMixin
+
 The first step is to "import" the [LitTextareaMixin](/references/lit-textarea-mixin). There are many mixins which you can find here: [Mixins](/references/mixins/)
 
 The `LitTextareaMixin` is an opinionated mixin that provides all the same functions a `<textarea>` has out of the box.
@@ -51,6 +53,8 @@ import { LitElement, css, html } from "lit"
 
 You'll notice we import the [LitTextareaMixin](/references/lit-textarea-mixin) and add
 it to our `LitElement`. This mixin will provide all the same functions as a regular `textarea`
+
+## Setting `delegatesFocus`
 
 Up next, we need to add a `delegatesFocus: true` option to our custom textarea. The reason
 is if we don't add this, when validations fail, the browser will throw a "form control element is not focusable" error.
@@ -85,6 +89,8 @@ With our delegated focus out of the way, now we start looking at some of the "co
 Because it is an opinionated component, it expects to find a `this.formControl`. This is used for things like `validationTarget`
 which tells you where to "anchor" native constraint validation popups for when `element.reportValidity()` is called.
 
+## Setting `this.formControl`
+
 The easiest way to do this in Lit is to use a `ref` and when the shadow dom element connects, we
 assign it to `this.formControl`. Like so:
 
@@ -118,10 +124,32 @@ export default class TextareaComponent extends LitTextareaMixin(LitElement) {
 
 We should start now having validations working and anchored off of our textarea!!
 
-The `LitTextareaMixin` contains some "prebuilt" validators. The 3 supported out of the box validators
+It's important to note, under the hood there is a `get validationTarget() {}` getter that
+returns the `this.formControl`. This doesn't mean much right now, but if you did want to change where native
+validations are anchored, it is important to know.
+
+## Validations
+
+Moving on, The `LitTextareaMixin` contains some "prebuilt" validators. The 3 supported out of the box validators
 are `minlength`, `maxlength` and `required`.
 
-Final component:
+So for example we could do the following:
+
+```html
+<example-textarea required minlength="5" maxlength="10">
+</example-textarea>
+```
+
+And the native constraint validations will kick in when the user goes to "submit" the form,
+or if you call `customTextarea.reportValidity()`
+
+The `LitTextareaMixin` does quite a bit out of the box, for example, it will call `setFormValue` any time the `this.value`
+is changed in a Lit `willUpdate` lifecycle callback. The hope is that by setting up these conventions, it is easy to add
+formAssociation to your elements and you generally won't have to think about it except for edge cases.
+
+## Final Component
+
+Here's what our final component might look like:
 
 ```js
 import { LitElement, css, html } from "lit"
@@ -193,28 +221,95 @@ export default class TextareaComponent extends LitTextareaMixin(LitElement) {
     `
   }
 
-  /**
-   * @param {FocusOptions} options
-   */
-  focus (options) {
-    if (this.formControl) {
-      this.formControl.focus(options)
-      return
-    }
-
-    super.focus(options)
-  }
-
-  /**
-   * @param {Element | undefined} textarea
-   */
   formControlChanged(textarea) {
-    if (!textarea) {
-      this.formControl = undefined
-      return
-    }
-
     this.formControl = /** @type {HTMLTextAreaElement} */ (textarea)
   }
 }
 ```
+
+## Final Component Preview
+
+And here's a preview of it in action:
+
+<light-preview>
+  <template slot="code">
+    <style>
+      textarea-component::part(form-control):focus-visible {
+        outline: transparent;
+      }
+
+      textarea-component::part(form-control) {
+        border: 3px solid gray;
+      }
+
+      :is(:valid, [data-valid])::part(form-control) {
+        background-color: rgba(0, 255, 0, 0.1);
+      }
+
+      :is([data-user-valid])::part(form-control) {
+        border-color: rgba(0, 255, 0, 1);
+      }
+
+      label.required::after {
+        content: "*";
+        color: red;
+        font-size: 1em;
+      }
+
+      :is(:invalid)::part(form-control) {
+        background-color: rgba(255, 0, 0, 0.1);
+      }
+
+      :is([data-user-invalid])::part(form-control) {
+        border-color: red;
+      }
+
+      :disabled {
+        opacity: 0.5;
+      }
+    </style>
+
+    <form>
+      <fieldset>
+        <label class="required" for="textarea-component">
+          This is a custom textarea
+        </label>
+        <br>
+        <textarea-component
+          id="textarea-component"
+          name="textarea-component"
+          aria-describedby="help-text form-state"
+          required
+          minlength="5"
+          maxlength="7"
+          value="def"
+        ></textarea-component>
+      </fieldset>
+
+      <br>
+
+      <button type="reset">Reset</button>
+      <button type="button" id="disable">Disable</button>
+      <button>Submit</button>
+
+      <script type="module">
+        import TextareaComponent from "<%= find_asset("../examples/textarea-component.js") %>"
+
+        if (!window.customElements.get("textarea-component")) {
+          window.customElements.define("textarea-component", TextareaComponent)
+        }
+
+        document.querySelector("form").addEventListener("submit", (event) => {
+          event.preventDefault()
+          const customTextarea = document.querySelector("textarea-component")
+
+          // Simulate a submission.
+          customTextarea.hasInteracted = true
+          customTextarea.valueHasChanged = true
+          customTextarea.setFormValue(customTextarea.value)
+        })
+      </script>
+    </form>
+  </template>
+
+</light-preview>
