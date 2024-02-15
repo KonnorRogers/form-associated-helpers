@@ -156,7 +156,6 @@ import { LitElement, css, html } from "lit"
 import { ref } from 'lit/directives/ref.js';
 import { live } from 'lit/directives/live.js';
 import { LitTextareaMixin } from "form-associated-helpers/exports/mixins/lit-textarea-mixin.js"
-import { MirrorValidator } from "form-associated-helpers/exports/validators/mirror-validator.js";
 
 export default class TextareaComponent extends LitTextareaMixin(LitElement) {
   /**
@@ -226,6 +225,18 @@ export default class TextareaComponent extends LitTextareaMixin(LitElement) {
   }
 }
 ```
+
+You'll notice the component above has a number of properties we never defined such as:
+
+```js
+`
+        rows=${this.rows}
+        cols=${this.cols}
+`
+```
+
+The reason is that these are pre-baked into the `LitTextareaMixin`. They're intended to "mirror" all the native
+properties and functions a "native" textarea would have.
 
 ## Final Component Preview
 
@@ -313,3 +324,6 @@ And here's a preview of it in action:
   </template>
 
 </light-preview>
+
+You'll notice the `<textarea-component>` changes colors based on the form's state. To read more about
+the form's state, check out the docs for [Understanding Form States](/references/understanding-form-states/)
