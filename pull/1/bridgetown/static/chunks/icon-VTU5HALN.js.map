@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../node_modules/.pnpm/@shoelace-style+shoelace@2.13.1_@types+react@18.2.54/node_modules/@shoelace-style/shoelace/dist/chunks/chunk.DQI3IAOX.js"],
+  "sourcesContent": ["import {\n  SlIcon\n} from \"./chunk.Y62EZWMI.js\";\n\n// src/components/icon/icon.ts\nvar icon_default = SlIcon;\nSlIcon.define(\"sl-icon\");\n\nexport {\n  icon_default\n};\n"],
+  "mappings": "8fAKA,IAAIA,EAAeC,EACnBA,EAAO,OAAO,SAAS",
+  "names": ["icon_default", "SlIcon"]
+}
