@@ -1,6 +1,19 @@
-## Next
+## TODO
 
 - Introduce a pattern for easier translations of error messages
+
+## Next
+
+- Feature: Added the following functions for custom states:
+
+```js
+addCustomState (state) {}
+deleteCustomState (state) {}
+hasCustomState (state) {}
+toggleCustomState (state, force) {}
+```
+
+With fallbacks for unsupported browsers.
 
 ## 0.0.4 02/13/2024
 
