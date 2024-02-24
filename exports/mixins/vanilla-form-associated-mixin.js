@@ -125,7 +125,67 @@ export function VanillaFormAssociatedMixin(superclass) {
         this.addEventListener("focusout", this.handleInteraction)
         this.addEventListener("blur", this.handleInteraction)
         this.addEventListener("invalid", this.handleInvalid)
+      }
 
+      /**
+       * @param {string} state
+       */
+      addCustomState (state) {
+        try {
+          // @ts-expect-error
+          this.internals.states.add(state)
+        } catch (_) {
+          // Without this, test suite errors.
+        } finally {
+          this.setAttribute(`data-${state}`, "")
+        }
+      }
+
+      /**
+       * @param {string} state
+       */
+      deleteCustomState (state) {
+        try {
+          // @ts-expect-error
+          this.internals.states.delete(state)
+        } catch (_) {
+          // Without this, test suite errors.
+        } finally {
+          this.removeAttribute(`data-${state}`)
+        }
+      }
+
+      /**
+       * @param {string} state
+       * @param {boolean} bool
+       */
+      toggleCustomState (state, bool) {
+        if (bool === true) {
+          this.addCustomState(state)
+          return
+        }
+
+        if (bool === false) {
+          this.deleteCustomState(state)
+          return
+        }
+
+        this.toggleCustomState(state, !this.hasCustomState(state))
+      }
+
+      /**
+       * @param {string} state
+       * @returns {boolean}
+       */
+      hasCustomState (state) {
+        try {
+          // @ts-expect-error
+          return this.internals.states.has(state)
+        } catch (_) {
+          // Without this, test suite errors.
+        } finally {
+          return this.hasAttribute(`data-${state}`)
+        }
       }
 
       /**
@@ -329,31 +389,33 @@ export function VanillaFormAssociatedMixin(superclass) {
         return this.internals.form
       }
     }
+
   )
 }
 
 
 /**
- * @param {HTMLElement & { disabled: boolean, validity: ValidityState, hasInteracted: boolean, valueHasChanged: boolean }} el
+ * @param {HTMLElement & { disabled: boolean, validity: ValidityState, hasInteracted: boolean, valueHasChanged: boolean } & InstanceType<ReturnType<typeof VanillaFormAssociatedMixin<FormAssociatedElement>>>} el
  */
 function updateInteractionState (el) {
   if (el.disabled || el.hasAttribute("disabled")) {
-    el.removeAttribute("data-invalid")
-    el.removeAttribute("data-user-invalid")
-    el.removeAttribute("data-valid")
-    el.removeAttribute("data-user-valid")
+    el.deleteCustomState("invalid")
+    el.deleteCustomState("user-invalid")
+    el.deleteCustomState("valid")
+    el.deleteCustomState("user-valid")
     return
   }
 
   if (el.validity.valid) {
-    el.removeAttribute("data-invalid")
-    el.removeAttribute("data-user-invalid")
-    el.setAttribute("data-valid", "")
-    el.toggleAttribute("data-user-valid", el.hasInteracted && el.valueHasChanged)
+    el.deleteCustomState("invalid")
+    el.deleteCustomState("user-invalid")
+    el.addCustomState("valid")
+    el.toggleCustomState("user-valid", el.hasInteracted && el.valueHasChanged)
   } else {
-    el.removeAttribute("data-valid")
-    el.removeAttribute("data-user-valid")
-    el.setAttribute("data-invalid", "")
-    el.toggleAttribute("data-user-invalid", el.hasInteracted && el.valueHasChanged)
+    el.deleteCustomState("valid")
+    el.deleteCustomState("user-valid")
+    el.addCustomState("invalid")
+    el.toggleCustomState("user-invalid", el.hasInteracted && el.valueHasChanged)
   }
 }
+
