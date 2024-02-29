@@ -2,9 +2,9 @@
 
 - Introduce a pattern for easier translations of error messages
 
-## Next
+## 0.0.5
 
-- Feature: Added the following functions for custom states:
+- Feature: Added the following functions for custom states to `VanillaFormAssociatedMixin`:
 
 ```js
 addCustomState (state) {}
@@ -14,6 +14,9 @@ toggleCustomState (state, force) {}
 ```
 
 With fallbacks for unsupported browsers.
+
+- Bug Fix: `runValidators()` now preserves custom errors, and will also run prior to checkValidity() and reportValidity().
+
 
 ## 0.0.4 02/13/2024
 
