@@ -17,7 +17,9 @@ export function runValidators (element) {
     return
   }
 
-  const flags = {}
+  const flags = {
+    customError: element.validity.customError
+  }
 
   const formControl = element.formControl || undefined
 
@@ -38,5 +40,9 @@ export function runValidators (element) {
     }
   }
 
+  // This is a workaround for preserving custom errors
+  if (!finalMessage) {
+    finalMessage = element.validationMessage
+  }
   element.setValidity(flags, finalMessage, formControl)
 }

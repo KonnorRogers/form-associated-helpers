@@ -195,7 +195,10 @@ export function VanillaFormAssociatedMixin(superclass) {
         if (e.target !== this) return
         if (this.disabled === true || this.hasAttribute("disabled")) return
 
-        this.valueHasChanged = true
+        if (this.value !== this.defaultValue) {
+          this.valueHasChanged = true
+        }
+
         this.hasInteracted = true
 
         updateInteractionState(this)
@@ -254,12 +257,11 @@ export function VanillaFormAssociatedMixin(superclass) {
        * @param {string} message
        */
       setCustomValidity (message) {
+        this.setValidity({})
         if (message) {
           this.setValidity({customError: true}, message)
           return
         }
-
-        this.setValidity({})
       }
 
       /**
@@ -283,11 +285,15 @@ export function VanillaFormAssociatedMixin(superclass) {
         }
 
         if (name === "value") {
+          this.defaultValue = this.getAttribute("value") || ""
+
           if (!this.hasInteracted && !this.valueHasChanged) {
             this.value = this.defaultValue
+            this.setFormValue(this.value, this.value)
           }
-          this.setFormValue(this.value, this.value)
         }
+
+        runValidators(this)
       }
 
       /**
@@ -299,6 +305,7 @@ export function VanillaFormAssociatedMixin(superclass) {
           this.formControl.value = this.defaultValue
         }
 
+        this.setValidity({})
         this.value = this.defaultValue
         this.hasInteracted = false
         this.valueHasChanged = false
@@ -313,6 +320,7 @@ export function VanillaFormAssociatedMixin(superclass) {
       */
       formDisabledCallback(isDisabled) {
         this.disabled = isDisabled
+        this.setValidity({})
         runValidators(this) // Removes validations.
       }
 
@@ -326,6 +334,7 @@ export function VanillaFormAssociatedMixin(superclass) {
         // @ts-expect-error
         this.value = state
 
+        this.setValidity({})
         if (this.formControl) {
           this.formControl.value = state
         }
@@ -352,10 +361,12 @@ export function VanillaFormAssociatedMixin(superclass) {
       }
 
       reportValidity () {
+        runValidators(this)
         return this.internals.reportValidity()
       }
 
       checkValidity () {
+        runValidators(this)
         return this.internals.checkValidity()
       }
 
@@ -388,8 +399,11 @@ export function VanillaFormAssociatedMixin(superclass) {
       get form () {
         return this.internals.form
       }
-    }
 
+      set form (str) {
+        this.setAttribute("form", str)
+      }
+    }
   )
 }
 
