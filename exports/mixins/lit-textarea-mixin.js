@@ -62,7 +62,6 @@ export function LitTextareaMixin(superclass) {
         * @param {...any} args
         */
       constructor (...args) {
-        // @ts-expect-error
         super(...args)
 
         /**

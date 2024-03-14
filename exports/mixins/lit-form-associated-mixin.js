@@ -1,5 +1,4 @@
 import { VanillaFormAssociatedMixin } from "./vanilla-form-associated-mixin.js"
-import { runValidators } from "../../internal/run-validators.js"
 
 const formProperties = Object.freeze({
   role: {reflect: true},
@@ -28,50 +27,53 @@ LitFormAssociatedMixin.formProperties = formProperties
  * @param {T} superclass
  */
 export function LitFormAssociatedMixin(superclass) {
-  return (
-    class extends VanillaFormAssociatedMixin(superclass) {
-      constructor () {
-        super()
+  const finalClass = class extends VanillaFormAssociatedMixin(superclass) {
+    /**
+      * @param {...any} args
+      */
+    constructor (...args) {
+      super(...args)
 
-        const ctor = /** @type {{properties?: { disabled?: { reflect?: boolean }}}} */ (/** @type {unknown} */ (this.constructor))
-        if (ctor.properties?.disabled?.reflect === true) {
-          console.warn(`The following element has their "disabled" property set to reflect.`)
-          console.warn(this)
-          console.warn("For further reading: https://github.com/whatwg/html/issues/8365")
-        }
-      }
-      /**
-       * @protected
-       * @param {import("lit").PropertyValues} changedProperties
-       */
-      willUpdate (changedProperties) {
-        // @ts-expect-error
-        if (typeof super.willUpdate !== "function") {
-          return
-        }
-
-        if (changedProperties.has("role")) {
-          this.internals.role = changedProperties.get("role") || null
-        }
-
-        if (changedProperties.has("formControl")) {
-          this.formControl?.addEventListener("focusout", this.handleInteraction)
-          this.formControl?.addEventListener("blur", this.handleInteraction)
-          this.formControl?.addEventListener("click", this.handleInteraction)
-        }
-
-        if (
-          changedProperties.has("formControl")
-          || changedProperties.has("defaultValue")
-          || changedProperties.has("value")
-        ) {
-          this.setFormValue(this.value, this.value)
-        }
-
-        // @ts-expect-error
-        super.willUpdate(changedProperties)
+      const ctor = /** @type {{properties?: { disabled?: { reflect?: boolean }}}} */ (/** @type {unknown} */ (this.constructor))
+      if (ctor.properties?.disabled?.reflect === true) {
+        console.warn(`The following element has their "disabled" property set to reflect.`)
+        console.warn(this)
+        console.warn("For further reading: https://github.com/whatwg/html/issues/8365")
       }
     }
-  )
+    /**
+      * @protected
+      * @param {import("lit").PropertyValues} changedProperties
+      */
+    willUpdate (changedProperties) {
+      // @ts-expect-error
+      if (typeof super.willUpdate !== "function") {
+        return
+      }
+
+      if (changedProperties.has("role")) {
+        this.internals.role = changedProperties.get("role") || null
+      }
+
+      if (changedProperties.has("formControl")) {
+        this.formControl?.addEventListener("focusout", this.handleInteraction)
+        this.formControl?.addEventListener("blur", this.handleInteraction)
+        this.formControl?.addEventListener("click", this.handleInteraction)
+      }
+
+      if (
+        changedProperties.has("formControl")
+        || changedProperties.has("defaultValue")
+        || changedProperties.has("value")
+      ) {
+        this.setFormValue(this.value, this.value)
+      }
+
+      // @ts-expect-error
+      super.willUpdate(changedProperties)
+    }
+  }
+
+  return /** @type {ReturnType<typeof VanillaFormAssociatedMixin<T>> & typeof finalClass} */ (finalClass)
 }
 

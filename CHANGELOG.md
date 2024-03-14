@@ -2,7 +2,11 @@
 
 - Introduce a pattern for easier translations of error messages
 
-## v0.0.06 - 3/14/2024
+## v0.0.7 - 3/14/2024
+
+- Bug Fix(types): Fixed a bug in types for LitFormAssociated.
+
+## v0.0.6 - 3/14/2024
 
 - Bug Fix(types): Fixed a bug in types for LitFormAssociated.
 
