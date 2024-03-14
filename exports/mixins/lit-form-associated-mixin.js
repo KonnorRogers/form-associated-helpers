@@ -24,7 +24,7 @@ LitFormAssociatedMixin.formProperties = formProperties
  * An extension of the VanillaFormAssociatedMixin intended for LitElement by providing formProperties and willUpdate() callbacks with the appropriate properties.
  *
  * @see https://webkit.org/blog/13711/elementinternals-and-form-associated-custom-elements/
- * @template {import("./types.js").GConstructable<HTMLElement> & {observedAttributes?: string[]}} T
+ * @template {import("./vanilla-form-associated-mixin.js").FormAssociatedElement} T
  * @param {T} superclass
  */
 export function LitFormAssociatedMixin(superclass) {

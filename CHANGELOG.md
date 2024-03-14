@@ -2,6 +2,10 @@
 
 - Introduce a pattern for easier translations of error messages
 
+## v0.0.06 - 3/14/2024
+
+- Bug Fix(types): Fixed a bug in types for LitFormAssociated.
+
 ## v0.0.5 - 02/29/2024
 
 - Feature: Added the following functions for custom states to `VanillaFormAssociatedMixin`:
