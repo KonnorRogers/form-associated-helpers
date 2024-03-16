@@ -62,12 +62,12 @@ export function VanillaFormAssociatedMixin(superclass) {
         this.role = null
 
         /**
-         * @type {string}
+         * @type {FormData | string | File | null}
          */
-        this.value = ""
+        this.value = null
 
         /**
-         * @type {string}
+         * @type {FormData | string | File | null}
          */
         this.previousValue = this.value
 
@@ -326,12 +326,11 @@ export function VanillaFormAssociatedMixin(superclass) {
 
       /**
       * Called when the browser is trying to restore element’s state to state in which case reason is “restore”, or when the browser is trying to fulfill autofill on behalf of user in which case reason is “autocomplete”. In the case of “restore”, state is a string, File, or FormData object previously set as the second argument to setFormValue.
-      * @param {string | File | FormData} state
+      * @param {string | File | FormData | null} state
       * @param {string} reason
       * @returns {void}
       */
       formStateRestoreCallback(state, reason) {
-        // @ts-expect-error
         this.value = state
 
         this.setValidity({})

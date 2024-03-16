@@ -25,15 +25,21 @@ LitTextareaMixin.formProperties = Object.freeze(
  * A mixin for build a `<textarea>` specifically for Lit.
  *
  * @see https://webkit.org/blog/13711/elementinternals-and-form-associated-custom-elements/
- * @template {import("./types.js").GConstructable<HTMLElement> & {observedAttributes?: string[]}} T
+ * @template {import("./vanilla-form-associated-mixin.js").FormAssociatedElement} T
  * @param {T} superclass
  */
 export function LitTextareaMixin(superclass) {
+  // This looks weird, but it's the only way to correctly cast the TextAreaMixin to have a "typesafe" value.
+  // from `{value: string | File | FormData | null}` to `{value: string}`
+  /** @type {T & import("./types.js").GConstructable<{defaultValue: string, value: string}>} */
+  // @ts-expect-error
+  const modifiedSuperclass = superclass
+
   return (
     /**
       * @implements {HTMLTextAreaElement}
       */
-    class extends LitFormAssociatedMixin(superclass) {
+    class extends LitFormAssociatedMixin(modifiedSuperclass) {
       /**
         * @override
         */
@@ -75,12 +81,12 @@ export function LitTextareaMixin(superclass) {
         this.wrap = ""
 
         /**
-          * @type {string}
+          * @type {HTMLTextAreaElement["value"]}
           */
         this.value = ""
 
         /**
-          * @type {string}
+          * @type {HTMLTextAreaElement["defaultValue"]}
           */
         this.defaultValue = ""
 
