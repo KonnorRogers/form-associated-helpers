@@ -11,9 +11,6 @@ devDependencies:
   '@esm-bundle/chai':
     specifier: 4.3.4-fix.0
     version: 4.3.4-fix.0
-  '@lit/reactive-element':
-    specifier: ^2.0.2
-    version: 2.0.2
   '@open-wc/testing-helpers':
     specifier: ^3.0.0
     version: 3.0.0
@@ -39,13 +36,7 @@ devDependencies:
     specifier: ^6.1.1
     version: 6.1.1
   lit:
-    specifier: ^3.1.0
-    version: 3.1.0
-  lit-element:
-    specifier: ^4.0.2
-    version: 4.0.2
-  lit-html:
-    specifier: ^3.1.0
+    specifier: '> 2'
     version: 3.1.0
   playwright:
     specifier: ^1.40.1

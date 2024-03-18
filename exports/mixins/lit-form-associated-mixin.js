@@ -41,18 +41,15 @@ export function LitFormAssociatedMixin(superclass) {
         console.warn("For further reading: https://github.com/whatwg/html/issues/8365")
       }
     }
+
+
     /**
-      * @protected
-      * @param {import("lit").PropertyValues} changedProperties
-      */
+     * @type {import("lit").LitElement["willUpdate"]}
+     */
     willUpdate (changedProperties) {
       // @ts-expect-error
       if (typeof super.willUpdate !== "function") {
         return
-      }
-
-      if (changedProperties.has("role")) {
-        this.internals.role = changedProperties.get("role") || null
       }
 
       if (changedProperties.has("formControl")) {
