@@ -4,6 +4,7 @@
 
 ## Next
 
+- Feature: `runValidators` is now available on the host element.
 - Feature: Added CustomStatesMixin to allow setting custom states even if the element is not formAssociated.
 
 - Bug: Fixed a bug in `tabindex` detection in the constructor.
