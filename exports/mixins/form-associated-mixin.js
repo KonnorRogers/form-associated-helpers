@@ -35,8 +35,6 @@ export function FormAssociatedMixin(superclass) {
           // Perhaps already attached?
           console.error(err)
         }
-
-        checkFocusability(this)
       }
 
       connectedCallback () {
@@ -58,6 +56,7 @@ export function FormAssociatedMixin(superclass) {
  */
 function checkFocusability (element) {
   if (element.shadowRoot && element.shadowRoot.delegatesFocus !== true) {
+    if (!isNaN(element.tabIndex)) return true
     // FormAssociated custom elements either need to have delegatedFocus, or need to have a tabindex on the host.
     const tabindexAttr = element.getAttribute("tabindex")?.trim()
     const tabindex = tabindexAttr ? Number(tabindexAttr) : null

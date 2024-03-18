@@ -1,5 +1,6 @@
 import { runValidators } from "../../internal/run-validators.js"
 import { ValueMissingValidator } from "../validators/value-missing-validator.js"
+import { CustomStatesMixin } from "./custom-states-mixin.js"
 import { FormAssociatedMixin } from "./form-associated-mixin.js"
 
 /**
@@ -20,7 +21,7 @@ export function VanillaFormAssociatedMixin(superclass) {
     /**
      * @implements {ElementInternals}
      */
-    class extends FormAssociatedMixin(superclass) {
+    class extends CustomStatesMixin(FormAssociatedMixin(superclass)) {
       /**
        * @override
        */
@@ -125,67 +126,6 @@ export function VanillaFormAssociatedMixin(superclass) {
         this.addEventListener("focusout", this.handleInteraction)
         this.addEventListener("blur", this.handleInteraction)
         this.addEventListener("invalid", this.handleInvalid)
-      }
-
-      /**
-       * @param {string} state
-       */
-      addCustomState (state) {
-        try {
-          // @ts-expect-error
-          this.internals.states.add(state)
-        } catch (_) {
-          // Without this, test suite errors.
-        } finally {
-          this.setAttribute(`data-${state}`, "")
-        }
-      }
-
-      /**
-       * @param {string} state
-       */
-      deleteCustomState (state) {
-        try {
-          // @ts-expect-error
-          this.internals.states.delete(state)
-        } catch (_) {
-          // Without this, test suite errors.
-        } finally {
-          this.removeAttribute(`data-${state}`)
-        }
-      }
-
-      /**
-       * @param {string} state
-       * @param {boolean} bool
-       */
-      toggleCustomState (state, bool) {
-        if (bool === true) {
-          this.addCustomState(state)
-          return
-        }
-
-        if (bool === false) {
-          this.deleteCustomState(state)
-          return
-        }
-
-        this.toggleCustomState(state, !this.hasCustomState(state))
-      }
-
-      /**
-       * @param {string} state
-       * @returns {boolean}
-       */
-      hasCustomState (state) {
-        try {
-          // @ts-expect-error
-          return this.internals.states.has(state)
-        } catch (_) {
-          // Without this, test suite errors.
-        } finally {
-          return this.hasAttribute(`data-${state}`)
-        }
       }
 
       /**

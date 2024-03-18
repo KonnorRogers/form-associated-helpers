@@ -2,6 +2,13 @@
 
 - Introduce a pattern for easier translations of error messages
 
+## Next
+
+- Feature: Added CustomStatesMixin to allow setting custom states even if the element is not formAssociated.
+- Bug: Fixed a bug in `tabindex` detection in the constructor.
+- Bug(types): Loosened Lit version for types for better deduping.
+- Bug: Removed `checkFocusability` check in the `constructor`. It should only run on `connectedCallback`
+
 ## v0.0.7 - 3/14/2024
 
 - Bug Fix(types): Fixed a bug in types for LitFormAssociated.

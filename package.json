@@ -51,7 +51,6 @@
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "^0.9.0",
     "@esm-bundle/chai": "4.3.4-fix.0",
-    "@lit/reactive-element": "^2.0.2",
     "@open-wc/testing-helpers": "^3.0.0",
     "@types/node": "^20.10.6",
     "@web/test-runner": "^0.18.0",
@@ -60,9 +59,7 @@
     "es-module-shims": "^1.8.2",
     "form-associated-helpers": "link:.",
     "gh-pages": "^6.1.1",
-    "lit": "^3.1.0",
-    "lit-element": "^4.0.2",
-    "lit-html": "^3.1.0",
+    "lit": "> 2",
     "playwright": "^1.40.1",
     "rimraf": "^5.0.5",
     "typedoc": "^0.25.7",
