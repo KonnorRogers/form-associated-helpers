@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../exports/validators/range-underflow-validator.js"],
+  "sourcesContent": ["/**\n * @type {import(\"../types.js\").Validator<HTMLElement & {min?: number}>}\n */\nexport const RangeUnderflowValidator = {\n  observedAttributes: [\"min\"],\n  checkValidity(element) {\n    const min = Number(element.min ?? element.getAttribute(\"min\"))\n    const value = element.value\n\n    /**\n     * @type {ReturnType<import(\"../types.js\").Validator[\"checkValidity\"]>}\n     */\n    const validity = {\n      message: \"\",\n      isValid: true,\n      invalidKeys: []\n    }\n\n    if (typeof value !== \"number\") return validity\n\n    if (value < min) {\n      validity.message = `Please select a value that is more than or equal to ${min}.`\n      validity.isValid = false\n      validity.invalidKeys.push(\"rangeUnderflow\")\n    }\n\n    return validity\n  }\n}\n"],
+  "mappings": "mFAGO,IAAMA,EAA0B,CACrC,mBAAoB,CAAC,KAAK,EAC1B,cAAcC,EAAS,CACrB,IAAMC,EAAM,OAAOD,EAAQ,KAAOA,EAAQ,aAAa,KAAK,CAAC,EACvDE,EAAQF,EAAQ,MAKhBG,EAAW,CACf,QAAS,GACT,QAAS,GACT,YAAa,CAAC,CAChB,EAEA,OAAI,OAAOD,GAAU,UAEjBA,EAAQD,IACVE,EAAS,QAAU,uDAAuDF,CAAG,IAC7EE,EAAS,QAAU,GACnBA,EAAS,YAAY,KAAK,gBAAgB,GAGrCA,CACT,CACF",
+  "names": ["RangeUnderflowValidator", "element", "min", "value", "validity"]
+}
