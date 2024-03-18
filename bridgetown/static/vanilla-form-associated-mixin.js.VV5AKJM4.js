@@ -1,2 +1,0 @@
-import{a}from"/form-associated-helpers/bridgetown/static/chunks/chunk-JEPQM6FS.js";import"/form-associated-helpers/bridgetown/static/chunks/chunk-ZL6FUDOL.js";import"/form-associated-helpers/bridgetown/static/chunks/chunk-JWI5Q4SE.js";import"/form-associated-helpers/bridgetown/static/chunks/chunk-4QWIFJON.js";import"/form-associated-helpers/bridgetown/static/chunks/chunk-ENMDFKSV.js";export{a as VanillaFormAssociatedMixin};
-//# sourceMappingURL=/form-associated-helpers/bridgetown/static/vanilla-form-associated-mixin.js.VV5AKJM4.js.map

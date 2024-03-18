@@ -6,7 +6,7 @@
 <!-- <base href="/form-associated-helpers/"> -->
 
 <meta name="description" content="A collection of reusable mixins + helpers for working with form associated custom elements.">
-<link rel="modulepreload" href="/form-associated-helpers/bridgetown/static/javascript/index.HBCM7ANK.js">
+<link rel="modulepreload" href="/form-associated-helpers/bridgetown/static/javascript/index.3WMC555S.js">
 <link rel="modulepreload" href="/form-associated-helpers/bridgetown/static/javascript/defer.YE7LWH5C.js">
 <link rel="preload" href="/form-associated-helpers/bridgetown/static/javascript/defer.CREW5JGX.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <!-- Critical CSS -->
@@ -15,7 +15,7 @@
 <noscript><link rel="stylesheet" href="/form-associated-helpers/bridgetown/static/javascript/defer.CREW5JGX.css"></noscript>
 
 <!-- Entrypoints -->
-<script data-turbo-track="reload" src="/form-associated-helpers/bridgetown/static/javascript/index.HBCM7ANK.js" type="module"></script>
+<script data-turbo-track="reload" src="/form-associated-helpers/bridgetown/static/javascript/index.3WMC555S.js" type="module"></script>
 <script data-turbo-track="reload" src="/form-associated-helpers/bridgetown/static/javascript/defer.YE7LWH5C.js" type="module"></script>
 
 <!-- Favicons -->
@@ -385,10 +385,16 @@
         </h2>
 
 <ul>
-  <li>Feature: Added CustomStatesMixin to allow setting custom states even if the element is not formAssociated.</li>
+  <li>
+    <p>Feature: Added CustomStatesMixin to allow setting custom states even if the element is not formAssociated.</p>
+  </li>
   <li>Bug: Fixed a bug in <code class="highlighter-rouge">tabindex</code> detection in the constructor.</li>
   <li>Bug(types): Loosened Lit version for types for better deduping.</li>
-  <li>Bug: Removed <code class="highlighter-rouge">checkFocusability</code> check in the <code class="highlighter-rouge">constructor</code>. It should only run on <code class="highlighter-rouge">connectedCallback</code></li>
+  <li>
+    <p>Bug: Removed <code class="highlighter-rouge">checkFocusability</code> check in the <code class="highlighter-rouge">constructor</code>. It should only run on <code class="highlighter-rouge">connectedCallback</code></p>
+  </li>
+  <li>Deprecated: No longer run validators prior to <code class="highlighter-rouge">setFormValue</code></li>
+  <li>Deprecated: Remove <code class="highlighter-rouge">set form(value: string)</code> it’s confusing because browsers dont do this, and you should set the attribute manually.</li>
 </ul>
 
 <h2 id="v007---3142024">
@@ -420,12 +426,12 @@
             JavaScript
           </div>
 
-          <clipboard-copy for="a862456a-b4ae-4a5a-a79b-2134dda9c868" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="5c6b7fa4-a5a3-4f60-ab57-993dd83f6ad3" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="a862456a-b4ae-4a5a-a79b-2134dda9c868" hidden="">addCustomState (state) {}
+          <textarea id="5c6b7fa4-a5a3-4f60-ab57-993dd83f6ad3" hidden="">addCustomState (state) {}
 deleteCustomState (state) {}
 hasCustomState (state) {}
 toggleCustomState (state, force) {}
