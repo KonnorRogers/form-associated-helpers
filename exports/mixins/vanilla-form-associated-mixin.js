@@ -328,7 +328,6 @@ export function VanillaFormAssociatedMixin(superclass) {
         }
 
         this.internals.setFormValue(...args)
-        runValidators(this)
       }
 
       /**
@@ -337,10 +336,6 @@ export function VanillaFormAssociatedMixin(superclass) {
        */
       get form () {
         return this.internals.form
-      }
-
-      set form (str) {
-        this.setAttribute("form", str)
       }
     }
   )

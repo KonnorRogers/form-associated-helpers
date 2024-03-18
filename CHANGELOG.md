@@ -5,9 +5,13 @@
 ## Next
 
 - Feature: Added CustomStatesMixin to allow setting custom states even if the element is not formAssociated.
+
 - Bug: Fixed a bug in `tabindex` detection in the constructor.
 - Bug(types): Loosened Lit version for types for better deduping.
 - Bug: Removed `checkFocusability` check in the `constructor`. It should only run on `connectedCallback`
+
+- Deprecated: No longer run validators prior to `setFormValue`
+- Deprecated: Remove `set form(value: string)` it's confusing because browsers dont do this, and you should set the attribute manually.
 
 ## v0.0.7 - 3/14/2024
 
