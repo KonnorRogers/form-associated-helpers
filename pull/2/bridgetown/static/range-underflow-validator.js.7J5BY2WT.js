@@ -1,2 +1,0 @@
-import"/form-associated-helpers/pull/2/bridgetown/static/chunks/chunk-QEMWCF5H.js";var s={observedAttributes:["min"],checkValidity(i){let t=Number(i.min??i.getAttribute("min")),a=i.value,e={message:"",isValid:!0,invalidKeys:[]};return typeof a!="number"||a<t&&(e.message=`Please select a value that is more than or equal to ${t}.`,e.isValid=!1,e.invalidKeys.push("rangeUnderflow")),e}};export{s as RangeUnderflowValidator};
-//# sourceMappingURL=/form-associated-helpers/pull/2/bridgetown/static/range-underflow-validator.js.7J5BY2WT.js.map

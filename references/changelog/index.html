@@ -6,7 +6,7 @@
 <!-- <base href="/form-associated-helpers/"> -->
 
 <meta name="description" content="A collection of reusable mixins + helpers for working with form associated custom elements.">
-<link rel="modulepreload" href="/form-associated-helpers/bridgetown/static/javascript/index.OJXRJ3OV.js">
+<link rel="modulepreload" href="/form-associated-helpers/bridgetown/static/javascript/index.HBCM7ANK.js">
 <link rel="modulepreload" href="/form-associated-helpers/bridgetown/static/javascript/defer.YE7LWH5C.js">
 <link rel="preload" href="/form-associated-helpers/bridgetown/static/javascript/defer.CREW5JGX.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <!-- Critical CSS -->
@@ -15,7 +15,7 @@
 <noscript><link rel="stylesheet" href="/form-associated-helpers/bridgetown/static/javascript/defer.CREW5JGX.css"></noscript>
 
 <!-- Entrypoints -->
-<script data-turbo-track="reload" src="/form-associated-helpers/bridgetown/static/javascript/index.OJXRJ3OV.js" type="module"></script>
+<script data-turbo-track="reload" src="/form-associated-helpers/bridgetown/static/javascript/index.HBCM7ANK.js" type="module"></script>
 <script data-turbo-track="reload" src="/form-associated-helpers/bridgetown/static/javascript/defer.YE7LWH5C.js" type="module"></script>
 
 <!-- Favicons -->
@@ -380,6 +380,17 @@
   <li>Introduce a pattern for easier translations of error messages</li>
 </ul>
 
+<h2 id="next">
+          <a href="#next">Next</a>
+        </h2>
+
+<ul>
+  <li>Feature: Added CustomStatesMixin to allow setting custom states even if the element is not formAssociated.</li>
+  <li>Bug: Fixed a bug in <code class="highlighter-rouge">tabindex</code> detection in the constructor.</li>
+  <li>Bug(types): Loosened Lit version for types for better deduping.</li>
+  <li>Bug: Removed <code class="highlighter-rouge">checkFocusability</code> check in the <code class="highlighter-rouge">constructor</code>. It should only run on <code class="highlighter-rouge">connectedCallback</code></li>
+</ul>
+
 <h2 id="v007---3142024">
           <a href="#v007---3142024">v0.0.7 - 3/14/2024</a>
         </h2>
@@ -409,12 +420,12 @@
             JavaScript
           </div>
 
-          <clipboard-copy for="ae80c847-7af2-499a-8fe0-5064744aa119" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="f42e2da9-b6e1-42f3-8d6d-629e9f392d3d" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="ae80c847-7af2-499a-8fe0-5064744aa119" hidden="">addCustomState (state) {}
+          <textarea id="f42e2da9-b6e1-42f3-8d6d-629e9f392d3d" hidden="">addCustomState (state) {}
 deleteCustomState (state) {}
 hasCustomState (state) {}
 toggleCustomState (state, force) {}
@@ -479,6 +490,8 @@ toggleCustomState (state, force) {}
   <ol class="table-of-contents__list">
   <li class="side-nav__item">
         <a href="#todo" class="side-nav__link">TODO</a>
+      </li><li class="side-nav__item">
+        <a href="#next" class="side-nav__link">Next</a>
       </li><li class="side-nav__item">
         <a href="#v007---3142024" class="side-nav__link">v0.0.7 - 3/14/2024</a>
       </li><li class="side-nav__item">
