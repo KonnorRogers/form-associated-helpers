@@ -7,6 +7,7 @@
 - Feature: `runValidators` is now available on the host element.
 - Feature: Added CustomStatesMixin to allow setting custom states even if the element is not formAssociated.
 
+- Bug: remove `runValidators` from `formDisabledCallback`.
 - Bug: Fixed a bug in `tabindex` detection in the constructor.
 - Bug(types): Loosened Lit version for types for better deduping.
 - Bug: Removed `checkFocusability` check in the `constructor`. It should only run on `connectedCallback`
