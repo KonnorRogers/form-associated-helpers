@@ -260,7 +260,6 @@ export function VanillaFormAssociatedMixin(superclass) {
       formDisabledCallback(isDisabled) {
         this.disabled = isDisabled
         this.setValidity({})
-        this.runValidators() // Removes validations.
       }
 
       /**
