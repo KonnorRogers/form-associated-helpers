@@ -411,3 +411,32 @@ test('should be valid after calling `setCustomValidity("")`', async () => {
   await el.updateComplete
   assert.isTrue(el.checkValidity());
 });
+
+test("Should not submit anything when disabled", async () => {
+  const form = await fixture(html`<form><textarea-component name="textarea"></textarea-component></form>`);
+  const textarea = form.querySelector("textarea-component")
+
+  const value = "Hello World"
+  textarea.value = value
+
+  await textarea.updateComplete
+
+  let formData = new FormData(form)
+  assert.lengthOf(formData.getAll("textarea"), 1)
+  assert.equal(formData.get("textarea"), value)
+
+  textarea.toggleAttribute("disabled", true)
+
+  formData = new FormData(form)
+  assert.lengthOf(formData.getAll("textarea"), 0)
+  assert.equal(formData.get("textarea"), null)
+
+  textarea.removeAttribute("disabled")
+  await textarea.updateComplete
+
+  formData = new FormData(form)
+  assert.lengthOf(formData.getAll("textarea"), 1)
+  assert.equal(formData.get("textarea"), value)
+
+
+})
