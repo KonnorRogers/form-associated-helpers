@@ -4,7 +4,9 @@
 
 ## Next
 
-- Feature: `runValidators` is now available on the host element.
+- BREAKING_CHANGE: Validators are now functions. Because of shared objects, we don't want mutations to override objects. This also opens up the possibility of allowing "options" in the future.
+
+- Feature: `this.updateValidity()` is now exposed on elements and replaces the old private `runValidators(element)` function.
 - Feature: Added CustomStatesMixin to allow setting custom states even if the element is not formAssociated.
 
 - Bug: remove `runValidators` from `formDisabledCallback`.

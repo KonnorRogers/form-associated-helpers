@@ -22,38 +22,43 @@ function findClosestSteps (min, value, step) {
 }
 
 /**
- * @type {import("../types.js").Validator<HTMLElement & { min?: number, step?: number }>}
+ * @type {() => import("../types.js").Validator<HTMLElement & { min?: number, step?: number }> & { message: (element: HTMLElement, options: { low: number, high: number }) => string }}
  */
-export const StepMismatchValidator = {
-  observedAttributes: ["min", "step"],
-  checkValidity (element) {
-    const min = Number(element.min ?? element.getAttribute("min"))
-    const value = Number(element.value ?? element.getAttribute("value"))
-    const step = Number(element.step ?? element.getAttribute("step"))
+export const StepMismatchValidator = () => {
+  return {
+    observedAttributes: ["min", "step"],
+    message (_element, { low, high }) {
+      return `Please select a valid value. The two nearest valid values are ${low} and ${high}.`
+    },
+    checkValidity (element) {
+      const min = Number(element.min ?? element.getAttribute("min"))
+      const value = Number(element.value ?? element.getAttribute("value"))
+      const step = Number(element.step ?? element.getAttribute("step"))
 
-    /**
-     * @type {ReturnType<import("../types.js").Validator["checkValidity"]>}
-     */
-    const validity = {
-      message: "",
-      isValid: true,
-      invalidKeys: []
-    }
+      /**
+      * @type {ReturnType<import("../types.js").Validator["checkValidity"]>}
+      */
+      const validity = {
+        message: "",
+        isValid: true,
+        invalidKeys: []
+      }
 
-    if (isNaN(min) || isNaN(value) || isNaN(step)) {
+      if (isNaN(min) || isNaN(value) || isNaN(step)) {
+        return validity
+      }
+
+      const isValid = isValidStep(min, value, step)
+
+      if (isValid) return validity
+
+      const {low, high} = findClosestSteps(min, value, step)
+
+      validity.message = (typeof this.message === "function" ? this.message(element, { low, high }) : this.message) || ""
+      validity.isValid = false
+      validity.invalidKeys.push("stepMismatch")
+
       return validity
     }
-
-    const isValid = isValidStep(min, value, step)
-
-    if (isValid) return validity
-
-    const {low, high} = findClosestSteps(min, value, step)
-
-    validity.message = `Please select a valid value. The two nearest valid values are ${low} and ${high}`
-    validity.isValid = false
-    validity.invalidKeys.push("stepMismatch")
-
-    return validity
   }
 }
