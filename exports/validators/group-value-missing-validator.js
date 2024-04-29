@@ -2,7 +2,10 @@
  * @type {() => import("../types.js").Validator<HTMLElement & { required?: boolean, form: HTMLFormElement, name?: string }>}
  */
 export const GroupValueMissingValidator = () => {
-  return {
+  /**
+   * @type {ReturnType<GroupValueMissingValidator>}
+   */
+  const obj = {
     observedAttributes: ["required"],
     message: "Please fill out this field",
     checkValidity (element) {
@@ -26,7 +29,7 @@ export const GroupValueMissingValidator = () => {
 
       if (!form || !element.name) {
         if (!element.value) {
-          validity.message = (typeof this.message === "function" ? this.message(element) : this.message) || ""
+          validity.message = (typeof obj.message === "function" ? obj.message(element) : obj.message) || ""
           validity.isValid = false
           validity.invalidKeys.push("valueMissing")
         }
@@ -39,10 +42,10 @@ export const GroupValueMissingValidator = () => {
         return validity
       }
 
-
-
       return validity
     }
   }
+
+  return obj
 }
 

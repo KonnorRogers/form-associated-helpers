@@ -2,7 +2,10 @@
  * @type {() => import("../types.js").Validator<HTMLElement & { required?: boolean }>}
  */
 export const ValueMissingValidator = () => {
-  return {
+  /**
+   * @type {ReturnType<ValueMissingValidator>}
+   */
+  const obj = {
     observedAttributes: ["required"],
     message: "Please fill out this field.",
     checkValidity (element) {
@@ -23,7 +26,7 @@ export const ValueMissingValidator = () => {
       }
 
       if (!element.value) {
-        validity.message = (typeof this.message === "function" ? this.message(element) : this.message) || ""
+        validity.message = (typeof obj.message === "function" ? obj.message(element) : obj.message) || ""
         validity.isValid = false
         validity.invalidKeys.push("valueMissing")
       }
@@ -31,5 +34,7 @@ export const ValueMissingValidator = () => {
       return validity
     }
   }
+
+  return obj
 }
 

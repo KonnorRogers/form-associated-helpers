@@ -2,7 +2,10 @@
  * @type {() => import("../types.js").Validator<HTMLElement & { maxLength?: number, length?: number }> & {message: (element: HTMLElement, maxLength: number, stringLength: number) => string}}
  */
 export const TooLongValidator = () => {
-  return {
+  /**
+   * @type {ReturnType<TooLongValidator>}
+   */
+  const obj = {
     observedAttributes: ["maxlength"],
     message (_element, maxLength, stringLength) {
       return `Please use less than or equal to ${maxLength} characters. You are currently using ${stringLength} characters.`
@@ -26,7 +29,7 @@ export const TooLongValidator = () => {
       if (!maxLength) { return validity }
 
       if (maxLength > value.length) {
-        validity.message = (typeof this.message === "function" ? this.message(element, maxLength, value.length) : this.message) || ""
+        validity.message = (typeof obj.message === "function" ? obj.message(element, maxLength, value.length) : obj.message) || ""
         validity.isValid = false
         validity.invalidKeys.push("tooLong")
       }
@@ -34,5 +37,7 @@ export const TooLongValidator = () => {
       return validity;
     }
   }
+
+  return obj
 }
 

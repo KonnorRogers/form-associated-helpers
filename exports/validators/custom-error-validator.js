@@ -4,7 +4,10 @@
  * @type {() => import("../types.js").Validator<HTMLElement & { error?: string | boolean }>}
  */
 export const CustomErrorValidator = () => {
-  return {
+  /**
+   * @type {ReturnType<CustomErrorValidator>}
+   */
+ const obj = {
     observedAttributes: ["error"],
     message: "An error has occurred",
     checkValidity (element) {
@@ -18,7 +21,7 @@ export const CustomErrorValidator = () => {
       }
 
       if (element.error === true || element.hasAttribute("error")) {
-        const defaultErrorMessage = (typeof this.message === "function" ? this.message(element) : this.message) || ""
+        const defaultErrorMessage = (typeof obj.message === "function" ? obj.message(element) : obj.message) || ""
         let message = element.error ?? element.getAttribute("error")
 
         if (!message || message === true) {
@@ -34,5 +37,6 @@ export const CustomErrorValidator = () => {
       return validity
     }
   }
+  return obj
 }
 

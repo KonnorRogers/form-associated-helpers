@@ -1,8 +1,13 @@
+// @ts-check
+
 /**
  * @type {() => import("../types.js").Validator<HTMLElement & { value?: string | null | File | FormData } & { pattern?: string }>}
  */
 export const PatternMismatchValidator = () => {
-  return {
+  /**
+   * @type {ReturnType<PatternMismatchValidator>}
+   */
+  const obj = {
     observedAttributes: ["pattern"],
     message: "Please match the requested format.",
     checkValidity (element) {
@@ -27,9 +32,10 @@ export const PatternMismatchValidator = () => {
       if (isValid) return validity
 
       validity.isValid = false
-      validity.message = (typeof this.message === "function" ? this.message(element) : this.message) || ""
+      validity.message = (typeof obj.message === "function" ? obj.message(element) : obj.message) || ""
       validity.invalidKeys.push("patternMismatch")
       return validity
     }
   }
+  return obj
 }

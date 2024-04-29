@@ -3,7 +3,10 @@
  * }}
  */
 export const TooShortValidator = () => {
-  return {
+  /**
+   * @type {ReturnType<TooShortValidator>}
+   */
+  const obj = {
     observedAttributes: ["minlength"],
     message (_element, minLength, stringLength) {
       return `Please use greater than or equal to ${minLength} characters. You are currently using ${stringLength} characters.`;
@@ -27,7 +30,7 @@ export const TooShortValidator = () => {
       if (!minLength) { return validity }
 
       if (minLength > value.length) {
-        validity.message = (typeof this.message === "function" ? this.message(element, minLength, value.length) : this.message) || ""
+        validity.message = (typeof obj.message === "function" ? obj.message(element, minLength, value.length) : obj.message) || ""
         validity.isValid = false
         validity.invalidKeys.push("tooShort")
       }
@@ -35,4 +38,6 @@ export const TooShortValidator = () => {
       return validity;
     }
   }
+
+  return obj
 }

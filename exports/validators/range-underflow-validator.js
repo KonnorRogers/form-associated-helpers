@@ -2,7 +2,10 @@
  * @type {() => import("../types.js").Validator<HTMLElement & {min?: number}> & { message: (element: HTMLElement, min: number) => string }}
  */
 export const RangeUnderflowValidator = () => {
-  return {
+  /**
+   * @type {ReturnType<RangeUnderflowValidator>}
+   */
+  const obj = {
     observedAttributes: ["min"],
     message (_element, min) {
       return `Please select a value that is more than or equal to ${min}.`
@@ -23,7 +26,7 @@ export const RangeUnderflowValidator = () => {
       if (typeof value !== "number") return validity
 
       if (value < min) {
-        validity.message = (typeof this.message === "function" ? this.message(element, min) : this.message) || ""
+        validity.message = (typeof obj.message === "function" ? obj.message(element, min) : obj.message) || ""
         validity.isValid = false
         validity.invalidKeys.push("rangeUnderflow")
       }
@@ -31,4 +34,6 @@ export const RangeUnderflowValidator = () => {
       return validity
     }
   }
+
+  return obj
 }

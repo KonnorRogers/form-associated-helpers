@@ -25,7 +25,10 @@ function findClosestSteps (min, value, step) {
  * @type {() => import("../types.js").Validator<HTMLElement & { min?: number, step?: number }> & { message: (element: HTMLElement, options: { low: number, high: number }) => string }}
  */
 export const StepMismatchValidator = () => {
-  return {
+  /**
+   * @type {ReturnType<StepMismatchValidator>}
+   */
+  const obj = {
     observedAttributes: ["min", "step"],
     message (_element, { low, high }) {
       return `Please select a valid value. The two nearest valid values are ${low} and ${high}.`
@@ -54,11 +57,13 @@ export const StepMismatchValidator = () => {
 
       const {low, high} = findClosestSteps(min, value, step)
 
-      validity.message = (typeof this.message === "function" ? this.message(element, { low, high }) : this.message) || ""
+      validity.message = (typeof obj.message === "function" ? obj.message(element, { low, high }) : obj.message) || ""
       validity.isValid = false
       validity.invalidKeys.push("stepMismatch")
 
       return validity
     }
   }
+
+  return obj
 }
