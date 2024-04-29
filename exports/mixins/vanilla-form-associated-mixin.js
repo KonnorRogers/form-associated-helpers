@@ -17,9 +17,6 @@ import { FormAssociatedMixin } from "./form-associated-mixin.js"
  */
 export function VanillaFormAssociatedMixin(superclass) {
   return (
-    /**
-     * @implements {ElementInternals}
-     */
     class extends CustomStatesMixin(FormAssociatedMixin(superclass)) {
       /**
        * @override
@@ -46,7 +43,7 @@ export function VanillaFormAssociatedMixin(superclass) {
        */
       static get validators () {
         return [
-          ValueMissingValidator
+          ValueMissingValidator()
         ]
       }
 
@@ -125,6 +122,12 @@ export function VanillaFormAssociatedMixin(superclass) {
         this.addEventListener("focusout", this.handleInteraction)
         this.addEventListener("blur", this.handleInteraction)
         this.addEventListener("invalid", this.handleInvalid)
+
+        // Private
+
+        /** This is a dirty check for custom errors. In Safari, {customError: true} always happens with `setValidity()`. This is the workaround. */
+        this.__hasCustomError = false
+        this.__customErrorMessage = ""
       }
 
       /**
@@ -140,7 +143,7 @@ export function VanillaFormAssociatedMixin(superclass) {
 
         this.hasInteracted = true
 
-        updateInteractionState(this)
+        this.updateInteractionState()
       }
 
       /**
@@ -153,7 +156,7 @@ export function VanillaFormAssociatedMixin(superclass) {
         if (!this.matches(":focus-within") && this.valueHasChanged) {
           this.hasInteracted = true
         }
-        this.runValidators()
+        this.updateValidity()
       }
 
       get allValidators () {
@@ -196,11 +199,16 @@ export function VanillaFormAssociatedMixin(superclass) {
        * @param {string} message
        */
       setCustomValidity (message) {
-        this.setValidity({})
-        if (message) {
-          this.setValidity({customError: true}, message)
+        if (!message) {
+          this.__hasCustomError = false
+          this.__customErrorMessage = ""
+          this.setValidity({})
           return
         }
+
+        this.__hasCustomError = true
+        this.__customErrorMessage = message
+        this.internals.setValidity({customError: true}, message)
       }
 
       /**
@@ -244,11 +252,12 @@ export function VanillaFormAssociatedMixin(superclass) {
           this.formControl.value = this.defaultValue
         }
 
+        this.setCustomValidity("")
         this.setValidity({})
         this.value = this.defaultValue
         this.hasInteracted = false
         this.valueHasChanged = false
-        this.runValidators()
+        this.updateValidity()
         this.setFormValue(this.defaultValue, this.defaultValue)
       }
 
@@ -259,6 +268,7 @@ export function VanillaFormAssociatedMixin(superclass) {
       */
       formDisabledCallback(isDisabled) {
         this.disabled = isDisabled
+        this.setCustomValidity("")
         this.setValidity({})
       }
 
@@ -271,7 +281,9 @@ export function VanillaFormAssociatedMixin(superclass) {
       formStateRestoreCallback(state, reason) {
         this.value = state
 
+        this.setCustomValidity("")
         this.setValidity({})
+
         if (this.formControl) {
           this.formControl.value = state
         }
@@ -280,8 +292,9 @@ export function VanillaFormAssociatedMixin(superclass) {
       // Additional things not added by the `attachInternals()` call.
 
       /**
-      * @param {Parameters<ElementInternals["setValidity"]>} params
-      */
+       * This should generally not be used by end users. This is intended for custom validators.
+       * @param {Parameters<ElementInternals["setValidity"]>} params
+       */
       setValidity (...params) {
         let flags = params[0]
         let message = params[1]
@@ -294,19 +307,18 @@ export function VanillaFormAssociatedMixin(superclass) {
         }
 
         this.internals.setValidity(flags, message, anchor)
-        updateInteractionState(this)
+        this.updateInteractionState()
       }
 
       reportValidity () {
-        this.runValidators()
+        this.updateValidity()
         return this.internals.reportValidity()
       }
 
       checkValidity () {
-        this.runValidators()
+        this.updateValidity()
         return this.internals.checkValidity()
       }
-
 
       /**
         * `validationTarget` is used for displaying native validation popups as the "anchor"
@@ -326,6 +338,7 @@ export function VanillaFormAssociatedMixin(superclass) {
         }
 
         this.internals.setFormValue(...args)
+        this.updateValidity()
       }
 
       /**
@@ -386,33 +399,77 @@ export function VanillaFormAssociatedMixin(superclass) {
         }
         element.setValidity(flags, finalMessage, formControl)
       }
+
+      updateValidity () {
+        if (this.disabled || this.getAttribute("disabled")) {
+          this.setCustomValidity("")
+          this.setValidity({})
+          // We don't run validators on disabled thiss to be inline with native HTMLElements.
+          // https://codepen.io/paramagicdev/pen/PoLogeL
+          return
+        }
+
+        const validators = /** @type {{allValidators?: Array<import("../types.js").Validator>}} */ (/** @type {unknown} */ (this)).allValidators
+
+        if (!validators) {
+          this.setValidity({})
+          return
+        }
+
+        const customError = Boolean(this.__hasCustomError)
+        const flags = {
+          customError
+        }
+
+        const formControl = this.formControl || undefined
+
+        let finalMessage = ""
+
+        for (const validator of validators) {
+          const { isValid, message, invalidKeys } = validator.checkValidity(this)
+
+          if (isValid) { continue }
+
+          if (!finalMessage) {
+            finalMessage = message
+          }
+
+          if (invalidKeys?.length >= 0) {
+            // @ts-expect-error
+            invalidKeys.forEach((str) => flags[str] = true)
+          }
+        }
+
+        // This is a workaround for preserving custom errors
+        if (!finalMessage) {
+          finalMessage = this.validationMessage || this.__customErrorMessage
+        }
+
+        this.setValidity(flags, finalMessage, formControl)
+      }
+
+      updateInteractionState () {
+        if (this.disabled || this.hasAttribute("disabled")) {
+          this.deleteCustomState("invalid")
+          this.deleteCustomState("user-invalid")
+          this.deleteCustomState("valid")
+          this.deleteCustomState("user-valid")
+          return
+        }
+
+        if (this.validity.valid) {
+          this.deleteCustomState("invalid")
+          this.deleteCustomState("user-invalid")
+          this.addCustomState("valid")
+          this.toggleCustomState("user-valid", this.hasInteracted && this.valueHasChanged)
+        } else {
+          this.deleteCustomState("valid")
+          this.deleteCustomState("user-valid")
+          this.addCustomState("invalid")
+          this.toggleCustomState("user-invalid", this.hasInteracted && this.valueHasChanged)
+        }
+      }
     }
   )
-}
-
-
-/**
- * @param {HTMLElement & { disabled: boolean, validity: ValidityState, hasInteracted: boolean, valueHasChanged: boolean } & InstanceType<ReturnType<typeof VanillaFormAssociatedMixin<FormAssociatedElement>>>} el
- */
-function updateInteractionState (el) {
-  if (el.disabled || el.hasAttribute("disabled")) {
-    el.deleteCustomState("invalid")
-    el.deleteCustomState("user-invalid")
-    el.deleteCustomState("valid")
-    el.deleteCustomState("user-valid")
-    return
-  }
-
-  if (el.validity.valid) {
-    el.deleteCustomState("invalid")
-    el.deleteCustomState("user-invalid")
-    el.addCustomState("valid")
-    el.toggleCustomState("user-valid", el.hasInteracted && el.valueHasChanged)
-  } else {
-    el.deleteCustomState("valid")
-    el.deleteCustomState("user-valid")
-    el.addCustomState("invalid")
-    el.toggleCustomState("user-invalid", el.hasInteracted && el.valueHasChanged)
-  }
 }
 
