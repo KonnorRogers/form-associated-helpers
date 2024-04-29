@@ -240,7 +240,7 @@ export function VanillaFormAssociatedMixin(superclass) {
           }
         }
 
-        this.runValidators()
+        this.updateValidity()
       }
 
       /**
@@ -252,8 +252,7 @@ export function VanillaFormAssociatedMixin(superclass) {
           this.formControl.value = this.defaultValue
         }
 
-        this.setCustomValidity("")
-        this.setValidity({})
+        this.resetValidity()
         this.value = this.defaultValue
         this.hasInteracted = false
         this.valueHasChanged = false
@@ -268,8 +267,8 @@ export function VanillaFormAssociatedMixin(superclass) {
       */
       formDisabledCallback(isDisabled) {
         this.disabled = isDisabled
-        this.setCustomValidity("")
-        this.setValidity({})
+        this.resetValidity()
+        this.updateValidity()
       }
 
       /**
@@ -281,12 +280,13 @@ export function VanillaFormAssociatedMixin(superclass) {
       formStateRestoreCallback(state, reason) {
         this.value = state
 
-        this.setCustomValidity("")
-        this.setValidity({})
-
         if (this.formControl) {
           this.formControl.value = state
         }
+
+        this.resetValidity()
+        this.updateValidity()
+
       }
 
       // Additional things not added by the `attachInternals()` call.
@@ -349,61 +349,14 @@ export function VanillaFormAssociatedMixin(superclass) {
         return this.internals.form
       }
 
-      /**
-      * @template {HTMLElement & ElementInternals & { formControl?: any, disabled?: boolean }} T
-      * @this {T}
-      */
-      runValidators () {
-        const element = this
-
-        if (element.disabled || element.getAttribute("disabled")) {
-          element.setValidity({})
-          // We don't run validators on disabled elements to be inline with native HTMLElements.
-          // https://codepen.io/paramagicdev/pen/PoLogeL
-          return
-        }
-
-        const validators = /** @type {{allValidators?: Array<import("../types.js").Validator>}} */ (/** @type {unknown} */ (element)).allValidators
-
-        if (!validators) {
-          element.setValidity({})
-          return
-        }
-
-        const flags = {
-          customError: element.validity.customError
-        }
-
-        const formControl = element.formControl || undefined
-
-        let finalMessage = ""
-
-        for (const validator of validators) {
-          const { isValid, message, invalidKeys } = validator.checkValidity(element)
-
-          if (isValid) { continue }
-
-          if (!finalMessage) {
-            finalMessage = message
-          }
-
-          if (invalidKeys?.length >= 0) {
-            // @ts-expect-error
-            invalidKeys.forEach((str) => flags[str] = true)
-          }
-        }
-
-        // This is a workaround for preserving custom errors
-        if (!finalMessage) {
-          finalMessage = element.validationMessage
-        }
-        element.setValidity(flags, finalMessage, formControl)
+      resetValidity () {
+        this.setCustomValidity("")
+        this.setValidity({})
       }
 
       updateValidity () {
         if (this.disabled || this.getAttribute("disabled")) {
-          this.setCustomValidity("")
-          this.setValidity({})
+          this.resetValidity()
           // We don't run validators on disabled thiss to be inline with native HTMLElements.
           // https://codepen.io/paramagicdev/pen/PoLogeL
           return
