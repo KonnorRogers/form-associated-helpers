@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../../../exports/validators/value-missing-validator.js"],
-  "sourcesContent": ["/**\n * @type {() => import(\"../types.js\").Validator<HTMLElement & { required?: boolean }>}\n */\nexport const ValueMissingValidator = () => {\n  return {\n    observedAttributes: [\"required\"],\n    message: \"Please fill out this field.\",\n    checkValidity (element) {\n      /**\n      * @type {ReturnType<import(\"../types.js\").Validator[\"checkValidity\"]>}\n      */\n      const validity = {\n        message: \"\",\n        isValid: true,\n        invalidKeys: []\n      }\n\n      const isRequired = element.required ?? element.hasAttribute(\"required\")\n\n      // Always true if the element isn't required.\n      if (!isRequired) {\n        return validity\n      }\n\n      if (!element.value) {\n        validity.message = (typeof this.message === \"function\" ? this.message(element) : this.message) || \"\"\n        validity.isValid = false\n        validity.invalidKeys.push(\"valueMissing\")\n      }\n\n      return validity\n    }\n  }\n}\n\n"],
-  "mappings": "AAGO,IAAMA,EAAwB,KAC5B,CACL,mBAAoB,CAAC,UAAU,EAC/B,QAAS,8BACT,cAAeC,EAAS,CAItB,IAAMC,EAAW,CACf,QAAS,GACT,QAAS,GACT,YAAa,CAAC,CAChB,EAKA,OAHmBD,EAAQ,UAAYA,EAAQ,aAAa,UAAU,KAOjEA,EAAQ,QACXC,EAAS,SAAW,OAAO,KAAK,SAAY,WAAa,KAAK,QAAQD,CAAO,EAAI,KAAK,UAAY,GAClGC,EAAS,QAAU,GACnBA,EAAS,YAAY,KAAK,cAAc,IAGnCA,CACT,CACF",
-  "names": ["ValueMissingValidator", "element", "validity"]
-}
