@@ -6,13 +6,14 @@
 
 - BREAKING_CHANGE: Validators are now functions. Because of shared objects, we don't want mutations to override objects. This also opens up the possibility of allowing "options" in the future.
 
+- Feature: `this.updateInteractionState()` is now exposed on the host element.
 - Feature: `this.updateValidity()` is now exposed on elements and replaces the old private `runValidators(element)` function.
 - Feature: Added CustomStatesMixin to allow setting custom states even if the element is not formAssociated.
 
 - Bug: remove `runValidators` from `formDisabledCallback`.
 - Bug: Fixed a bug in `tabindex` detection in the constructor.
 - Bug(types): Loosened Lit version for types for better deduping.
-- Bug: Removed `checkFocusability` check in the `constructor`. It should only run on `connectedCallback`
+- Bug: Removed `checkFocusability`
 
 - Deprecated: No longer run validators prior to `setFormValue`
 - Deprecated: Remove `set form(value: string)` it's confusing because browsers dont do this, and you should set the attribute manually.
