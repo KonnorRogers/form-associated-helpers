@@ -46,8 +46,8 @@ export function LitTextareaMixin(superclass) {
       static get validators () {
         return [
           ...super.validators,
-          TooLongValidator,
-          TooShortValidator,
+          TooLongValidator(),
+          TooShortValidator(),
         ]
       }
 

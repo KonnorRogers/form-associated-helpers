@@ -12,7 +12,7 @@ export default class TextareaComponent extends LitTextareaMixin(LitElement) {
    */
   static shadowRootOptions = {...LitElement.shadowRootOptions, delegatesFocus: true};
 
-  static validators = [MirrorValidator]
+  static validators = [MirrorValidator()]
 
   static get properties () {
     return {

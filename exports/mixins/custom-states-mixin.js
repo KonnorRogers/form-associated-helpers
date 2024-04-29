@@ -15,7 +15,6 @@ export function CustomStatesMixin(superclass) {
        */
       addCustomState (state) {
         try {
-          // @ts-expect-error
           this.internals.states.add(state)
         } catch (_) {
           // Without this, test suite errors.
@@ -29,7 +28,6 @@ export function CustomStatesMixin(superclass) {
        */
       deleteCustomState (state) {
         try {
-          // @ts-expect-error
           this.internals.states.delete(state)
         } catch (_) {
           // Without this, test suite errors.
@@ -62,7 +60,6 @@ export function CustomStatesMixin(superclass) {
        */
       hasCustomState (state) {
         try {
-          // @ts-expect-error
           return this.internals.states.has(state)
         } catch (_) {
           // Without this, test suite errors.

@@ -1,3 +1,8 @@
+/**
+ * Global type to add ElementInternals.states
+ * Can go away when TS ships proper support.
+ * @type {import("../../types/index.d.ts")}
+ */
 
 /**
  * A mixin to call `attachInternals()`
@@ -20,53 +25,12 @@ export function FormAssociatedMixin(superclass) {
       constructor(...args) {
         super(...args)
 
-        if (typeof this.attachInternals !== "function") {
-          console.error(`Element Internals are not supported in your browser.`)
-          return
-        }
-
-        try {
-          /**
-          * We dont make it private like #internals because then its not available in the mixin.
-          * @type {ReturnType<HTMLElement["attachInternals"]>}
-          */
-          this.internals = this.attachInternals()
-        } catch (err) {
-          // Perhaps already attached?
-          console.error(err)
-        }
-      }
-
-      connectedCallback () {
-        if (this.internals == null) return
-
-        // @ts-expect-error
-        if (typeof super.connectedCallback === "function") {
-          // @ts-expect-error
-          super.connectedCallback()
-          checkFocusability(this)
-        }
+        /**
+        * We dont make it private like #internals because then its not available in the mixin.
+        * @type {ReturnType<HTMLElement["attachInternals"]>}
+        */
+        this.internals = this.attachInternals()
       }
     }
   )
 }
-/**
- * @param {HTMLElement} element
- * @return {boolean}
- */
-function checkFocusability (element) {
-  if (element.shadowRoot && element.shadowRoot.delegatesFocus !== true) {
-    if (!isNaN(element.tabIndex)) return true
-    // FormAssociated custom elements either need to have delegatedFocus, or need to have a tabindex on the host.
-    const tabindexAttr = element.getAttribute("tabindex")?.trim()
-    const tabindex = tabindexAttr ? Number(tabindexAttr) : null
-
-    if (tabindex == null || isNaN(tabindex)) {
-      console.error(`FormAssociated custom elements need a "tabindex" or to be registered with "{ delegatesFocus: true }".\nThe following element is in violation: `)
-      console.error(element)
-      return false
-    }
-  }
-  return true
-}
-
