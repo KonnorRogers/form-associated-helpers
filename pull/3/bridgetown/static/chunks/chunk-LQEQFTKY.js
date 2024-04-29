@@ -1,0 +1,2 @@
+var t=()=>({observedAttributes:["required"],message:"Please fill out this field.",checkValidity(s){let i={message:"",isValid:!0,invalidKeys:[]};return(s.required??s.hasAttribute("required"))&&(s.value||(i.message=(typeof this.message=="function"?this.message(s):this.message)||"",i.isValid=!1,i.invalidKeys.push("valueMissing"))),i}});export{t as a};
+//# sourceMappingURL=/form-associated-helpers/pull/3/bridgetown/static/chunks/chunk-LQEQFTKY.js.map
