@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../../exports/validators/type-mismatch-validator.js"],
-  "sourcesContent": ["/**\n * @type {import(\"../types.js\").Validator<HTMLElement & { formControl?: HTMLElement & ElementInternals }>}\n */\nexport const TypeMismatchValidator = {\n  // observedAttributes: [],\n  checkValidity (element) {\n    /**\n     * @type {ReturnType<import(\"../types.js\").Validator[\"checkValidity\"]>}\n     */\n    const validity = {\n      message: \"\",\n      isValid: true,\n      invalidKeys: []\n    }\n    const formControl = element.formControl\n\n    if (!formControl) return validity\n\n    formControl.checkValidity()\n    if (formControl.validity.typeMismatch === true) {\n      validity.invalidKeys.push(\"typeMismatch\")\n      validity.isValid = false\n      validity.message = formControl.validationMessage\n      return validity\n    }\n\n    return validity\n  }\n}\n\n\n"],
-  "mappings": "4EAGO,IAAMA,EAAwB,CAEnC,cAAeC,EAAS,CAItB,IAAMC,EAAW,CACf,QAAS,GACT,QAAS,GACT,YAAa,CAAC,CAChB,EACMC,EAAcF,EAAQ,YAE5B,OAAKE,GAELA,EAAY,cAAc,EACtBA,EAAY,SAAS,eAAiB,KACxCD,EAAS,YAAY,KAAK,cAAc,EACxCA,EAAS,QAAU,GACnBA,EAAS,QAAUC,EAAY,mBACxBD,GAPgBA,CAW3B,CACF",
-  "names": ["TypeMismatchValidator", "element", "validity", "formControl"]
-}

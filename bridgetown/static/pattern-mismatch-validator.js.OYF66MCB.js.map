@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../../exports/validators/pattern-mismatch-validator.js"],
-  "sourcesContent": ["/**\n * @type {import(\"../types.js\").Validator<HTMLElement & { value?: string | null | File | FormData } & { pattern?: string }>}\n */\nexport const PatternMismatchValidator = {\n  observedAttributes: [\"pattern\"],\n  checkValidity (element) {\n    /**\n     * @type {ReturnType<import(\"../types.js\").Validator[\"checkValidity\"]>}\n     */\n    const validity = {\n      message: \"\",\n      isValid: true,\n      invalidKeys: []\n    }\n\n    const pattern = element.pattern ?? element.getAttribute(\"pattern\")\n    /** If no value is provided, this validator should return true */\n    if (!(typeof element.value === \"string\") || !pattern) {\n      return validity;\n    }\n\n    const regExp = new RegExp(pattern);\n    const isValid = !!regExp.exec(element.value);\n\n    if (isValid) return validity\n\n    validity.isValid = false\n    validity.message = \"Please match the request format.\"\n    validity.invalidKeys.push(\"patternMismatch\")\n    return validity\n  }\n}\n"],
-  "mappings": "4EAGO,IAAMA,EAA2B,CACtC,mBAAoB,CAAC,SAAS,EAC9B,cAAeC,EAAS,CAItB,IAAMC,EAAW,CACf,QAAS,GACT,QAAS,GACT,YAAa,CAAC,CAChB,EAEMC,EAAUF,EAAQ,SAAWA,EAAQ,aAAa,SAAS,EASjE,OAPM,OAAOA,EAAQ,OAAU,UAAa,CAACE,GAK7B,CAAC,CADF,IAAI,OAAOA,CAAO,EACR,KAAKF,EAAQ,KAAK,IAI3CC,EAAS,QAAU,GACnBA,EAAS,QAAU,mCACnBA,EAAS,YAAY,KAAK,iBAAiB,GACpCA,CACT,CACF",
-  "names": ["PatternMismatchValidator", "element", "validity", "pattern"]
-}

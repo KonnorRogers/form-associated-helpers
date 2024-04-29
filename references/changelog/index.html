@@ -6,7 +6,7 @@
 <!-- <base href="/form-associated-helpers/"> -->
 
 <meta name="description" content="A collection of reusable mixins + helpers for working with form associated custom elements.">
-<link rel="modulepreload" href="/form-associated-helpers/bridgetown/static/javascript/index.3S63HAV4.js">
+<link rel="modulepreload" href="/form-associated-helpers/bridgetown/static/javascript/index.2CJVQYU6.js">
 <link rel="modulepreload" href="/form-associated-helpers/bridgetown/static/javascript/defer.YE7LWH5C.js">
 <link rel="preload" href="/form-associated-helpers/bridgetown/static/javascript/defer.CREW5JGX.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <!-- Critical CSS -->
@@ -15,7 +15,7 @@
 <noscript><link rel="stylesheet" href="/form-associated-helpers/bridgetown/static/javascript/defer.CREW5JGX.css"></noscript>
 
 <!-- Entrypoints -->
-<script data-turbo-track="reload" src="/form-associated-helpers/bridgetown/static/javascript/index.3S63HAV4.js" type="module"></script>
+<script data-turbo-track="reload" src="/form-associated-helpers/bridgetown/static/javascript/index.2CJVQYU6.js" type="module"></script>
 <script data-turbo-track="reload" src="/form-associated-helpers/bridgetown/static/javascript/defer.YE7LWH5C.js" type="module"></script>
 
 <!-- Favicons -->
@@ -385,7 +385,11 @@
         </h2>
 
 <ul>
-  <li>Feature: <code class="highlighter-rouge">runValidators</code> is now available on the host element.</li>
+  <li>
+    <p>BREAKING_CHANGE: Validators are now functions. Because of shared objects, we don’t want mutations to override objects. This also opens up the possibility of allowing “options” in the future.</p>
+  </li>
+  <li>Feature: <code class="highlighter-rouge">this.updateInteractionState()</code> is now exposed on the host element.</li>
+  <li>Feature: <code class="highlighter-rouge">this.updateValidity()</code> is now exposed on elements and replaces the old private <code class="highlighter-rouge">runValidators(element)</code> function.</li>
   <li>
     <p>Feature: Added CustomStatesMixin to allow setting custom states even if the element is not formAssociated.</p>
   </li>
@@ -393,7 +397,7 @@
   <li>Bug: Fixed a bug in <code class="highlighter-rouge">tabindex</code> detection in the constructor.</li>
   <li>Bug(types): Loosened Lit version for types for better deduping.</li>
   <li>
-    <p>Bug: Removed <code class="highlighter-rouge">checkFocusability</code> check in the <code class="highlighter-rouge">constructor</code>. It should only run on <code class="highlighter-rouge">connectedCallback</code></p>
+    <p>Bug: Removed <code class="highlighter-rouge">checkFocusability</code></p>
   </li>
   <li>Deprecated: No longer run validators prior to <code class="highlighter-rouge">setFormValue</code></li>
   <li>Deprecated: Remove <code class="highlighter-rouge">set form(value: string)</code> it’s confusing because browsers dont do this, and you should set the attribute manually.</li>
@@ -428,12 +432,12 @@
             JavaScript
           </div>
 
-          <clipboard-copy for="33785058-7923-4a86-8bf3-82b9d60f1ef7" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="9f4765ab-1475-464f-bcac-67272dfed4ad" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="33785058-7923-4a86-8bf3-82b9d60f1ef7" hidden="">addCustomState (state) {}
+          <textarea id="9f4765ab-1475-464f-bcac-67272dfed4ad" hidden="">addCustomState (state) {}
 deleteCustomState (state) {}
 hasCustomState (state) {}
 toggleCustomState (state, force) {}

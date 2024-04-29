@@ -1,2 +1,0 @@
-import"/form-associated-helpers/bridgetown/static/chunks/chunk-ENMDFKSV.js";var i={observedAttributes:["error"],checkValidity(e){let r={message:"",isValid:!0,invalidKeys:[]};if(e.error===!0||e.hasAttribute("error")){let t="An error has occurred.",s=e.error??e.getAttribute("error");return(!s||s===!0)&&(s=t),r.invalidKeys.push("customError"),r.isValid=!1,r.message=s,r}return r}};export{i as CustomErrorValidator};
-//# sourceMappingURL=/form-associated-helpers/bridgetown/static/custom-error-validator.js.UIIITNYZ.js.map

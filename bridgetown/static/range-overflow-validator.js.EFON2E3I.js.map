@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../../exports/validators/range-overflow-validator.js"],
-  "sourcesContent": ["/**\n * @type {import(\"../types.js\").Validator<HTMLElement & {max?: number}>}\n */\nexport const RangeOverflowValidator = {\n  observedAttributes: [\"max\"],\n  checkValidity (element) {\n    /**\n     * @type {ReturnType<import(\"../types.js\").Validator[\"checkValidity\"]>}\n     */\n    const validity = {\n      message: \"\",\n      isValid: true,\n      invalidKeys: []\n    }\n\n    const max = Number(element.max ?? element.getAttribute(\"max\"))\n    const value = element.value\n\n    // If it's not a number, we can't compare.\n    if (typeof value !== \"number\") return validity\n\n    if (value > max) {\n      validity.message = `Please select a value that is less than or equal to ${max}.`\n      validity.isValid = false\n      validity.invalidKeys.push(\"rangeOverflow\")\n    }\n\n    return validity\n  }\n}\n"],
-  "mappings": "4EAGO,IAAMA,EAAyB,CACpC,mBAAoB,CAAC,KAAK,EAC1B,cAAeC,EAAS,CAItB,IAAMC,EAAW,CACf,QAAS,GACT,QAAS,GACT,YAAa,CAAC,CAChB,EAEMC,EAAM,OAAOF,EAAQ,KAAOA,EAAQ,aAAa,KAAK,CAAC,EACvDG,EAAQH,EAAQ,MAGtB,OAAI,OAAOG,GAAU,UAEjBA,EAAQD,IACVD,EAAS,QAAU,uDAAuDC,CAAG,IAC7ED,EAAS,QAAU,GACnBA,EAAS,YAAY,KAAK,eAAe,GAGpCA,CACT,CACF",
-  "names": ["RangeOverflowValidator", "element", "validity", "max", "value"]
-}
