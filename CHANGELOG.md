@@ -2,7 +2,7 @@
 
 - Introduce a pattern for easier translations of error messages
 
-## Next
+## v0.0.9 - 04/30/2024
 
 - BREAKING_CHANGE: Validators are now functions. Because of shared objects, we don't want mutations to override objects. This also opens up the possibility of allowing "options" in the future.
 
