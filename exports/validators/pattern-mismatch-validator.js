@@ -1,15 +1,47 @@
 // @ts-check
 
 /**
- * @type {() => import("../types.js").Validator<HTMLElement & { value?: string | null | File | FormData } & { pattern?: string }>}
+ * @typedef {HTMLElement & { validationMessage: string }} ValidateableElement
  */
-export const PatternMismatchValidator = () => {
+
+/**
+ * @template {ValidateableElement} T
+ * @typedef {Object} PatternMismatchValidatorOptions
+ * @property {T} [validatorElement=HTMLInputElement] - A "validatorElement" is used to grab the appropriate `validationMessage` so we get free translations strings. Generally for `PatternMismatchValidator` this will be `<input type="text">` element with required set to `true`. */
+
+/**
+ * @template {ValidateableElement} T
+ * @type {(options: PatternMismatchValidatorOptions<T>) => import("../types.js").Validator<HTMLElement & { value?: string | null | File | FormData, pattern?: string }>}
+ * @example Creating a validator for an input form associated element.
+ *   class MyEl {
+ *     static validators = [
+ *        PatternMismatchValidator()
+ *        // Creates a `<input type="text" required="">` element and grabs its `validationMessage`
+ *     ]
+ *   }
+ *
+ * @example Creating a validator for an `input` validator element the "long" way.
+ *   class MyEl {
+ *     static validators = [
+ *        PatternMismatchValidator({
+ *          validatorElement: Object.assign(document.createElement("input"), {
+ *             required: true,
+ *             type: "text",
+ *             pattern: "wrong-pattern",
+ *          }
+ *        })
+ *     ]
+ *   }
+ */
+export const PatternMismatchValidator = ({
+  validatorElement = Object.assign(document.createElement("input"), { type: "text", pattern: "wrong-pattern", value: "bad-value" })
+}) => {
   /**
    * @type {ReturnType<PatternMismatchValidator>}
    */
   const obj = {
     observedAttributes: ["pattern"],
-    message: "Please match the requested format.",
+    message: validatorElement.validationMessage,
     checkValidity (element) {
       /**
       * @type {ReturnType<import("../types.js").Validator["checkValidity"]>}

@@ -1,16 +1,41 @@
 // @ts-check
 
 /**
- * @type {() => import("../types.js").Validator<HTMLElement & {max?: number}> & { message: (element: HTMLElement, max: number) => string }}
+ * @template {HTMLElement & { validationMessage: string }} [T=HTMLElement & { validationMessage: string }]
+ * @typedef {(hostElement: HTMLElement & {value: unknown, max?: number}) => T} ValidatorElementFunction
  */
-export const RangeOverflowValidator = () => {
+
+/**
+ * @template {HTMLElement & { validationMessage: string }} [T=HTMLElement & { validationMessage: string }]
+ * @typedef {object} RangeOverflowValidatorOptions
+ * @property {ValidatorElementFunction<T>} validatorElementFunction
+ */
+
+/**
+ * @template {HTMLElement & { validationMessage: string }} T
+ * @type {(options?: Partial<RangeOverflowValidatorOptions>) => import("../types.js").Validator<HTMLElement & {max?: number}> & { message: (element: HTMLElement, max: number) => string }}
+ */
+export const RangeOverflowValidator = (options = {}) => {
+  if (!options) { options = {} }
+  if (options.validatorElementFunction == null) {
+    options.validatorElementFunction = (hostElement) => {
+      return Object.assign(document.createElement("input"), {
+        max: hostElement.max ?? Number(hostElement.getAttribute("max")),
+        value: hostElement.value
+      })
+    }
+  }
+
   /**
    * @type {ReturnType<RangeOverflowValidator>}
    */
   const obj = {
     observedAttributes: ["max"],
-    message (_element, max) {
-      return `Please select a value that is less than or equal to ${max}.`
+    message (hostElement, _max) {
+      if (!options.validatorElementFunction) return ""
+
+      const validatorElement = options.validatorElementFunction(/** @type {HTMLElement & { max?: number, value: unknown }} */ (hostElement))
+      return validatorElement.validationMessage
     },
     checkValidity (element) {
       /**
