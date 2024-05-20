@@ -1,4 +1,7 @@
 /**
+ * @typedef {{validationMessage: string }} Validateable
+ */
+/**
  * @type {() => import("../types.js").Validator<HTMLElement & { required?: boolean }>}
  */
 export const ValueMissingValidator = () => {

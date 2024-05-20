@@ -1,0 +1,14 @@
+{
+  "extends": "tsconfig.json",
+  "include": [
+    "tests/**/*.js",
+    "exports/**/*.js",
+    "examples/**/*.js",
+    "types/**/*.d.ts"
+  ],
+  "compilerOptions": {
+    "noEmit": true,
+    "emitDeclarationOnly": false,
+    "declaration": false
+  }
+}

@@ -1,58 +1,30 @@
 import { uuidv4 } from '../../internal/uuid-v4.js'
 /**
- * @typedef {"radio" | "checkbox" | HTMLElement & { validationMessage: string }} ValidateableElement
- */
-
-/**
- * @template {ValidateableElement} T
  * @typedef {Object} GroupValueMissingValidatorOptions
- * @property {T} validatorElement - A "validatorElement" is used to grab the appropriate `validationMessage` so we get free translations strings. Generally for `GroupValueMissingValidator` this will be either a `radio` or `checkbox` element with required true, and some name that wont conflict on the page. Generally a `uuid` would be good for this. There are 2 built-in defaults, "radio" and "checkbox", but if you need to pass in your own element, you're free to do so.
+ * @property {"radio" | "checkbox"} validatorType - A "validatorType" is used to grab the appropriate `validationMessage` so we get free translations strings. This will be either a `radio` or `checkbox`. Checkboxes and radios have different messages, so be sure to test which one you want.
  */
 
 /**
- * @template {ValidateableElement} T
- * @type {(options: GroupValueMissingValidatorOptions<T>) => import("../types.js").Validator<HTMLElement & { required?: boolean, form: HTMLFormElement, name?: string }>}
+ * @type {(options?: Partial<GroupValueMissingValidatorOptions>) => import("../types.js").Validator<HTMLElement & { required?: boolean, form: HTMLFormElement, name?: string }>}
  * @example Creating a validator for a radio form associated element.
  *   class MyEl {
  *     static validators = [
  *        GroupValueMissingValidator({
- *          validatorElement: "radio"
- *        })
- *     ]
- *   }
- *
- * @example Creating a validator for a radio validator element the "long" way.
- *   class MyEl {
- *     static validators = [
- *        GroupValueMissingValidator({
- *          validatorElement: Object.assign(document.createElement("input"), {
- *             required: true,
- *             type: "radio",
- *             name: "__unguessable-unique-name__"
- *          }
+ *          validatorType: "radio"
  *        })
  *     ]
  *   }
  */
-export const GroupValueMissingValidator = ({
-  validatorElement
-}) => {
+export const GroupValueMissingValidator = (options) => {
+  if (!options) { options = {} }
+  const { validatorType } = options
   const validateableTypes = /** @type {const} */ (["checkbox", "radio"])
 
-  /**
-   * @type {HTMLElement & { validationMessage: string }}
-   */
-  let finalElement
-
-  if (!(validatorElement instanceof HTMLElement) && !validateableTypes.includes((validatorElement))) {
-    throw Error(`Please provide an HTMLElement or use a prebuilt validatorElement such as "checkbox" or "radio"`)
+  if (!validatorType || !validateableTypes.includes(validatorType)) {
+    throw Error(`Only "radio" or "checkbox" are accepted types`)
   }
 
-  if (validatorElement instanceof HTMLElement) {
-    finalElement = validatorElement
-  } else {
-    finalElement = createValidatorElement(validatorElement)
-  }
+  const finalElement = createValidatorElement(validatorType)
 
   /**
    * @type {ReturnType<GroupValueMissingValidator>}
@@ -90,8 +62,10 @@ export const GroupValueMissingValidator = ({
 
       const formData = new FormData(form)
 
-      if (!formData.get(element.name)) {
-        return validity
+      if (formData.getAll(element.name).length < 1) {
+        validity.message = (typeof obj.message === "function" ? obj.message(element) : obj.message) || ""
+        validity.isValid = false
+        validity.invalidKeys.push("valueMissing")
       }
 
       return validity

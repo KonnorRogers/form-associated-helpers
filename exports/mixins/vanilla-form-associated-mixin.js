@@ -69,32 +69,32 @@ export function VanillaFormAssociatedMixin(superclass) {
         this.previousValue = this.value
 
         /**
-         * @type {string}
+         * @type {null | string}
          */
-        this.defaultValue = ""
+        this.defaultValue = this.getAttribute("value") || null
 
         /**
          * @type {HTMLInputElement["name"]}
          */
-        this.name = ""
+        this.name = this.getAttribute("name") || ""
 
         /**
          * `this.type` is used by ElementInternals.
          * @type {string}
          */
-        this.type = this.localName || ""
+        this.type = this.getAttribute("type") || this.localName || ""
 
         /**
          * Make sure if you're using a library that "reflects" properties to attributes, you don't reflect this `disabled.`
          * @type {boolean}
          */
-        this.disabled = false
+        this.disabled = this.hasAttribute("disabled")
 
         /**
          * Generally forms can have "required", this may not be necessary here, but is a nice convention.
          * @type {boolean}
          */
-        this.required = false
+        this.required = this.hasAttribute("required")
 
         /**
          * Tracks when a user blurs from a form control.
@@ -135,7 +135,7 @@ export function VanillaFormAssociatedMixin(superclass) {
        */
       handleInvalid = (e) => {
         if (e.target !== this) return
-        if (this.disabled === true || this.hasAttribute("disabled")) return
+        if (this.disabled ?? this.hasAttribute("disabled")) return
 
         if (this.value !== this.defaultValue) {
           this.valueHasChanged = true
@@ -151,7 +151,7 @@ export function VanillaFormAssociatedMixin(superclass) {
        * @param {Event} e
        */
       handleInteraction = (e) => {
-        if (this.disabled === true || this.hasAttribute("disabled")) return
+        if (this.disabled ?? this.hasAttribute("disabled")) return
 
         if (!this.matches(":focus-within") && this.valueHasChanged) {
           this.hasInteracted = true
@@ -174,7 +174,7 @@ export function VanillaFormAssociatedMixin(superclass) {
       }
 
       get willShowValidationMessage () {
-        return this.disabled !== true && this.hasInteracted === true
+        return (this.disabled ?? this.hasAttribute("disabled")) && this.hasInteracted === true
       }
 
       get labels () {
@@ -232,12 +232,16 @@ export function VanillaFormAssociatedMixin(superclass) {
         }
 
         if (name === "value") {
-          this.defaultValue = this.getAttribute("value") || ""
+          this.defaultValue = newVal
 
           if (!this.hasInteracted && !this.valueHasChanged) {
             this.value = this.defaultValue
             this.setFormValue(this.value, this.value)
           }
+        }
+
+        if (name === "disabled") {
+          this.disabled = Boolean(newVal)
         }
 
         this.updateValidity()

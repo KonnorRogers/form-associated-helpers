@@ -5,7 +5,7 @@
  */
 export const BadInputValidator = () => {
   return {
-    // observedAttributes: [],
+    observedAttributes: ["type"],
     checkValidity (element) {
       /**
       * @type {ReturnType<import("../types.js").Validator["checkValidity"]>}
