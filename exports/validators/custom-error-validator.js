@@ -1,15 +1,25 @@
 /**
- * A validator for custom errors. This will check if there is an `.error` property or an `error` attribute
+ * A validator for custom errors. This will check if there is an `.customError` property or an `custom-error` attribute
  *   and append it to the ValidityState of the custom element.
- * @type {() => import("../types.js").Validator<HTMLElement & { error?: string | boolean }>}
+ * @template {HTMLElement & { customError?: string | boolean }} T
+ * @type {() => import("../types.js").Validator<T> & { fallbackMessage: ((element: T) => string) | string } }
  */
 export const CustomErrorValidator = () => {
   /**
    * @type {ReturnType<CustomErrorValidator>}
    */
  const obj = {
-    observedAttributes: ["error"],
-    message: "An error has occurred",
+    observedAttributes: ["custom-error"],
+    fallbackMessage: "An error occurred",
+    message (element) {
+      let errorMsg = element.customError ?? element.getAttribute("custom-error")
+
+      if (!errorMsg || errorMsg === true) {
+        errorMsg = typeof obj.fallbackMessage === "function" ? obj.fallbackMessage(element) : obj.fallbackMessage
+      }
+
+      return errorMsg
+    },
     checkValidity (element) {
       /**
       * @type {ReturnType<import("../types.js").Validator["checkValidity"]>}
@@ -20,17 +30,12 @@ export const CustomErrorValidator = () => {
         invalidKeys: []
       }
 
-      if (element.error === true || element.hasAttribute("error")) {
-        const defaultErrorMessage = (typeof obj.message === "function" ? obj.message(element) : obj.message) || ""
-        let message = element.error ?? element.getAttribute("error")
-
-        if (!message || message === true) {
-          message = defaultErrorMessage
-        }
-
+      if (Boolean(element.customError) || element.hasAttribute("custom-error")) {
         validity.invalidKeys.push("customError")
         validity.isValid = false
-        validity.message = message
+        const fallbackMessage = () => typeof obj.fallbackMessage === "function" ? obj.fallbackMessage(element) : obj.fallbackMessage
+
+        validity.message = (typeof obj.message === "function" ? obj.message(element) : obj.message) || fallbackMessage()
         return validity
       }
 

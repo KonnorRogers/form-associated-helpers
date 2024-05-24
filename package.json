@@ -29,7 +29,8 @@
     "deploy:patch": "npm run build && npm version patch && npm publish && git push --follow-tags",
     "deploy:minor": "npm run build && npm version minor && npm publish && git push --follow-tags",
     "deploy:major": "npm run build && npm version major && npm publish && git push --follow-tags",
-    "test": "web-test-runner"
+    "test": "web-test-runner",
+    "test:watch": "web-test-runner --watch"
   },
   "keywords": [
     "web-components",

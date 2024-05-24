@@ -1,5 +1,5 @@
 // @ts-check
-import { BaseElement } from "./base-element.js";
+import { BaseElement } from "../fixtures/base-element.js";
 import {assert} from '@esm-bundle/chai'
 import {html, fixture} from '@open-wc/testing-helpers'
 import {GroupValueMissingValidator} from '../../exports/validators/group-value-missing-validator.js'

@@ -1,4 +1,4 @@
-import { BaseElement } from "./base-element.js";
+import { BaseElement } from "../fixtures/base-element.js";
 import {assert} from '@esm-bundle/chai'
 import {html, fixture} from '@open-wc/testing-helpers'
 import {PatternMismatchValidator} from '../../exports/validators/pattern-mismatch-validator.js'
@@ -14,7 +14,7 @@ test("Should display a patternMismatch validation message with default arguments
     customElements.define(`test-el-1`, TestEl)
   }
 
-  const el = await fixture(html`<test-el-1 pattern="asdf"></test-el-1>`)
+  const el = /** @type {TestEl} */ (await fixture(html`<test-el-1 pattern="asdf"></test-el-1>`))
   el.updateValidity()
 
   const invalidInput = Object.assign(
@@ -48,7 +48,7 @@ test("Should display a patternMismatch validation message with a custom validato
     customElements.define(`test-el-2`, TestEl)
   }
 
-  const el = await fixture(html`<test-el-2 pattern="asdf"></test-el-2>`)
+  const el = /** @type {TestEl} */ (await fixture(html`<test-el-2 pattern="asdf"></test-el-2>`))
   el.updateValidity()
 
   assert.equal(el.validationMessage, invalidInput.validationMessage)
@@ -67,7 +67,7 @@ test("Customizing final message statically", async () => {
     customElements.define(`test-el-3`, TestEl)
   }
 
-  const el = await fixture(html`<test-el-3 pattern="asdf"></test-el-3>`)
+  const el = /** @type {TestEl} */ (await fixture(html`<test-el-3 pattern="asdf"></test-el-3>`))
   el.updateValidity()
 
   assert.equal(el.validationMessage, validationMessage)
@@ -87,7 +87,7 @@ test("Customizing final message statically", async () => {
     customElements.define(`test-el-4`, TestEl)
   }
 
-  const el = await fixture(html`<test-el-4 pattern="asdf"></test-el-4>`)
+  const el = /** @type {TestEl} */ (await fixture(html`<test-el-4 pattern="asdf"></test-el-4>`))
   el.updateValidity()
 
   assert.equal(el.validationMessage, validationMessage)

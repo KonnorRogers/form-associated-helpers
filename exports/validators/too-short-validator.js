@@ -9,7 +9,16 @@ export const TooShortValidator = () => {
   const obj = {
     observedAttributes: ["minlength"],
     message (_element, minLength, stringLength) {
-      return `Please use greater than or equal to ${minLength} characters. You are currently using ${stringLength} characters.`;
+      // @TODO: This is an edge case with minlength. maxlength has the same issue.
+      // const maxLength = Number(element.minLength || element.getAttribute("minlength"))
+      // const value = element.value
+      // const badInput = Object.assign(document.createElement("input"), {
+      //   value,
+      //   maxLength
+      // })
+
+      // return badInput.validationMessage
+      return `Please lengthen this text to ${minLength} characters or more. (You are currently using ${stringLength} characters).`
     },
     checkValidity (element) {
       /**
@@ -27,9 +36,9 @@ export const TooShortValidator = () => {
 
       const minLength = Number(element.minLength || element.getAttribute("minlength"))
 
-      if (!minLength) { return validity }
+      if (isNaN(minLength) || minLength == null || minLength <= 0) { return validity }
 
-      if (minLength > value.length) {
+      if (value.length < minLength) {
         validity.message = (typeof obj.message === "function" ? obj.message(element, minLength, value.length) : obj.message) || ""
         validity.isValid = false
         validity.invalidKeys.push("tooShort")

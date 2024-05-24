@@ -2,4 +2,9 @@ import {VanillaFormAssociatedMixin} from '../../exports/mixins/vanilla-form-asso
 
 export class BaseElement extends VanillaFormAssociatedMixin(HTMLElement) {
   static validators = []
+
+  constructor () {
+    super()
+    this.attachShadow({ mode: "open" })
+  }
 }

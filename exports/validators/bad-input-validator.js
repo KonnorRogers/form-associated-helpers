@@ -1,5 +1,6 @@
 /**
  * "The read-only badInput property of a ValidityState object indicates if the user has provided input that the browser is unable to convert. For example, if you have a number input element whose content is a string."
+ *  This validator is very similar to the `MirrorValidator` and expects a `formControl` property to exist to read for `BadInput`.
  * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/ValidityState/badInput}
  * @type {() => import("../types.js").Validator<HTMLElement & { formControl?: HTMLElement & ElementInternals }>}
  */

@@ -1,3 +1,5 @@
+// @ts-check
+
 /**
  * @param {number} min
  * @param {number} value
@@ -22,7 +24,23 @@ function findClosestSteps (min, value, step) {
 }
 
 /**
- * @type {() => import("../types.js").Validator<HTMLElement & { min?: number, step?: number }> & { message: (element: HTMLElement, options: { low: number, high: number }) => string }}
+ * @param {any} maybeNum
+ */
+function toNumberOrNull (maybeNum) {
+  try {
+    return Number(maybeNum)
+  } catch (_e) {
+    return null
+  }
+}
+
+/**
+ * @typedef {HTMLElement & { min?: number, step?: number, value?: null | string | File | FormData }} RangeElement
+ */
+
+/**
+ * @template {RangeElement} [T=RangeElement]
+ * @type {() => import("../types.js").Validator<T> & { message: (element: T, options: {low: number, high: number}) => string }}
  */
 export const StepMismatchValidator = () => {
   /**
@@ -30,14 +48,22 @@ export const StepMismatchValidator = () => {
    */
   const obj = {
     observedAttributes: ["min", "step"],
-    message (_element, { low, high }) {
-      return `Please select a valid value. The two nearest valid values are ${low} and ${high}.`
+    message (element, options) {
+      // Don't need min here.
+      // const min = Number(element.min ?? element.getAttribute("min"))
+      const value = toNumberOrNull(element.value)
+      const step = toNumberOrNull(element.step ?? element.getAttribute("step"))
+
+      const badInput = Object.assign(document.createElement("input"), {
+        type: "number",
+        // min,
+        value,
+        step,
+      })
+
+      return badInput.validationMessage
     },
     checkValidity (element) {
-      const min = Number(element.min ?? element.getAttribute("min"))
-      const value = Number(element.value ?? element.getAttribute("value"))
-      const step = Number(element.step ?? element.getAttribute("step"))
-
       /**
       * @type {ReturnType<import("../types.js").Validator["checkValidity"]>}
       */
@@ -45,6 +71,14 @@ export const StepMismatchValidator = () => {
         message: "",
         isValid: true,
         invalidKeys: []
+      }
+
+      const min = toNumberOrNull(element.min ?? element.getAttribute("min"))
+      const value = toNumberOrNull(element.value)
+      const step = toNumberOrNull(element.step ?? element.getAttribute("step"))
+
+      if (min == null || value == null || step == null) {
+        return validity
       }
 
       if (isNaN(min) || isNaN(value) || isNaN(step)) {

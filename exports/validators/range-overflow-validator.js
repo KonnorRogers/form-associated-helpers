@@ -20,6 +20,7 @@ export const RangeOverflowValidator = (options = {}) => {
   if (options.validatorElementFunction == null) {
     options.validatorElementFunction = (hostElement) => {
       return Object.assign(document.createElement("input"), {
+        type: "number",
         max: hostElement.max ?? Number(hostElement.getAttribute("max")),
         value: hostElement.value
       })
@@ -48,10 +49,10 @@ export const RangeOverflowValidator = (options = {}) => {
       }
 
       const max = Number(element.max ?? element.getAttribute("max"))
-      const value = element.value
+      const value = Number(element.value)
 
       // If it's not a number, we can't compare.
-      if (typeof value !== "number") return validity
+      if (isNaN(value) || typeof value !== "number") return validity
 
       if (value > max) {
         validity.message = (typeof obj.message === "function" ? obj.message(element, max) : obj.message) || ""
