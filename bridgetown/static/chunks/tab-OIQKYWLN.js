@@ -1,0 +1,90 @@
+import{a as b}from"/form-associated-helpers/bridgetown/static/chunks/chunk-AFXV3KJ7.js";import"/form-associated-helpers/bridgetown/static/chunks/chunk-4WFO3Z6D.js";import"/form-associated-helpers/bridgetown/static/chunks/chunk-AN4DNZAI.js";import{a as d}from"/form-associated-helpers/bridgetown/static/chunks/chunk-UATCTRUK.js";import{d as p}from"/form-associated-helpers/bridgetown/static/chunks/chunk-ZQN7PWWQ.js";import"/form-associated-helpers/bridgetown/static/chunks/chunk-4RZMHVSS.js";import{a as i}from"/form-associated-helpers/bridgetown/static/chunks/chunk-6BQY5CG2.js";import{a as r,b as a,d as n,e as c}from"/form-associated-helpers/bridgetown/static/chunks/chunk-U74YYMN2.js";import"/form-associated-helpers/bridgetown/static/chunks/chunk-5GHXPYLK.js";import{c as e,e as l,h as s}from"/form-associated-helpers/bridgetown/static/chunks/chunk-VXW5OIF2.js";import"/form-associated-helpers/bridgetown/static/chunks/chunk-ENMDFKSV.js";var m=l`
+  :host {
+    display: inline-block;
+  }
+
+  .tab {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--sl-font-sans);
+    font-size: var(--sl-font-size-small);
+    font-weight: var(--sl-font-weight-semibold);
+    border-radius: var(--sl-border-radius-medium);
+    color: var(--sl-color-neutral-600);
+    padding: var(--sl-spacing-medium) var(--sl-spacing-large);
+    white-space: nowrap;
+    user-select: none;
+    -webkit-user-select: none;
+    cursor: pointer;
+    transition:
+      var(--transition-speed) box-shadow,
+      var(--transition-speed) color;
+  }
+
+  .tab:hover:not(.tab--disabled) {
+    color: var(--sl-color-primary-600);
+  }
+
+  .tab:focus {
+    outline: none;
+  }
+
+  .tab:focus-visible:not(.tab--disabled) {
+    color: var(--sl-color-primary-600);
+  }
+
+  .tab:focus-visible {
+    outline: var(--sl-focus-ring);
+    outline-offset: calc(-1 * var(--sl-focus-ring-width) - var(--sl-focus-ring-offset));
+  }
+
+  .tab.tab--active:not(.tab--disabled) {
+    color: var(--sl-color-primary-600);
+  }
+
+  .tab.tab--closable {
+    padding-inline-end: var(--sl-spacing-small);
+  }
+
+  .tab.tab--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .tab__close-button {
+    font-size: var(--sl-font-size-small);
+    margin-inline-start: var(--sl-spacing-small);
+  }
+
+  .tab__close-button::part(base) {
+    padding: var(--sl-spacing-3x-small);
+  }
+
+  @media (forced-colors: active) {
+    .tab.tab--active:not(.tab--disabled) {
+      outline: solid 1px transparent;
+      outline-offset: -3px;
+    }
+  }
+`;var u=0,t=class extends c{constructor(){super(...arguments),this.localize=new d(this),this.attrId=++u,this.componentId=`sl-tab-${this.attrId}`,this.panel="",this.active=!1,this.closable=!1,this.disabled=!1}connectedCallback(){super.connectedCallback(),this.setAttribute("role","tab")}handleCloseClick(o){o.stopPropagation(),this.emit("sl-close")}handleActiveChange(){this.setAttribute("aria-selected",this.active?"true":"false")}handleDisabledChange(){this.setAttribute("aria-disabled",this.disabled?"true":"false")}focus(o){this.tab.focus(o)}blur(){this.tab.blur()}render(){return this.id=this.id.length>0?this.id:this.componentId,s`
+      <div
+        part="base"
+        class=${p({tab:!0,"tab--active":this.active,"tab--closable":this.closable,"tab--disabled":this.disabled})}
+        tabindex=${this.disabled?"-1":"0"}
+      >
+        <slot></slot>
+        ${this.closable?s`
+              <sl-icon-button
+                part="close-button"
+                exportparts="base:close-button__base"
+                name="x-lg"
+                library="system"
+                label=${this.localize.term("close")}
+                class="tab__close-button"
+                @click=${this.handleCloseClick}
+                tabindex="-1"
+              ></sl-icon-button>
+            `:""}
+      </div>
+    `}};t.styles=[r,m];t.dependencies={"sl-icon-button":b};e([n(".tab")],t.prototype,"tab",2);e([a({reflect:!0})],t.prototype,"panel",2);e([a({type:Boolean,reflect:!0})],t.prototype,"active",2);e([a({type:Boolean})],t.prototype,"closable",2);e([a({type:Boolean,reflect:!0})],t.prototype,"disabled",2);e([i("active")],t.prototype,"handleActiveChange",1);e([i("disabled")],t.prototype,"handleDisabledChange",1);var f=t;t.define("sl-tab");export{f as default};
+//# sourceMappingURL=/form-associated-helpers/bridgetown/static/chunks/tab-OIQKYWLN.js.map
