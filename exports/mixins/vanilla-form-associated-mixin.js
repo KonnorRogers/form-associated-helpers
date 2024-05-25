@@ -7,6 +7,13 @@ import { FormAssociatedMixin } from "./form-associated-mixin.js"
  */
 
 /**
+ * @param {HTMLElement & { disabled: boolean }} el
+ */
+function isDisabled (el) {
+  return Boolean(el.matches(":disabled") || el.disabled)
+}
+
+/**
  * A mixin of form associated helpers that get added to a class with attachInternals.
  * This opinionated version extends the above formAssociated and handles common conventions I like.
  * Required properties: { value, disabled, formControl, validationTarget }
@@ -56,12 +63,12 @@ export function VanillaFormAssociatedMixin(superclass) {
         /**
          * @type {ElementInternals["role"]}
          */
-        this.role = null
+        this.role = this.getAttribute("role") || null
 
         /**
          * @type {FormData | string | File | null}
          */
-        this.value = null
+        this.value = this.getAttribute("value") || null
 
         /**
          * @type {FormData | string | File | null}
@@ -88,7 +95,7 @@ export function VanillaFormAssociatedMixin(superclass) {
          * Make sure if you're using a library that "reflects" properties to attributes, you don't reflect this `disabled.`
          * @type {boolean}
          */
-        this.disabled = this.hasAttribute("disabled")
+        this.disabled = isDisabled(this)
 
         /**
          * Generally forms can have "required", this may not be necessary here, but is a nice convention.
@@ -135,7 +142,7 @@ export function VanillaFormAssociatedMixin(superclass) {
        */
       handleInvalid = (e) => {
         if (e.target !== this) return
-        if (this.disabled ?? this.hasAttribute("disabled")) return
+        if (isDisabled(this)) return
 
         if (this.value !== this.defaultValue) {
           this.valueHasChanged = true
@@ -151,7 +158,7 @@ export function VanillaFormAssociatedMixin(superclass) {
        * @param {Event} e
        */
       handleInteraction = (e) => {
-        if (this.disabled ?? this.hasAttribute("disabled")) return
+        if (isDisabled(this)) return
 
         if (!this.matches(":focus-within") && this.valueHasChanged) {
           this.hasInteracted = true
@@ -174,7 +181,7 @@ export function VanillaFormAssociatedMixin(superclass) {
       }
 
       get willShowValidationMessage () {
-        return (this.disabled ?? this.hasAttribute("disabled")) && this.hasInteracted === true
+        return (isDisabled(this)) && this.hasInteracted === true
       }
 
       get labels () {
@@ -359,7 +366,7 @@ export function VanillaFormAssociatedMixin(superclass) {
       }
 
       updateValidity () {
-        if (this.disabled || this.getAttribute("disabled")) {
+        if (isDisabled(this)) {
           this.resetValidity()
           // We don't run validators on disabled thiss to be inline with native HTMLElements.
           // https://codepen.io/paramagicdev/pen/PoLogeL
@@ -406,13 +413,16 @@ export function VanillaFormAssociatedMixin(superclass) {
       }
 
       updateInteractionState () {
-        if (this.disabled || this.hasAttribute("disabled")) {
+        if (isDisabled(this)) {
+          this.addCustomState("disabled")
           this.deleteCustomState("invalid")
           this.deleteCustomState("user-invalid")
           this.deleteCustomState("valid")
           this.deleteCustomState("user-valid")
           return
         }
+
+        this.deleteCustomState("disabled")
 
         if (this.validity.valid) {
           this.deleteCustomState("invalid")
