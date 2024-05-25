@@ -18,20 +18,20 @@ importers:
         specifier: ^7.3.0
         version: 7.3.0
       '@konnorr/bridgetown-quick-search':
-        specifier: ^3.8.0
-        version: 3.8.0
+        specifier: ^3.9.2
+        version: 3.9.2
       '@shoelace-style/shoelace':
         specifier: ^2.13.1
-        version: 2.13.1(@types/react@18.2.54)
+        version: 2.13.1(@types/react@18.3.3)
       bridgetown-quick-search:
         specifier: 2.0.0
         version: 2.0.0
       light-pen:
-        specifier: ^2.2.0
-        version: 2.2.0
+        specifier: ^3.0.6
+        version: 3.0.6
       lit:
-        specifier: ^2.8.0
-        version: 2.8.0
+        specifier: ^3.1.3
+        version: 3.1.3
       web-component-lazy-loader:
         specifier: ^1.0.1
         version: 1.0.1
@@ -322,11 +322,8 @@ packages:
     resolution: {integrity: sha512-Dcu+NaSvHLT7EjrDrkEmH4qET2ZJZ5IcCWmNXxNQTBwlnE5tBZfN6WxZ842n5cHV52DH/AKNirbPBtcEXDLW4g==}
     engines: {node: '>= 14'}
 
-  '@konnorr/bridgetown-quick-search@3.8.0':
-    resolution: {integrity: sha512-XemzVt4iCDiecYif2Y7WpQyQ4+VwssKMGelryfWOpxuy1w2OHdFGUrjaSYCm5juAJbLjZU80H9nY15ohzEuVAA==}
-
-  '@lit-labs/ssr-dom-shim@1.1.1':
-    resolution: {integrity: sha512-kXOeFbfCm4fFf2A3WwVEeQj55tMZa8c8/f9AKHMobQMkzNUfUj+antR3fRPaZJawsa1aZiP/Da3ndpZrwEe4rQ==}
+  '@konnorr/bridgetown-quick-search@3.9.2':
+    resolution: {integrity: sha512-ixdcwWzHX5usmLoRks2MRwEEnz8NZiBXy6q6U1HlxJlTd0ypdEbEbH+DKVYcTH9Y3Ry5Ajz/mQqVRv/qQLVfDg==}
 
   '@lit-labs/ssr-dom-shim@1.2.0':
     resolution: {integrity: sha512-yWJKmpGE6lUURKAaIltoPIE/wrbY3TEkqQt+X0m+7fQNnAv0keydnYvbiJFP1PnMhizmIWRWOG5KLhYyc/xl+g==}
@@ -336,14 +333,15 @@ packages:
     peerDependencies:
       '@types/react': 17 || 18
 
-  '@lit/reactive-element@1.6.2':
-    resolution: {integrity: sha512-rDfl+QnCYjuIGf5xI2sVJWdYIi56CTCwWa+nidKYX6oIuBYwUbT/vX4qbUDlHiZKJ/3FRNQ/tWJui44p6/stSA==}
+  '@lit/reactive-element@1.6.3':
+    resolution: {integrity: sha512-QuTgnG52Poic7uM1AN5yJ09QMe0O28e10XzSvWDz02TJiiKee4stsiownEIadWm8nYzyDAyT+gKzUoZmiWQtsQ==}
 
   '@lit/reactive-element@2.0.4':
     resolution: {integrity: sha512-GFn91inaUa2oHLak8awSIigYz0cU0Payr1rcFsrkf5OJ5eSPxElyZfKh0f2p9FsTiZWXQdWGJeXZICEfXXYSXQ==}
 
   '@material/mwc-icon@0.25.3':
     resolution: {integrity: sha512-36076AWZIRSr8qYOLjuDDkxej/HA0XAosrj7TS1ZeLlUBnLUtbDtvc1S7KSa0hqez7ouzOqGaWK24yoNnTa2OA==}
+    deprecated: MWC beta is longer supported. Please upgrade to @material/web
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -360,8 +358,8 @@ packages:
   '@open-wc/dedupe-mixin@1.4.0':
     resolution: {integrity: sha512-Sj7gKl1TLcDbF7B6KUhtvr+1UCxdhMbNY5KxdU5IfMFWqL8oy1ZeAcCANjoB1TL0AJTcPmcCFsCbHf8X2jGDUA==}
 
-  '@open-wc/scoped-elements@2.2.0':
-    resolution: {integrity: sha512-Qe+vWsuVHFzUkdChwlmJGuQf9cA3I+QOsSHULV/6qf6wsqLM2/32svNRH+rbBIMwiPEwzZprZlkvkqQRucYnVA==}
+  '@open-wc/scoped-elements@3.0.5':
+    resolution: {integrity: sha512-q4U+hFTQQRyorJILOpmBm6PY2hgjCnQe214nXJNjbJMQ9EvT55oyZ7C8BY5aFYJkytUyBoawlMpZt4F2xjdzHw==}
 
   '@shoelace-style/animations@1.1.0':
     resolution: {integrity: sha512-Be+cahtZyI2dPKRm8EZSx3YJQ+jLvEcn3xzRP7tM4tqBnvd/eW/64Xh0iOf0t2w5P8iJKfdBbpVNE9naCaOf2g==}
@@ -373,17 +371,11 @@ packages:
     resolution: {integrity: sha512-QMMvq7xgKzZR5+HEgZvv82V1yDKxucsW3XTbF+Tl5ckkzyXlKtKdY1k0eK9EnWPK482JXjoKeeiBJnrx+h6i4Q==}
     engines: {node: '>=14.17.0'}
 
-  '@types/prop-types@15.7.11':
-    resolution: {integrity: sha512-ga8y9v9uyeiLdpKddhxYQkxNDrfvuPrlFb0N1qnZZByvcElJaXthF1UhvCh9TLWJBEHeNtdnbysW7Y6Uq8CVng==}
+  '@types/prop-types@15.7.12':
+    resolution: {integrity: sha512-5zvhXYtRNRluoE/jAp4GVsSduVUzNWKkOZrCDBWYtE7biZywwdC2AcEzg+cSMLFRfVgeAFqpfNabiPjxFddV1Q==}
 
-  '@types/react@18.2.54':
-    resolution: {integrity: sha512-039k+vrVJymDoe2y+HLk3O3oI3sa+C8KNjuDKofqrIJK26ramnqLNj9VJTaxAzFGMvpW/79HrrAJapHzpQ9fGQ==}
-
-  '@types/scheduler@0.16.8':
-    resolution: {integrity: sha512-WZLiwShhwLRmeV6zH+GkbOFT6Z6VklCItrDioxUnv+u4Ll+8vKeFySoFyK/0ctcRpOmwAicELfmys1sDc/Rw+A==}
-
-  '@types/trusted-types@2.0.3':
-    resolution: {integrity: sha512-NfQ4gyz38SL8sDNrSixxU2Os1a5xcdFxipAFxYEuLUlvU2uDwS4NUpsImcf1//SlWItCVMMLiylsxbmNMToV/g==}
+  '@types/react@18.3.3':
+    resolution: {integrity: sha512-hti/R0pS0q1/xx+TsI73XIqk26eBsISZ2R0wUijXIngRK9R/e7Xw/cXVxQK7R5JjW+SV4zGcn5hXjudkN/pLIw==}
 
   '@types/trusted-types@2.0.7':
     resolution: {integrity: sha512-ScaPdn1dQczgbl0QFTeTOmVHFULt394XJgOQNoyVhZ6r2vLnMLJfBPd53SB52T/3G36VI1/g2MZaX0cwDuXsfw==}
@@ -519,6 +511,9 @@ packages:
     resolution: {integrity: sha512-qOo9F+dMUmC2Lcb4BbVvnKJxTPjCm+RRpe4gDuGrzkL7mEVl/djYSu2OdQ2Pa302N4oqkSg9ir6jaLWJ2USVpQ==}
     engines: {node: '>=8'}
 
+  form-associated-helpers@0.0.4:
+    resolution: {integrity: sha512-Fy3dCmzxbaB08nRIr8GVBo5duQSN/NouCU4JjQ/Pd3bipsKMsV2RhPb3uGujEYYk/OIMDf9EPwRI5pQq6PsZpw==}
+
   fraction.js@4.2.0:
     resolution: {integrity: sha512-MhLuK+2gUcnZe8ZHlaaINnQLl0xRIGRfcGk2yl8xoQAfHrSsL3rYu6FCmBdkdbhc9EPlwyGHewaRsvwRMJtAlA==}
 
@@ -536,6 +531,9 @@ packages:
 
   function-bind@1.1.1:
     resolution: {integrity: sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A==}
+
+  fzy.js@0.4.1:
+    resolution: {integrity: sha512-4sPVXf+9oGhzg2tYzgWe4hgAY0wEbkqeuKVEgdnqX8S8VcLosQsDjb0jV+f5uoQlf8INWId1w0IGoufAoik1TA==}
 
   glob-parent@5.1.2:
     resolution: {integrity: sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==}
@@ -595,11 +593,11 @@ packages:
   jsonfile@6.1.0:
     resolution: {integrity: sha512-5dgndWOriYSm5cnYaJNhalLNDKOqFwyDB/rr1E9ZsGciGvKPs8R2xYGCacuf3z6K1YKDz182fd+fY3cn3pMqXQ==}
 
-  konnors-ninja-keys@1.10.0:
-    resolution: {integrity: sha512-vgdfzL036WHLDrfw2NrypSxUaZg9vLodNnT+o1UkaDYtVpOoxsoiHflyq6OaVRTWY5gh9VOzOG/r52KV2HAX9w==}
+  konnors-ninja-keys@1.13.2:
+    resolution: {integrity: sha512-v4nwtTNa/PJcGuGLwbTQ0mZ1C/KFqV9IxPUy3FKTxPBlrK2/Kc2/5HnwAgqPfhQyjz4ScozxeXQWx3IS9WR9YQ==}
 
-  light-pen@2.2.0:
-    resolution: {integrity: sha512-RtHoum+mZ1g/U69jyiwt6QsWzD8abdm29AU54xVYxsMq3rQGwYk1++JoQQsgObEvFGeiFWGEgUMP7vX3IBHskA==}
+  light-pen@3.0.6:
+    resolution: {integrity: sha512-wHmfEOM67qtyMJ4alH8UxxW15s7nbfZuN/E9QnQQj6T8TnJlf4Dcuj4WZ8sr9zH5GLx5rE/UGgxc1XkfLqFbrQ==}
 
   lilconfig@2.0.6:
     resolution: {integrity: sha512-9JROoBW7pobfsx+Sq2JsASvCo6Pfo6WWoUW79HuB1BCoBXD4PLWJPqDF6fNj67pqBYTbAHkE57M1kS/+L1neOg==}
@@ -608,23 +606,23 @@ packages:
   linkifyjs@4.1.1:
     resolution: {integrity: sha512-zFN/CTVmbcVef+WaDXT63dNzzkfRBKT1j464NJQkV7iSgJU0sLBus9W0HBwnXK13/hf168pbrx/V/bjEHOXNHA==}
 
-  lit-element@3.3.2:
-    resolution: {integrity: sha512-xXAeVWKGr4/njq0rGC9dethMnYCq5hpKYrgQZYTzawt9YQhMiXfD+T1RgrdY3NamOxwq2aXlb0vOI6e29CKgVQ==}
+  lit-element@3.3.3:
+    resolution: {integrity: sha512-XbeRxmTHubXENkV4h8RIPyr8lXc+Ff28rkcQzw3G6up2xg5E8Zu1IgOWIwBLEQsu3cOVFqdYwiVi0hv0SlpqUA==}
 
-  lit-element@4.0.4:
-    resolution: {integrity: sha512-98CvgulX6eCPs6TyAIQoJZBCQPo80rgXR+dVBs61cstJXqtI+USQZAbA4gFHh6L/mxBx9MrgPLHLsUgDUHAcCQ==}
+  lit-element@4.0.5:
+    resolution: {integrity: sha512-iTWskWZEtn9SyEf4aBG6rKT8GABZMrTWop1+jopsEOgEcugcXJGKuX5bEbkq9qfzY+XB4MAgCaSPwnNpdsNQ3Q==}
 
   lit-html@2.8.0:
     resolution: {integrity: sha512-o9t+MQM3P4y7M7yNzqAyjp7z+mQGa4NS4CxiyLqFPyFWyc4O+nodLrkrxSaCTrla6M5YOLaT3RpbbqjszB5g3Q==}
 
-  lit-html@3.1.2:
-    resolution: {integrity: sha512-3OBZSUrPnAHoKJ9AMjRL/m01YJxQMf+TMHanNtTHG68ubjnZxK0RFl102DPzsw4mWnHibfZIBJm3LWCZ/LmMvg==}
+  lit-html@3.1.3:
+    resolution: {integrity: sha512-FwIbqDD8O/8lM4vUZ4KvQZjPPNx7V1VhT7vmRB8RBAO0AU6wuTVdoXiu2CivVjEGdugvcbPNBLtPE1y0ifplHA==}
 
   lit@2.8.0:
     resolution: {integrity: sha512-4Sc3OFX9QHOJaHbmTMk28SYgVxLN3ePDjg7hofEft2zWlehFL3LiAuapWc4U/kYwMYJSh2hTCPZ6/LIC7ii0MA==}
 
-  lit@3.1.2:
-    resolution: {integrity: sha512-VZx5iAyMtX7CV4K8iTLdCkMaYZ7ipjJZ0JcSdJ0zIdGxxyurjIn7yuuSxNBD7QmjvcNJwr0JS4cAdAtsy7gZ6w==}
+  lit@3.1.3:
+    resolution: {integrity: sha512-l4slfspEsnCcHVRTvaP7YnkTZEZggNFywLEIhQaGhYDczG+tu/vlgm/KaWIEjIp+ZyV20r2JnZctMb8LeLCG7Q==}
 
   lunr@2.3.9:
     resolution: {integrity: sha512-zTU3DaZaF3Rt9rhN3uBMGQD3dD2/vFQqnvZCDv4dl5iOzq2IZQqTxu90r4E5J+nP70J3ilqVCrbho2eWaeW8Ow==}
@@ -1130,23 +1128,21 @@ snapshots:
 
   '@hotwired/turbo@7.3.0': {}
 
-  '@konnorr/bridgetown-quick-search@3.8.0':
+  '@konnorr/bridgetown-quick-search@3.9.2':
     dependencies:
-      konnors-ninja-keys: 1.10.0
-      lit: 2.8.0
+      konnors-ninja-keys: 1.13.2
+      lit: 3.1.3
       lunr: 2.3.9
-
-  '@lit-labs/ssr-dom-shim@1.1.1': {}
 
   '@lit-labs/ssr-dom-shim@1.2.0': {}
 
-  '@lit/react@1.0.3(@types/react@18.2.54)':
+  '@lit/react@1.0.3(@types/react@18.3.3)':
     dependencies:
-      '@types/react': 18.2.54
+      '@types/react': 18.3.3
 
-  '@lit/reactive-element@1.6.2':
+  '@lit/reactive-element@1.6.3':
     dependencies:
-      '@lit-labs/ssr-dom-shim': 1.1.1
+      '@lit-labs/ssr-dom-shim': 1.2.0
 
   '@lit/reactive-element@2.0.4':
     dependencies:
@@ -1171,39 +1167,34 @@ snapshots:
 
   '@open-wc/dedupe-mixin@1.4.0': {}
 
-  '@open-wc/scoped-elements@2.2.0':
+  '@open-wc/scoped-elements@3.0.5':
     dependencies:
-      '@lit/reactive-element': 1.6.2
       '@open-wc/dedupe-mixin': 1.4.0
+      lit: 3.1.3
 
   '@shoelace-style/animations@1.1.0': {}
 
   '@shoelace-style/localize@3.1.2': {}
 
-  '@shoelace-style/shoelace@2.13.1(@types/react@18.2.54)':
+  '@shoelace-style/shoelace@2.13.1(@types/react@18.3.3)':
     dependencies:
       '@ctrl/tinycolor': 4.0.3
       '@floating-ui/dom': 1.6.1
-      '@lit/react': 1.0.3(@types/react@18.2.54)
+      '@lit/react': 1.0.3(@types/react@18.3.3)
       '@shoelace-style/animations': 1.1.0
       '@shoelace-style/localize': 3.1.2
       composed-offset-position: 0.0.4
-      lit: 3.1.2
+      lit: 3.1.3
       qr-creator: 1.0.0
     transitivePeerDependencies:
       - '@types/react'
 
-  '@types/prop-types@15.7.11': {}
+  '@types/prop-types@15.7.12': {}
 
-  '@types/react@18.2.54':
+  '@types/react@18.3.3':
     dependencies:
-      '@types/prop-types': 15.7.11
-      '@types/scheduler': 0.16.8
+      '@types/prop-types': 15.7.12
       csstype: 3.1.3
-
-  '@types/scheduler@0.16.8': {}
-
-  '@types/trusted-types@2.0.3': {}
 
   '@types/trusted-types@2.0.7': {}
 
@@ -1361,6 +1352,8 @@ snapshots:
     dependencies:
       to-regex-range: 5.0.1
 
+  form-associated-helpers@0.0.4: {}
+
   fraction.js@4.2.0: {}
 
   fs-extra@10.1.0:
@@ -1375,6 +1368,8 @@ snapshots:
     optional: true
 
   function-bind@1.1.1: {}
+
+  fzy.js@0.4.1: {}
 
   glob-parent@5.1.2:
     dependencies:
@@ -1438,16 +1433,18 @@ snapshots:
     optionalDependencies:
       graceful-fs: 4.2.11
 
-  konnors-ninja-keys@1.10.0:
+  konnors-ninja-keys@1.13.2:
     dependencies:
       '@material/mwc-icon': 0.25.3
-      '@open-wc/scoped-elements': 2.2.0
+      '@open-wc/scoped-elements': 3.0.5
+      fzy.js: 0.4.1
       hotkeys-js: 3.10.2
       lit: 2.8.0
       web-component-define: 2.0.11
 
-  light-pen@2.2.0:
+  light-pen@3.0.6:
     dependencies:
+      form-associated-helpers: 0.0.4
       lit: 2.8.0
       prism-esm: 1.29.0-fix.4
       web-component-define: 2.0.11
@@ -1456,37 +1453,37 @@ snapshots:
 
   linkifyjs@4.1.1: {}
 
-  lit-element@3.3.2:
+  lit-element@3.3.3:
     dependencies:
-      '@lit-labs/ssr-dom-shim': 1.1.1
-      '@lit/reactive-element': 1.6.2
+      '@lit-labs/ssr-dom-shim': 1.2.0
+      '@lit/reactive-element': 1.6.3
       lit-html: 2.8.0
 
-  lit-element@4.0.4:
+  lit-element@4.0.5:
     dependencies:
       '@lit-labs/ssr-dom-shim': 1.2.0
       '@lit/reactive-element': 2.0.4
-      lit-html: 3.1.2
+      lit-html: 3.1.3
 
   lit-html@2.8.0:
     dependencies:
-      '@types/trusted-types': 2.0.3
+      '@types/trusted-types': 2.0.7
 
-  lit-html@3.1.2:
+  lit-html@3.1.3:
     dependencies:
       '@types/trusted-types': 2.0.7
 
   lit@2.8.0:
     dependencies:
-      '@lit/reactive-element': 1.6.2
-      lit-element: 3.3.2
+      '@lit/reactive-element': 1.6.3
+      lit-element: 3.3.3
       lit-html: 2.8.0
 
-  lit@3.1.2:
+  lit@3.1.3:
     dependencies:
       '@lit/reactive-element': 2.0.4
-      lit-element: 4.0.4
-      lit-html: 3.1.2
+      lit-element: 4.0.5
+      lit-html: 3.1.3
 
   lunr@2.3.9: {}
 
@@ -1626,8 +1623,9 @@ snapshots:
   postcss-load-config@3.1.4(postcss@8.4.19):
     dependencies:
       lilconfig: 2.0.6
-      postcss: 8.4.19
       yaml: 1.10.2
+    optionalDependencies:
+      postcss: 8.4.19
 
   postcss-logical@5.0.4(postcss@8.4.19):
     dependencies:
@@ -1795,7 +1793,7 @@ snapshots:
 
   web-component-define@2.0.11:
     dependencies:
-      '@lit/reactive-element': 1.6.2
+      '@lit/reactive-element': 1.6.3
       '@open-wc/dedupe-mixin': 1.4.0
 
   web-component-lazy-loader@1.0.1: {}
