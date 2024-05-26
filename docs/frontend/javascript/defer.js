@@ -48,17 +48,15 @@ import { BridgetownNinjaKeys } from "@konnorr/bridgetown-quick-search/ninja-keys
     }
 
     createData() {
-      this.results = this.showResultsForQuery(this._search || "*").reverse()
+      this.results = this.showResultsForQuery(this._search)
 
       this.results.forEach((result) => {
         result.icon = `<sl-icon name="link-45deg"></sl-icon>`
       })
 
-      return [
-        ...this.staticData,
-        ...this.results,
-      ]
+      return this.staticData.concat(this.results)
     }
+
 
     open () {
       this.scrollTop = window.scrollY;
