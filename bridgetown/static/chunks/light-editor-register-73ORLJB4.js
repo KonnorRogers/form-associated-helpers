@@ -1,2 +1,0 @@
-import{a as t}from"/form-associated-helpers/bridgetown/static/chunks/chunk-UV3HFUCX.js";import"/form-associated-helpers/bridgetown/static/chunks/chunk-UA73UF6T.js";import"/form-associated-helpers/bridgetown/static/chunks/chunk-APHUTKYZ.js";import"/form-associated-helpers/bridgetown/static/chunks/chunk-5FMZA5DP.js";import"/form-associated-helpers/bridgetown/static/chunks/chunk-ENMDFKSV.js";var i=t;t.define();export{i as default};
-//# sourceMappingURL=/form-associated-helpers/bridgetown/static/chunks/light-editor-register-73ORLJB4.js.map
