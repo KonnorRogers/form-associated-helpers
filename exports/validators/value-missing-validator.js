@@ -1,4 +1,8 @@
 /**
+ * @typedef {{validationMessage: string }} Validateable
+ */
+
+/**
  * @type {() => import("../types.js").Validator<HTMLElement & { required?: boolean }>}
  */
 export const ValueMissingValidator = () => {
@@ -7,7 +11,9 @@ export const ValueMissingValidator = () => {
    */
   const obj = {
     observedAttributes: ["required"],
-    message: "Please fill out this field.",
+    message: Object.assign(document.createElement("input"), {
+      required: true,
+    }).validationMessage,
     checkValidity (element) {
       /**
       * @type {ReturnType<import("../types.js").Validator["checkValidity"]>}

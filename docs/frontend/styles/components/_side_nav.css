@@ -17,8 +17,34 @@ ul.side-nav__menu li::marker {
   padding: 8px;
   max-width: 100%;
   line-height: 1.3;
-  font-size: 1rem;
+  font-size: 1em;
   font-weight: normal;
+  border-inline-start: 4px solid transparent;
+  padding-inline-start: 0.5em;
+}
+
+.side-nav__item[data-level="2"] {
+  font-size: 1.15em;
+  margin-top: 1em;
+}
+
+.side-nav__item[data-level="3"] {
+  font-size: 1em;
+  margin-inline-start: 1em;
+}
+
+.side-nav__item[data-level="4"] {
+  font-size: 0.9em;
+  margin-inline-start: 2em;
+}
+
+.side-nav__item[data-level="5"] {
+  font-size: 0.85em;
+  margin-inline-start: 3em;
+}
+
+.side-nav__item a {
+  text-decoration: none;
 }
 
 .side-nav__link {
@@ -48,23 +74,12 @@ ul.side-nav__menu li::marker {
   padding-top: 1rem;
 }
 
-.side-nav__drawer::part(body) {
-  padding: 0;
-}
-
-.side-nav__drawer::part(footer) {
-  display: none;
-}
-
 .side-nav__drawer__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid var(--sl-color-neutral-200);
-  position: sticky;
-  top: 0px;
-  padding: 1rem;
-  background-color: var(--sl-color-neutral-0);
+  padding-bottom: 1rem;
 }
 
 .side-nav__item.is-active {
@@ -79,7 +94,7 @@ ul.side-nav__menu li::marker {
 }
 
 .side-nav__category-header {
-  font-size: 1.25rem;
+  font-size: 1.25em;
   margin-bottom: 0.5rem;
 }
 

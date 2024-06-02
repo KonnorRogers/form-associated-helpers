@@ -1,7 +1,7 @@
 // @ts-check
 
 /**
- * @type {() => import("../types.js").Validator<HTMLElement & {max?: number}> & { message: (element: HTMLElement, max: number) => string }}
+ * @type {() => import("../types.js").Validator<HTMLElement & {max?: number}>}
  */
 export const RangeOverflowValidator = () => {
   /**
@@ -9,8 +9,14 @@ export const RangeOverflowValidator = () => {
    */
   const obj = {
     observedAttributes: ["max"],
-    message (_element, max) {
-      return `Please select a value that is less than or equal to ${max}.`
+    message (hostElement) {
+      const badInput = Object.assign(document.createElement("input"), {
+        type: "number",
+        max: hostElement.max ?? Number(hostElement.getAttribute("max")),
+        value: hostElement.value
+      })
+
+      return badInput.validationMessage
     },
     checkValidity (element) {
       /**
@@ -23,13 +29,13 @@ export const RangeOverflowValidator = () => {
       }
 
       const max = Number(element.max ?? element.getAttribute("max"))
-      const value = element.value
+      const value = Number(element.value)
 
       // If it's not a number, we can't compare.
-      if (typeof value !== "number") return validity
+      if (isNaN(value) || typeof value !== "number") return validity
 
       if (value > max) {
-        validity.message = (typeof obj.message === "function" ? obj.message(element, max) : obj.message) || ""
+        validity.message = (typeof obj.message === "function" ? obj.message(element) : obj.message) || ""
         validity.isValid = false
         validity.invalidKeys.push("rangeOverflow")
       }

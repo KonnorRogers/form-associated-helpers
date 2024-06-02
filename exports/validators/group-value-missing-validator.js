@@ -1,13 +1,29 @@
+import { uuidv4 } from '../../internal/uuid-v4.js'
+
 /**
- * @type {() => import("../types.js").Validator<HTMLElement & { required?: boolean, form: HTMLFormElement, name?: string }>}
+ * @template {HTMLElement & { required?: boolean, form: HTMLFormElement, name?: string }} [T=HTMLElement & { required?: boolean, form: HTMLFormElement, name?: string }]
+ * @type {() => import("../types.js").Validator<T>}
+ * @example Creating a validator for a radio form associated element.
+ *   class MyEl {
+ *     static validators = [
+ *        GroupValueMissingValidator()
+ *     ]
+ *   }
  */
 export const GroupValueMissingValidator = () => {
   /**
    * @type {ReturnType<GroupValueMissingValidator>}
    */
   const obj = {
-    observedAttributes: ["required"],
-    message: "Please fill out this field",
+    observedAttributes: ["required", "name"],
+    /**
+     * Only radios currently conform to the `"GroupValueMissingValidator", `
+     */
+    message: Object.assign(document.createElement("input"), {
+      type: "radio",
+      required: true,
+      name: `unguessable-name-${uuidv4()}`
+    }).validationMessage,
     checkValidity (element) {
       /**
       * @type {ReturnType<import("../types.js").Validator["checkValidity"]>}
@@ -38,8 +54,10 @@ export const GroupValueMissingValidator = () => {
 
       const formData = new FormData(form)
 
-      if (!formData.get(element.name)) {
-        return validity
+      if (formData.getAll(element.name).length < 1) {
+        validity.message = (typeof obj.message === "function" ? obj.message(element) : obj.message) || ""
+        validity.isValid = false
+        validity.invalidKeys.push("valueMissing")
       }
 
       return validity
@@ -48,4 +66,3 @@ export const GroupValueMissingValidator = () => {
 
   return obj
 }
-

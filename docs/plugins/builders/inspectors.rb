@@ -1,4 +1,3 @@
-require "cgi"
 class Builders::Inspectors < SiteBuilder
   def build
     inspect_html do |document|
@@ -29,7 +28,7 @@ class Builders::Inspectors < SiteBuilder
 
       lang = lang.strip.split("-")[1] if lang
 
-      lexer = Rouge::Lexer.find(lang)
+      lang = Syntax.full_language(lang)
       id = SecureRandom.uuid
 
       el.wrap("<div class='syntax-block'></div>")
@@ -37,7 +36,7 @@ class Builders::Inspectors < SiteBuilder
       actions = <<-HTML
         <div class='syntax-block__actions'>
           <div class='syntax-block__badge'>
-            #{lexer.title}
+            #{lang}
           </div>
 
           <clipboard-copy
@@ -50,7 +49,7 @@ class Builders::Inspectors < SiteBuilder
             <sl-icon class='clipboard__icon--idle' name='clipboard'></sl-icon>
           </clipboard-copy>
 
-          <textarea id='#{id}' hidden>#{CGI.escape_html(text)}</textarea>
+          <textarea id='#{id}' hidden>#{text}</textarea>
         </div>
       HTML
 
@@ -66,6 +65,8 @@ class Builders::Inspectors < SiteBuilder
     document.css("main").css("h2[id],h3[id],h4[id],h5[id],h6[id]").each do |heading|
       text = heading.inner_text
 
+      level = heading.name.split(/h/)[1]
+
       unless heading.css("a")[0]
         heading.content = ""
         anchor = %(
@@ -75,12 +76,11 @@ class Builders::Inspectors < SiteBuilder
         heading << anchor
       end
 
-
       side_anchor = %(
-        <a href='##{heading[:id]}' class='side-nav__link'>#{text}</a>
+        <a href='##{heading[:id]}' class='side-nav__link' style="">#{text}</a>
       )
 
-      item = document.create_element("li", "", class: "side-nav__item")
+      item = document.create_element("li", "", class: "side-nav__item", "data-level": level.to_s)
       item << side_anchor
 
       table_of_contents << item

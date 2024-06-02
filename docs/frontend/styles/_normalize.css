@@ -1,8 +1,7 @@
 html {
   box-sizing: border-box;
   height: 100%;
-  font-size: 16px;
-  /* letter-spacing: 0.025em; */
+  scrollbar-gutter: stable;
 }
 
 *, *:before, *:after {
@@ -14,7 +13,6 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeSpeed;
-  scrollbar-gutter: stable;
   font-family: var(--sl-font-sans);
 	background-color: var(--body-color);
 	color: var(--text-color);

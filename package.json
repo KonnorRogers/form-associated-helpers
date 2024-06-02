@@ -29,7 +29,8 @@
     "deploy:patch": "npm run build && npm version patch && npm publish && git push --follow-tags",
     "deploy:minor": "npm run build && npm version minor && npm publish && git push --follow-tags",
     "deploy:major": "npm run build && npm version major && npm publish && git push --follow-tags",
-    "test": "web-test-runner"
+    "test": "web-test-runner",
+    "test:watch": "web-test-runner --watch"
   },
   "keywords": [
     "web-components",
@@ -52,6 +53,7 @@
     "@custom-elements-manifest/analyzer": "^0.9.0",
     "@esm-bundle/chai": "4.3.4-fix.0",
     "@open-wc/testing-helpers": "^3.0.0",
+    "@types/mocha": "^10.0.6",
     "@types/node": "^20.10.6",
     "@web/test-runner": "^0.18.0",
     "@web/test-runner-commands": "^0.9.0",

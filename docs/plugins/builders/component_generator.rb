@@ -26,6 +26,7 @@ class Builders::ComponentGenerator < SiteBuilder
 
       parser = CustomElementsManifestParser.parse(manifest)
       elements = parser.find_all_tag_names
+      # we don't actually make elements. Instead, we have functions we want to find.
 
       resources = site.collections.documentation.resources
 
@@ -54,6 +55,7 @@ class Builders::ComponentGenerator < SiteBuilder
         parts = metadata.cssParts
 
         resource.content += [
+          "## API Reference\n\n".html_safe,
           import_tabs(path, import_name, tag_name).html_safe,
           slots_table(slots).html_safe,
           attributes_table(attributes).html_safe,
@@ -73,13 +75,17 @@ class Builders::ComponentGenerator < SiteBuilder
     "<div style='text-align: center;'>-</div>"
   end
 
+  def unchecked_property
+    "<sl-icon name='x-lg' style='text-align: center; display: flex; margin: 0 auto; color: var(--sl-color-danger-600);'></sl-icon>"
+  end
+
   def checked_property
-    "<sl-icon name='check-lg' style='text-align: center; display: flex; margin: 0 auto;'></sl-icon>"
+    "<sl-icon name='check-lg' style='font-size: 1.25em; text-align: center; display: flex; margin: 0 auto; color: var(--sl-color-success-700);'></sl-icon>"
   end
 
   def import_tabs(path, import_name, tag_name)
     str = <<~MD
-      ## Imports
+      ### Imports
 
       <sl-tab-group>
     MD
@@ -157,7 +163,7 @@ class Builders::ComponentGenerator < SiteBuilder
     end.join("\n")
 
     <<~HTML
-      ## Slots
+      ### Slots
 
       <div class="table-container">
         <table class="table--component">
@@ -208,7 +214,7 @@ class Builders::ComponentGenerator < SiteBuilder
             #{member.description.to_s.empty? ? empty_property : escape(member.description)}
           </td>
           <td>
-            #{member.reflects ? checked_property : empty_property}
+            #{member.reflects ? checked_property : unchecked_property}
           </td>
           <td>
             #{type_text.blank? ? empty_property : "<code>#{escape(type_text)}</code>"}
@@ -221,7 +227,7 @@ class Builders::ComponentGenerator < SiteBuilder
     end.join("\n")
 
     <<~HTML
-      ## Attributes
+      ### Attributes
 
       <div class="table-container">
         <table class="table--component">
@@ -259,7 +265,7 @@ class Builders::ComponentGenerator < SiteBuilder
     end.join("\n")
 
     <<~HTML
-      ## Events
+      ### Events
 
       <div class="table-container">
         <table class="table--component">
@@ -311,7 +317,7 @@ class Builders::ComponentGenerator < SiteBuilder
     end.join("\n")
 
     <<~HTML
-      ## Functions
+      ### Functions
 
       <div class="table-container">
         <table class="table--component">
@@ -347,7 +353,7 @@ class Builders::ComponentGenerator < SiteBuilder
     end.join("\n")
 
     <<~HTML
-      ## Parts
+      ### Parts
 
       <div class="table-container">
         <table class="table--component">

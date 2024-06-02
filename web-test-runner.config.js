@@ -5,6 +5,7 @@ import { playwrightLauncher } from '@web/test-runner-playwright';
 export default {
   rootDir: '.',
   files: ['./tests/**/*.test.js'], // "default" group
+  watch: process.argv.includes("--watch"),
   concurrentBrowsers: 3,
   nodeResolve: true,
   testFramework: {
@@ -18,8 +19,14 @@ export default {
 
   ],
   browsers: [
-    playwrightLauncher({ product: 'chromium' }),
-    playwrightLauncher({ product: 'firefox' }),
-    playwrightLauncher({ product: 'webkit' })
+    playwrightLauncher({ product: 'chromium', launchOptions: {
+      headless: !(process.env.DEBUG?.toLowerCase() === "chrome")
+    }}),
+    playwrightLauncher({ product: 'firefox', launchOptions: {
+      headless: !(process.env.DEBUG?.toLowerCase() === "firefox")
+    }}),
+    playwrightLauncher({ product: 'webkit', launchOptions: {
+      headless: !(process.env.DEBUG?.toLowerCase() === "webkit")
+    }}),
   ],
 }
