@@ -6,11 +6,14 @@
  */
 export const CustomErrorValidator = () => {
   /**
-   * @type {ReturnType<CustomErrorValidator>}
+   * @type {ReturnType<CustomErrorValidator<T>>}
    */
  const obj = {
     observedAttributes: ["custom-error"],
     fallbackMessage: "An error occurred",
+   /**
+    * @param {T} element
+    */
     message (element) {
       let errorMsg = element.customError ?? element.getAttribute("custom-error")
 

@@ -17,8 +17,4 @@
     "allowJs": true,
     "checkJs": true,
     "verbatimModuleSyntax": true
-  },
-  "references": {
-    "tests": "./tests"
-  }
-}
+  }}

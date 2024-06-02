@@ -37,7 +37,7 @@ export const RangeUnderflowValidator = () => {
       if (isNaN(value) || typeof value !== "number") return validity
 
       if (value < min) {
-        validity.message = (typeof obj.message === "function" ? obj.message(element, min) : obj.message) || ""
+        validity.message = (typeof obj.message === "function" ? obj.message(element) : obj.message) || ""
         validity.isValid = false
         validity.invalidKeys.push("rangeOverflow")
       }

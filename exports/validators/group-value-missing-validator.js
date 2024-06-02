@@ -1,7 +1,8 @@
 import { uuidv4 } from '../../internal/uuid-v4.js'
 
 /**
- * @type {() => import("../types.js").Validator<HTMLElement & { required?: boolean, form: HTMLFormElement, name?: string }>}
+ * @template {HTMLElement & { required?: boolean, form: HTMLFormElement, name?: string }} [T=HTMLElement & { required?: boolean, form: HTMLFormElement, name?: string }]
+ * @type {() => import("../types.js").Validator<T>}
  * @example Creating a validator for a radio form associated element.
  *   class MyEl {
  *     static validators = [
@@ -15,6 +16,9 @@ export const GroupValueMissingValidator = () => {
    */
   const obj = {
     observedAttributes: ["required", "name"],
+    /**
+     * Only radios currently conform to the `"GroupValueMissingValidator", `
+     */
     message: Object.assign(document.createElement("input"), {
       type: "radio",
       required: true,

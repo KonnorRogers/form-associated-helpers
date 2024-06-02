@@ -1,14 +1,19 @@
 /**
- * @template {HTMLElement & { value?: string | null, maxLength?: number, length?: number }} [T=HTMLElement & { value?: string | null, maxLength?: number, length?: number }]
- * @type {() => import("../types.js").Validator<T> & {message: (element: HTMLElement, maxLength: number, stringLength: number) => string}}
+ * @typedef {import("../types.js").FormValue} FormValue
+ */
+
+/**
+ * @template {HTMLElement & { maxLength?: number, value: FormValue }} [T=(HTMLElement & { maxLength?: number, value: FormValue })]
  */
 export const TooLongValidator = () => {
-  /**
-   * @type {ReturnType<TooLongValidator<T>>}
-   */
   const obj = {
     observedAttributes: ["maxlength"],
-    message (_element, maxLength, stringLength) {
+    /**
+     * @param {T} _hostElement
+     * @param {number} maxLength
+     * @param {number} stringLength
+     */
+    message (_hostElement, maxLength, stringLength) {
       // @TODO: This is an edge case with maxlength. minlength has the same issue.
       // const maxLength = Number(element.maxLength || element.getAttribute("maxlength"))
       // const value = element.value
@@ -20,6 +25,9 @@ export const TooLongValidator = () => {
       // return badInput.validationMessage
       return `Please shorten this text to ${maxLength} characters or less. (You are currently using ${stringLength} characters).`
     },
+    /**
+     * @param {T} element
+     */
     checkValidity (element) {
       /**
       * @type {ReturnType<import("../types.js").Validator["checkValidity"]>}

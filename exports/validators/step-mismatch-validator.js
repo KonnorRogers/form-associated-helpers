@@ -40,15 +40,18 @@ function toNumberOrNull (maybeNum) {
 
 /**
  * @template {RangeElement} [T=RangeElement]
- * @type {() => import("../types.js").Validator<T> & { message: (element: T, options: {low: number, high: number}) => string }}
+ * @type {() => import("../types.js").Validator<T> }}
  */
 export const StepMismatchValidator = () => {
   /**
-   * @type {ReturnType<StepMismatchValidator>}
+   * @type {ReturnType<StepMismatchValidator<T>>}
    */
   const obj = {
     observedAttributes: ["min", "step"],
-    message (element, options) {
+    /**
+     * @param {T} element
+     */
+    message (element) {
       // Don't need min here.
       // const min = Number(element.min ?? element.getAttribute("min"))
       const value = toNumberOrNull(element.value)

@@ -40,9 +40,11 @@ export function LitTextareaMixin(superclass) {
       * @implements {HTMLTextAreaElement}
       */
     class extends LitFormAssociatedMixin(modifiedSuperclass) {
+
       /**
-        * @override
-        */
+       * @override
+       * @type {Array<import("../types.js").Validator>}
+       */
       static get validators () {
         return [
           ...super.validators,

@@ -26,6 +26,7 @@ class Builders::ComponentGenerator < SiteBuilder
 
       parser = CustomElementsManifestParser.parse(manifest)
       elements = parser.find_all_tag_names
+      # we don't actually make elements. Instead, we have functions we want to find.
 
       resources = site.collections.documentation.resources
 
