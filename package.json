@@ -1,6 +1,6 @@
 {
   "name": "form-associated-helpers",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "A collection of reusable mixins + helpers for working with form associated custom elements.",
   "exports": {
     "./package.json": "./package.json",
