@@ -1,6 +1,7 @@
-## TODO
+## v0.0.10
 
 - Introduce a pattern for easier translations of error messages
+- Fixed checks to make sure `this.internals` and `superclass.formAssociated` aren't already defined.
 
 ## v0.0.9 - 04/30/2024
 
