@@ -23,11 +23,11 @@ LitFormAssociatedMixin.formProperties = formProperties
  * An extension of the VanillaFormAssociatedMixin intended for LitElement by providing formProperties and willUpdate() callbacks with the appropriate properties.
  *
  * @see https://webkit.org/blog/13711/elementinternals-and-form-associated-custom-elements/
- * @template {import("./vanilla-form-associated-mixin.js").FormAssociatedElement} T
+ * @template {{ new (...args: any[]): import("lit").LitElement }} T
  * @param {T} superclass
  */
 export function LitFormAssociatedMixin(superclass) {
-  const finalClass = class extends VanillaFormAssociatedMixin(superclass) {
+  return class extends VanillaFormAssociatedMixin(superclass) {
     /**
       * @param {...any} args
       */
@@ -47,30 +47,32 @@ export function LitFormAssociatedMixin(superclass) {
      * @type {import("lit").LitElement["willUpdate"]}
      */
     willUpdate (changedProperties) {
-      // @ts-expect-error
       if (typeof super.willUpdate !== "function") {
         return
       }
 
       if (changedProperties.has("formControl")) {
-        this.formControl?.addEventListener("focusout", this.handleInteraction)
-        this.formControl?.addEventListener("blur", this.handleInteraction)
-        this.formControl?.addEventListener("click", this.handleInteraction)
+        changedProperties.get("formControl")?.removeEventListener("focusout", this.handleInteraction)
+        changedProperties.get("formControl")?.removeEventListener("blur", this.handleInteraction)
+        changedProperties.get("formControl")?.removeEventListener("click", this.handleInteraction)
+
+        /**
+         * @type {typeof this & { formControl?: HTMLElement | null | undefined }}
+         */
+        const self = this
+        self.formControl?.addEventListener("focusout", this.handleInteraction)
+        self.formControl?.addEventListener("blur", this.handleInteraction)
+        self.formControl?.addEventListener("click", this.handleInteraction)
       }
 
       if (
-        changedProperties.has("formControl")
-        || changedProperties.has("defaultValue")
-        || changedProperties.has("value")
+        changedProperties.has("value")
       ) {
-        this.setFormValue(this.value, this.value)
+        this.setFormValue(/** @type {any} */ (this.getFormValue()), /** @type {any} */ (this.value))
       }
 
-      // @ts-expect-error
       super.willUpdate(changedProperties)
     }
   }
-
-  return /** @type {ReturnType<typeof VanillaFormAssociatedMixin<T>> & typeof finalClass} */ (finalClass)
 }
 

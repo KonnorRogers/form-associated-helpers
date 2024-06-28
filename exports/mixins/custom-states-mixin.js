@@ -1,10 +1,11 @@
 /**
- * @typedef {import("./types.js").GConstructable<HTMLElement & { internals: ElementInternals }> & { observedAttributes?: string[] }} ElementInternalsElement
+ * @template {{ new (...args: any[]): HTMLElement }} T
+ * @typedef {InstanceType<T> & { internals: ElementInternals }} WithElementInternals
  */
 
 /**
  * A mixin for using custom states without calling `this.internals.add()`
- * @template {ElementInternalsElement} T
+ * @template {{ new (...args: any[]): HTMLElement }} T
  * @param {T} superclass
  */
 export function CustomStatesMixin(superclass) {
@@ -15,7 +16,7 @@ export function CustomStatesMixin(superclass) {
        */
       addCustomState (state) {
         try {
-          this.internals.states.add(state)
+          /** @type {WithElementInternals<T>} */ (this).internals.states.add(state)
         } catch (_) {
           // Without this, test suite errors.
         } finally {
@@ -28,7 +29,7 @@ export function CustomStatesMixin(superclass) {
        */
       deleteCustomState (state) {
         try {
-          this.internals.states.delete(state)
+          /** @type {WithElementInternals<T>} */ (this).internals.states.delete(state)
         } catch (_) {
           // Without this, test suite errors.
         } finally {
@@ -41,12 +42,12 @@ export function CustomStatesMixin(superclass) {
        * @param {boolean} bool
        */
       toggleCustomState (state, bool) {
-        if (bool === true) {
+        if (bool) {
           this.addCustomState(state)
           return
         }
 
-        if (bool === false) {
+        if (!bool) {
           this.deleteCustomState(state)
           return
         }
@@ -60,7 +61,7 @@ export function CustomStatesMixin(superclass) {
        */
       hasCustomState (state) {
         try {
-          return this.internals.states.has(state)
+          /** @type {WithElementInternals<T>} */ (this).internals.states.has(state)
         } catch (_) {
           // Without this, test suite errors.
         } finally {

@@ -25,22 +25,26 @@ LitTextareaMixin.formProperties = Object.freeze(
  * A mixin for build a `<textarea>` specifically for Lit.
  *
  * @see https://webkit.org/blog/13711/elementinternals-and-form-associated-custom-elements/
- * @template {import("./vanilla-form-associated-mixin.js").FormAssociatedElement} T
+ * @template {import("lit").LitElement} T
  * @param {T} superclass
  */
 export function LitTextareaMixin(superclass) {
+  const makeUsable = /** @type {import("./vanilla-form-associated-mixin.js").FormAssociatedElement<typeof superclass>} */ (superclass)
   // This looks weird, but it's the only way to correctly cast the TextAreaMixin to have a "typesafe" value.
-  // from `{value: string | File | FormData | null}` to `{value: string}`
-  /** @type {T & import("./types.js").GConstructable<{defaultValue: string, value: string}>} */
-  // @ts-expect-error
-  const modifiedSuperclass = superclass
+  const modifiedSuperclass = LitFormAssociatedMixin(makeUsable)
+
+  const typeSafeSuperclass = /** @type {typeof modifiedSuperclass & {
+    new (...args: any[]): {
+      value: string
+      defaultValue: string
+    }
+  }} */ (modifiedSuperclass)
 
   return (
     /**
       * @implements {HTMLTextAreaElement}
       */
-    class extends LitFormAssociatedMixin(modifiedSuperclass) {
-
+    class extends LitFormAssociatedMixin(typeSafeSuperclass) {
       /**
        * @override
        * @type {Array<import("../types.js").Validator>}
@@ -66,6 +70,8 @@ export function LitTextareaMixin(superclass) {
 
         return LitTextareaMixin.formProperties
       }
+
+
       /**
         * @param {...any} args
         */

@@ -24,7 +24,7 @@
     "build": "npm run clean && tsc && npm run build:cem",
     "watch:cem": "custom-elements-manifest analyze --litelement --watch",
     "build:cem": "custom-elements-manifest analyze --litelement",
-    "clean": "rimraf -g \"./exports/**/*.d.ts\" \"./internal/**/*.d.ts\"",
+    "clean": "rimraf -g \"./{examples,exports,internal}/**/!(*-globals|*-types).d.ts\"",
     "start": "tsc --watch",
     "deploy:patch": "npm run build && npm version patch && npm publish && git push --follow-tags",
     "deploy:minor": "npm run build && npm version minor && npm publish && git push --follow-tags",

@@ -9,16 +9,11 @@
  * This is merely an implementation that sets the `formAssociated` static class property and calls `attachInternals()`. It doesn't do anything else. It is intentionally minimal.
  *
  * @see https://webkit.org/blog/13711/elementinternals-and-form-associated-custom-elements/
- * @template {import("./types.js").GConstructable<HTMLElement> & {observedAttributes?: string[], formAssociated?: boolean}} T
+ * @template {{ new (...args: any[]): HTMLElement }} T
  * @param {T} superclass
  */
 export function FormAssociatedMixin(superclass) {
-  return (
-    /**
-     */
-    class extends superclass {
-      static formAssociated = superclass.formAssociated ?? true
-
+  class FormAssociatedMixinClass extends superclass {
       /**
       * @param {...any} args
       */
@@ -35,6 +30,12 @@ export function FormAssociatedMixin(superclass) {
           this.internals = this.attachInternals()
         }
       }
-    }
-  )
+  }
+
+  // @ts-expect-error
+  if (FormAssociatedMixinClass.formAssociated == null) {
+    FormAssociatedMixinClass.formAssociated = true
+  }
+
+  return FormAssociatedMixinClass
 }
