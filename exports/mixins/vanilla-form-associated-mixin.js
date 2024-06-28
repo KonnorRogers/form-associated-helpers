@@ -506,28 +506,28 @@ export function VanillaFormAssociatedMixin(superclass) {
       }
 
       updateInteractionState () {
-        // if (isDisabled(this)) {
-        //   this.addCustomState("disabled")
-        //   this.deleteCustomState("invalid")
-        //   this.deleteCustomState("user-invalid")
-        //   this.deleteCustomState("valid")
-        //   this.deleteCustomState("user-valid")
-        //   return
-        // }
+        if (isDisabled(this)) {
+          this.addCustomState("disabled")
+          this.deleteCustomState("invalid")
+          this.deleteCustomState("user-invalid")
+          this.deleteCustomState("valid")
+          this.deleteCustomState("user-valid")
+          return
+        }
 
-        // this.deleteCustomState("disabled")
+        this.deleteCustomState("disabled")
 
-        // if (this.validity.valid) {
-        //   this.deleteCustomState("invalid")
-        //   this.deleteCustomState("user-invalid")
-        //   this.addCustomState("valid")
-        //   this.toggleCustomState("user-valid", this.hasInteracted && this.valueHasChanged)
-        // } else {
-        //   this.deleteCustomState("valid")
-        //   this.deleteCustomState("user-valid")
-        //   this.addCustomState("invalid")
-        //   this.toggleCustomState("user-invalid", this.hasInteracted && this.valueHasChanged)
-        // }
+        if (this.validity.valid) {
+          this.deleteCustomState("invalid")
+          this.deleteCustomState("user-invalid")
+          this.addCustomState("valid")
+          this.toggleCustomState("user-valid", this.hasInteracted && this.valueHasChanged)
+        } else {
+          this.deleteCustomState("valid")
+          this.deleteCustomState("user-valid")
+          this.addCustomState("invalid")
+          this.toggleCustomState("user-invalid", this.hasInteracted && this.valueHasChanged)
+        }
       }
     }
 }
