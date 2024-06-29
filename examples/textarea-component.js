@@ -4,6 +4,7 @@ import { live } from 'lit/directives/live.js';
 import { LitTextareaMixin } from "../exports/mixins/lit-textarea-mixin.js"
 import { MirrorValidator } from "../exports/validators/mirror-validator.js";
 
+
 export default class TextareaComponent extends LitTextareaMixin(LitElement) {
   /**
    * @override

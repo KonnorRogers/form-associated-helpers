@@ -22,29 +22,24 @@ LitTextareaMixin.formProperties = Object.freeze(
 )
 
 /**
+ * @typedef {{ formControl?: undefined | null | HTMLElement }} MaybeFormControl
+ */
+
+/**
  * A mixin for build a `<textarea>` specifically for Lit.
  *
  * @see https://webkit.org/blog/13711/elementinternals-and-form-associated-custom-elements/
- * @template {import("lit").LitElement} T
+ * @template {{ new (...args: any[]): import("lit").LitElement }} T
  * @param {T} superclass
  */
 export function LitTextareaMixin(superclass) {
-  const makeUsable = /** @type {import("./vanilla-form-associated-mixin.js").FormAssociatedElement<typeof superclass>} */ (superclass)
-  // This looks weird, but it's the only way to correctly cast the TextAreaMixin to have a "typesafe" value.
-  const modifiedSuperclass = LitFormAssociatedMixin(makeUsable)
+  const Mixin = LitFormAssociatedMixin(superclass)
 
-  const typeSafeSuperclass = /** @type {typeof modifiedSuperclass & {
-    new (...args: any[]): {
-      value: string
-      defaultValue: string
-    }
-  }} */ (modifiedSuperclass)
 
-  return (
-    /**
-      * @implements {HTMLTextAreaElement}
-      */
-    class extends LitFormAssociatedMixin(typeSafeSuperclass) {
+  /**
+   * @implements Omit<HTMLTextAreaElement, "value" | "defaultValue">
+   */
+  class LitFormAssociatedClass extends Mixin {
       /**
        * @override
        * @type {Array<import("../types.js").Validator>}
@@ -67,10 +62,8 @@ export function LitTextareaMixin(superclass) {
           return {...LitTextareaMixin.formProperties, ...properties}
         }
 
-
         return LitTextareaMixin.formProperties
       }
-
 
       /**
         * @param {...any} args
@@ -89,12 +82,12 @@ export function LitTextareaMixin(superclass) {
         this.wrap = ""
 
         /**
-          * @type {HTMLTextAreaElement["value"]}
+          * @type {string}
           */
         this.value = ""
 
         /**
-          * @type {HTMLTextAreaElement["defaultValue"]}
+          * @type {string}
           */
         this.defaultValue = ""
 
@@ -146,7 +139,7 @@ export function LitTextareaMixin(superclass) {
         * @param {Parameters<HTMLTextAreaElement["setSelectionRange"]>} args
         */
       setSelectionRange (...args) {
-        const formControl = this.formControl
+        const formControl = /** @type {MaybeFormControl} */ (this).formControl
 
         if (formControl && "selectionRange" in formControl) {
           /** @type {HTMLTextAreaElement} */ (/** @type {unknown} */ (formControl)).setSelectionRange(...args)
@@ -157,7 +150,7 @@ export function LitTextareaMixin(superclass) {
         * @param {[replacement: string, start: number, end: number, selectionMode?: SelectionMode] | [replacement: string]} args
         */
       setRangeText (...args) {
-        const formControl = this.formControl
+        const formControl = /** @type {MaybeFormControl} */ (this).formControl
 
         if (formControl && "setRangeText" in formControl) {
           // @ts-expect-error
@@ -169,10 +162,10 @@ export function LitTextareaMixin(superclass) {
         * @returns {HTMLTextAreaElement["textLength"]}
         */
       get textLength () {
-        const formControl = /** @type {HTMLTextAreaElement} */ (this.formControl)
+        const formControl = /** @type {MaybeFormControl} */ (this).formControl
 
         if (formControl && "textLength" in formControl) {
-          return formControl.textLength
+          return /** @type {HTMLTextAreaElement} */ (formControl).textLength
         }
 
         return 0
@@ -182,7 +175,7 @@ export function LitTextareaMixin(superclass) {
         * @returns {HTMLTextAreaElement["selectionStart"]}
         */
       get selectionStart () {
-        const formControl = /** @type {HTMLTextAreaElement} */ (this.formControl)
+        const formControl = /** @type {HTMLTextAreaElement} */ (/** @type {MaybeFormControl} */ (this).formControl)
 
         if (formControl && "selectionStart" in formControl) {
           return formControl.selectionStart
@@ -195,7 +188,7 @@ export function LitTextareaMixin(superclass) {
         * @returns {HTMLTextAreaElement["selectionStart"]}
         */
       get selectionEnd () {
-        const formControl = /** @type {HTMLTextAreaElement} */ (this.formControl)
+        const formControl = /** @type {HTMLTextAreaElement} */ (/** @type {MaybeFormControl} */ (this).formControl)
 
         if (formControl && "selectionEnd" in formControl) {
           return formControl.selectionEnd
@@ -208,12 +201,13 @@ export function LitTextareaMixin(superclass) {
         * @type {HTMLTextAreaElement["select"]}
         */
       select () {
-        const formControl = this.formControl
+        const formControl = /** @type {HTMLTextAreaElement} */ (/** @type {MaybeFormControl} */ (this).formControl)
 
         if (formControl) {
-          /** @type {HTMLTextAreaElement} */ (formControl).select?.()
+          formControl.select?.()
         }
       }
     }
-  )
+
+  return LitFormAssociatedClass
 }

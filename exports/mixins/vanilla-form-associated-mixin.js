@@ -3,16 +3,6 @@ import { CustomStatesMixin } from "./custom-states-mixin.js"
 import { FormAssociatedMixin } from "./form-associated-mixin.js"
 
 /**
- * @typedef {Object} FormAssociatedInstanceProperties
- * @property {null | undefined | (HTMLElement & { value: any, defaultValue: any })} [formControl]
- * @property {ElementInternals} internals
- * @property {boolean} disabled
- * @property {boolean} hasInteracted: boolean
- * @property {Array<import("../types.js").Validator>} validators
- */
-
-
-/**
  * @param {HTMLElement & { disabled: boolean }} el
  */
 function isDisabled (el) {
@@ -196,8 +186,9 @@ export function VanillaFormAssociatedMixin(superclass) {
          */
         this.value = fallbackValue(this.value, this.getAttribute("value") || null)
 
+        // Type any to make it overrideable.
         /**
-         * @type {null | string}
+         * @type {unknown}
          */
         this.defaultValue = fallbackValue(this.defaultValue, this.getAttribute("value") || null)
 
@@ -360,7 +351,7 @@ export function VanillaFormAssociatedMixin(superclass) {
         this.hasInteracted = false
         this.valueHasChanged = false
         this.updateValidity()
-        this.setFormValue(this.getFormValue(), this.value)
+        this.setFormValue(this.getFormValue(), /** @type {any} */ (this.value))
       }
 
       /**
@@ -437,6 +428,7 @@ export function VanillaFormAssociatedMixin(superclass) {
 
       /**
        * This function generally just returns `this.value`. Occasionally, you may want to apply transforms to your `this.value` prior to setting it on the form. This is the place to do that.
+       * @returns {File | null | FormData | string}
        * @example
        *    class MyElement extends VanillaFormAssociatedMixin(HTMLElement) {
        *       getFormValue () {
@@ -447,7 +439,7 @@ export function VanillaFormAssociatedMixin(superclass) {
        *    }
        */
       getFormValue () {
-        return this.value
+        return /** @type {null | File | FormData | string} */ (this.value)
       }
 
       resetValidity () {

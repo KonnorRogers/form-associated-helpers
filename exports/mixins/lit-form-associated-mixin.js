@@ -23,7 +23,9 @@ LitFormAssociatedMixin.formProperties = formProperties
  * An extension of the VanillaFormAssociatedMixin intended for LitElement by providing formProperties and willUpdate() callbacks with the appropriate properties.
  *
  * @see https://webkit.org/blog/13711/elementinternals-and-form-associated-custom-elements/
- * @template {{ new (...args: any[]): import("lit").LitElement }} T
+ * @template {{
+    new (...args: any[]): HTMLElement
+  }} T
  * @param {T} superclass
  */
 export function LitFormAssociatedMixin(superclass) {
@@ -44,9 +46,11 @@ export function LitFormAssociatedMixin(superclass) {
 
 
     /**
+     * @protected
      * @type {import("lit").LitElement["willUpdate"]}
      */
     willUpdate (changedProperties) {
+      // @ts-expect-error
       if (typeof super.willUpdate !== "function") {
         return
       }
@@ -71,6 +75,7 @@ export function LitFormAssociatedMixin(superclass) {
         this.setFormValue(/** @type {any} */ (this.getFormValue()), /** @type {any} */ (this.value))
       }
 
+      // @ts-expect-error
       super.willUpdate(changedProperties)
     }
   }
