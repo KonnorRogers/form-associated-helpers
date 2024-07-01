@@ -3,13 +3,6 @@ import { CustomStatesMixin } from "./custom-states-mixin.js"
 import { FormAssociatedMixin } from "./form-associated-mixin.js"
 
 /**
- * @param {HTMLElement & { disabled: boolean }} el
- */
-function isDisabled (el) {
-  return Boolean(el.matches(":disabled") || el.disabled)
-}
-
-/**
  * @template T
  * @template U
  * @param {T} val
@@ -109,6 +102,14 @@ function _VanillaFormAssociatedGettersMixin(superclass) {
       get isUserInvalid () {
         return /** @type {any} */ (this).hasInteracted && !this.validity.valid
       }
+
+      /**
+       * We use a `isDisabled` that checks both `matches(":disabled")` and `this.disabled` which
+       *   accounts for if the element is wrapped in a `<fieldset disabled>`
+       */
+      get isDisabled () {
+        return Boolean(this.matches(":disabled") || /** @type {any} */ (this).disabled)
+      }
   })
 }
 
@@ -203,7 +204,7 @@ export function VanillaFormAssociatedMixin(superclass) {
           * Make sure if you're using a library that "reflects" properties to attributes, you don't reflect this `disabled.`
           * @type {boolean}
           */
-          this.disabled = fallbackValue(this.disabled, isDisabled(this))
+          this.disabled = fallbackValue(this.disabled, this.isDisabled)
 
           /**
           * Generally form controls can have "required", this may not be necessary here, but is a nice convention.
@@ -253,7 +254,7 @@ export function VanillaFormAssociatedMixin(superclass) {
        */
       handleInvalid = (e) => {
         if (e.target !== this) return
-        if (isDisabled(this)) return
+        if (this.isDisabled) return
 
         this.hasInteracted = true
 
@@ -266,7 +267,7 @@ export function VanillaFormAssociatedMixin(superclass) {
        * @param {Event} e
        */
       handleInteraction = (e) => {
-        if (isDisabled(this)) return
+        if (this.isDisabled) return
 
         if (!this.matches(":focus-within")) {
           this.hasInteracted = true
@@ -437,7 +438,7 @@ export function VanillaFormAssociatedMixin(superclass) {
       }
 
       updateValidity () {
-        if (isDisabled(this)) {
+        if (this.isDisabled) {
           this.resetValidity()
           // We don't run validators on disabled thiss to be inline with native HTMLElements.
           // https://codepen.io/paramagicdev/pen/PoLogeL
@@ -487,7 +488,7 @@ export function VanillaFormAssociatedMixin(superclass) {
       }
 
       updateInteractionState () {
-        if (isDisabled(this)) {
+        if (this.isDisabled) {
           this.addCustomState("disabled")
           this.deleteCustomState("invalid")
           this.deleteCustomState("user-invalid")
@@ -502,12 +503,12 @@ export function VanillaFormAssociatedMixin(superclass) {
           this.deleteCustomState("invalid")
           this.deleteCustomState("user-invalid")
           this.addCustomState("valid")
-          this.toggleCustomState("user-valid", !this.isUserInvalid)
+          this.toggleCustomState("user-valid", this.isUserInvalid)
         } else {
           this.deleteCustomState("valid")
           this.deleteCustomState("user-valid")
           this.addCustomState("invalid")
-          this.toggleCustomState("user-invalid", !this.isUserInvalid)
+          this.toggleCustomState("user-invalid", this.isUserInvalid)
         }
       }
     }

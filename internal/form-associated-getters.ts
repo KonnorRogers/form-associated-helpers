@@ -31,4 +31,10 @@ export type AbstractGetters<T extends typeof HTMLElement> = {
     *    By default this getter will always returns false. It is up to you to add logic.
     */
    get isUserInvalid (): boolean
+
+  /**
+    * We use a `isDisabled` that checks both `matches(":disabled")` and `this.disabled` which
+    *   accounts for if the element is wrapped in a `<fieldset disabled>`
+    */
+  get isDisabled (): boolean
 }
