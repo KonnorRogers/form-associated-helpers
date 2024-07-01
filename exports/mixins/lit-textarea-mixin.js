@@ -216,6 +216,54 @@ export function LitTextareaMixin(superclass) {
       }
 
       /**
+       * @override
+       * @param {Event} e
+       */
+      handleInvalid = (e) => {
+        if (e.target !== this) return
+        if (this.isDisabled) return
+
+        if (this.value !== this.defaultValue) {
+          this.valueHasChanged = true
+        }
+
+        this.hasInteracted = true
+        this.updateInteractionState()
+      }
+
+      /**
+       * @override
+       * Sets `this.hasInteracted = true` to true when the users focus / clicks the element.
+       * @param {Event} e
+       */
+      handleInteraction = (e) => {
+        if (this.isDisabled) return
+
+        if (!this.matches(":focus-within") && this.valueHasChanged) {
+          this.hasInteracted = true
+        }
+        this.updateValidity()
+      }
+
+      /**
+       * @param {string} name
+       * @param {null | string} oldVal
+       * @param {null | string} newVal
+       */
+      attributeChangedCallback (name, oldVal, newVal) {
+        if (name === "value") {
+          this.defaultValue = newVal || ""
+
+          if (!this.hasInteracted && !this.valueHasChanged) {
+            this.value = this.defaultValue
+            this.setFormValue(/** @type {any} */ (this.toFormValue()), /** @type {any} */ (this.value))
+          }
+        }
+        super.attributeChangedCallback(name, oldVal, newVal)
+      }
+
+
+      /**
         * @param {Parameters<HTMLTextAreaElement["setSelectionRange"]>} args
         */
       setSelectionRange (...args) {
@@ -249,6 +297,9 @@ export function LitTextareaMixin(superclass) {
         }
       }
 
+      /**
+       * @override
+       */
       formResetCallback () {
         this.value = this.defaultValue
 
@@ -261,6 +312,13 @@ export function LitTextareaMixin(superclass) {
       willUpdate (changedProperties) {
         if (changedProperties.has("value") && this.hasInteracted) {
           this.valueHasChanged = true
+        }
+
+        if (changedProperties.has("defaultValue")) {
+          if (!this.hasInteracted && !this.valueHasChanged) {
+            this.value = this.defaultValue
+            this.setFormValue(/** @type {any} */ (this.toFormValue()), /** @type {any} */ (this.value))
+          }
         }
 
         super.willUpdate(changedProperties)

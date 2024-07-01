@@ -296,8 +296,8 @@ export function VanillaFormAssociatedMixin(superclass) {
 
       /**
        * @param {string} name
-       * @param {string} oldVal
-       * @param {string} newVal
+       * @param {null | string} oldVal
+       * @param {null | string} newVal
        */
       attributeChangedCallback(name, oldVal, newVal) {
         // @ts-expect-error
