@@ -10,14 +10,14 @@ import type {Validator} from "../exports/types.js"
  */
 export type AbstractGetters<T extends typeof HTMLElement> = {
   get allValidators (): Array<Validator<HTMLElement & InstanceType<T>>>
-  get willShowValidationMessage (): boolean
   get labels (): NodeListOf<HTMLLabelElement>
   get validity (): ElementInternals["validity"]
   get validationMessage (): ElementInternals["validationMessage"]
   get willValidate (): ElementInternals["willValidate"]
 
   /**
-    * `validationTarget` is used for displaying native validation popups as the "anchor"
+    * `validationTarget` is used for displaying native validation popups as the "anchor".
+    * override this to choose what to "anchor" your validation popups from.
     */
   get validationTarget (): null | undefined | HTMLElement
 
@@ -25,4 +25,10 @@ export type AbstractGetters<T extends typeof HTMLElement> = {
    * Returns the form element attached to the element
    */
   get form (): ElementInternals["form"]
+
+  /**
+    * Tracks whether or not an element meets custom criteria for `:user-invalid`. NOTE: this will not set `:user-invalid`, but instead set `:state(user-invalid)`. `:user-invalid` is inconsistent and has not been specced for Form Associated Custom Elements.
+    *    By default this getter will always returns false. It is up to you to add logic.
+    */
+   get isUserInvalid (): boolean
 }
