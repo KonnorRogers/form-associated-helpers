@@ -183,55 +183,53 @@ export function VanillaFormAssociatedMixin(superclass) {
 
 
         // We wrap it all in a `queueMicrotask` because we want this to run after the real constructor.
-        queueMicrotask(() => {
-          /**
-          * @type {ElementInternals["role"]}
-          */
-          this.role = fallbackValue(this.role, this.getAttribute("role") || null)
+        /**
+        * @type {ElementInternals["role"]}
+        */
+        this.role = fallbackValue(this.role, this.getAttribute("role") || null)
 
-          /**
-          * @type {HTMLInputElement["name"]}
-          */
-          this.name = fallbackValue(this.name, (this.getAttribute("name") || ""))
+        /**
+        * @type {HTMLInputElement["name"]}
+        */
+        this.name = fallbackValue(this.name, (this.getAttribute("name") || ""))
 
-          /**
-          * `this.type` is used by ElementInternals.
-          * @type {string}
-          */
-          this.type = fallbackValue(this.type, (this.getAttribute("type") || this.localName || ""))
+        /**
+        * `this.type` is used by ElementInternals.
+        * @type {string}
+        */
+        this.type = fallbackValue(this.type, (this.getAttribute("type") || this.localName || ""))
 
-          /**
-          * Make sure if you're using a library that "reflects" properties to attributes, you don't reflect this `disabled.`
-          * @type {boolean}
-          */
-          this.disabled = fallbackValue(this.disabled, this.isDisabled)
+        /**
+        * Make sure if you're using a library that "reflects" properties to attributes, you don't reflect this `disabled.`
+        * @type {boolean}
+        */
+        this.disabled = fallbackValue(this.disabled, this.isDisabled)
 
-          /**
-          * Generally form controls can have "required", this may not be necessary here, but is a nice convention.
-          * @type {boolean}
-          */
-          this.required = fallbackValue(this.required, this.hasAttribute("required"))
+        /**
+        * Generally form controls can have "required", this may not be necessary here, but is a nice convention.
+        * @type {boolean}
+        */
+        this.required = fallbackValue(this.required, this.hasAttribute("required"))
 
-          /**
-          * Tracks when a user blurs from a form control.
-          * @type {boolean}
-          */
-          this.hasInteracted = fallbackValue(this.hasInteracted, false)
+        /**
+        * Tracks when a user blurs from a form control.
+        * @type {boolean}
+        */
+        this.hasInteracted = fallbackValue(this.hasInteracted, false)
 
-          /**
-          * While not generally encouraged, you can add instance level validators.
-          *   These validators should not rely on an attribute, or should already have a "watched" attribute
-          *   to know when to re-run the validator.
-          * @type {Array<import("../types.js").Validator>}
-          */
-          this.validators = fallbackValue(this.validators, [])
+        /**
+        * While not generally encouraged, you can add instance level validators.
+        *   These validators should not rely on an attribute, or should already have a "watched" attribute
+        *   to know when to re-run the validator.
+        * @type {Array<import("../types.js").Validator>}
+        */
+        this.validators = fallbackValue(this.validators, [])
 
-          ;/** @type {typeof _VanillaFormAssociatedMixin_} */(this.constructor).assumeInteractionOn.forEach((str) => {
-            this.addEventListener(str, this.handleInteraction)
-          })
-
-          this.addEventListener("invalid", this.handleInvalid)
+        ;/** @type {typeof _VanillaFormAssociatedMixin_} */(this.constructor).assumeInteractionOn.forEach((str) => {
+          this.addEventListener(str, this.handleInteraction)
         })
+
+        this.addEventListener("invalid", this.handleInvalid)
 
         // Private
 

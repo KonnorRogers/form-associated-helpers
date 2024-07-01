@@ -219,7 +219,7 @@ export function LitTextareaMixin(superclass) {
        * @override
        * @param {Event} e
        */
-      handleInvalid = (e) => {
+      handleInvalid (e) {
         if (e.target !== this) return
         if (this.isDisabled) return
 
@@ -236,7 +236,7 @@ export function LitTextareaMixin(superclass) {
        * Sets `this.hasInteracted = true` to true when the users focus / clicks the element.
        * @param {Event} e
        */
-      handleInteraction = (e) => {
+      handleInteraction (e) {
         if (this.isDisabled) return
 
         if (!this.matches(":focus-within") && this.valueHasChanged) {
@@ -311,7 +311,9 @@ export function LitTextareaMixin(superclass) {
        */
       willUpdate (changedProperties) {
         if (changedProperties.has("value") && this.hasInteracted) {
-          this.valueHasChanged = true
+          if (this.value !== this.defaultValue) {
+            this.valueHasChanged = true
+          }
         }
 
         if (changedProperties.has("defaultValue")) {

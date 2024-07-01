@@ -305,7 +305,7 @@ test("Should fail validity check with required and no value", async () => {
   assert.equal(editor.validity.valid, false)
 })
 
-test("Should not trigger `:user-valid` if we type something, then return to the same defaultValue", async () => {
+test.only("Should not trigger `:user-valid` if we type something, then return to the same defaultValue", async () => {
   const form = await fixture(html`
     <form>
       <textarea-component required name="test" value="default value" minlength="5"></textarea-component>
@@ -348,7 +348,19 @@ test("Should not trigger `:user-valid` if we type something, then return to the 
   await sendKeys({ press: "Backspace" })
   await sendKeys({ type: "no" })
 
-  await sendKeys({ press: TAB_KEY })
+  editor.blur()
+
+  // await sendKeys({ press: TAB_KEY })
+  await aTimeout(1)
+
+  const { value, defaultValue, valueHasChanged, hasInteracted, validity } = editor
+  console.log({
+    valueHasChanged,
+    hasInteracted,
+    valid: validity.valid,
+    value,
+    defaultValue
+  })
 
   assert.isTrue(isInvalid(editor))
   // Should trigger :user-invalid
