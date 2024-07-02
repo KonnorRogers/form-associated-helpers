@@ -251,6 +251,7 @@ export function VanillaFormAssociatedMixin(superclass) {
        * @param {Event} e
        */
       handleInvalid = (e) => {
+        // invalid events could bubble from children. We only want invalid events on the parent.
         if (e.target !== this) return
         if (this.isDisabled) return
 
