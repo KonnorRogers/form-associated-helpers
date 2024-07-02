@@ -1,3 +1,4 @@
-<% ordered_categories_hash_map.each do |c| %>
+<% categories = ["Guides", "How Tos", "References"] %>
+<% ordered_categories_hash_map.select { |c| categories.include?(c[:text]) }.each do |c| %>
   <a class="nav-link" href="<%= c[:url] %>"><%= c[:text] %></a>
 <% end %>
