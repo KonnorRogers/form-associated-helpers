@@ -353,15 +353,6 @@ test.only("Should not trigger `:user-valid` if we type something, then return to
   // await sendKeys({ press: TAB_KEY })
   await aTimeout(1)
 
-  const { value, defaultValue, valueHasChanged, hasInteracted, validity } = editor
-  console.log({
-    valueHasChanged,
-    hasInteracted,
-    valid: validity.valid,
-    value,
-    defaultValue
-  })
-
   assert.isTrue(isInvalid(editor))
   // Should trigger :user-invalid
   assert.isTrue(isUserInvalid(editor))
