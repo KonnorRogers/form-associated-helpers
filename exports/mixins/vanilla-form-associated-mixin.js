@@ -172,7 +172,7 @@ export function VanillaFormAssociatedMixin(superclass) {
       static assumeInteractionOn =
         /** @type {{ assumeInteractionOn: string[] }} */ (/** @type {unknown} */ (this.constructor)).assumeInteractionOn || [
         "focusout",
-        "blur"
+        "blur",
       ]
 
       /**
@@ -225,32 +225,91 @@ export function VanillaFormAssociatedMixin(superclass) {
         */
         this.validators = fallbackValue(this.validators, [])
 
-        ;/** @type {typeof _VanillaFormAssociatedMixin_} */(this.constructor).assumeInteractionOn.forEach((str) => {
-          this.addEventListener(str, this.handleInteraction)
+        queueMicrotask(() => {
+          /**
+          * @protected
+          */
+          this.__boundHandleInvalid = this.handleInvalid.bind(this)
+
+          /**
+          * @protected
+          */
+          this.__boundHandleInteraction = this.handleInteraction.bind(this)
+
+          /**
+          * @protected
+          */
+          this.__boundHandleSubmit = this.__handleSubmit.bind(this)
+
+          ;/** @type {typeof _VanillaFormAssociatedMixin_} */(this.constructor).assumeInteractionOn.forEach((str) => {
+            this.addEventListener(str, this.__boundHandleInteraction)
+          })
+
+          this.addEventListener("invalid", this.__boundHandleInvalid)
+
+          // Private
+
+          /** These are dirty checks for custom errors. In Safari, {customError: true} always happens with `setValidity()`. This is the workaround. */
+
+          /**
+          * @private
+          */
+          this.__hasCustomError = false
+
+          /**
+          * @private
+          */
+          this.__customErrorMessage = ""
         })
+      }
 
-        this.addEventListener("invalid", this.handleInvalid)
+      connectedCallback () {
+        // @ts-expect-error
+        if (typeof super.connectedCallback === "function") {
+          // @ts-expect-error
+          super.connectedCallback()
+        }
 
-        // Private
+        this.getRootNode().addEventListener("submit", this.__boundHandleSubmit)
+      }
 
-        /** These are dirty checks for custom errors. In Safari, {customError: true} always happens with `setValidity()`. This is the workaround. */
+      disconnectedCallback () {
+        // @ts-expect-error
+        if (typeof super.disconnectedCallback === "function") {
+          // @ts-expect-error
+          super.disconnectedCallback()
+        }
 
-        /**
-         * @private
-         */
-        this.__hasCustomError = false
+        this.getRootNode().removeEventListener("submit", this.__boundHandleSubmit)
+      }
 
-        /**
-         * @private
-         */
-        this.__customErrorMessage = ""
+      /**
+       * Handles a submit to a form. Dont use this directly. Instead use `submitCallback (form: HTMLFormElement) {}` for reacting to when the element has been submitted by the form.
+       * @param {Event} e
+       * @private
+       */
+      __handleSubmit (e) {
+        const { target } = e
+
+        if (target === this.form) {
+          this.submitCallback()
+        }
+      }
+
+      /**
+       * Use this callback for when the element has been part of a form that was attempted to be submitted.
+       * If a form is invalid, this will not fire.
+       * If someone catches the event earlier in the tree and stops propagation, you this event will not fire.
+       */
+      submitCallback () {
+        this.hasInteracted = true
       }
 
       /**
        * Override this to do things like emit your own `invalid` event.
        * @param {Event} e
        */
-      handleInvalid = (e) => {
+      handleInvalid (e) {
         // invalid events could bubble from children. We only want invalid events on the parent.
         if (e.target !== this) return
         if (this.isDisabled) return
@@ -265,7 +324,7 @@ export function VanillaFormAssociatedMixin(superclass) {
        * Override this to have your own `handleInteraction` function.
        * @param {Event} e
        */
-      handleInteraction = (e) => {
+      handleInteraction (e) {
         if (this.isDisabled) return
 
         if (!this.matches(":focus-within")) {
@@ -432,6 +491,7 @@ export function VanillaFormAssociatedMixin(superclass) {
       }
 
       resetValidity () {
+        this.hasInteracted = false
         this.setCustomValidity("")
         this.setValidity({})
       }

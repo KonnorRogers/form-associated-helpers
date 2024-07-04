@@ -63,17 +63,17 @@ export function LitFormAssociatedMixin(superclass) {
       }
 
       if (changedProperties.has("formControl")) {
-        changedProperties.get("formControl")?.removeEventListener("focusout", this.handleInteraction)
-        changedProperties.get("formControl")?.removeEventListener("blur", this.handleInteraction)
-        changedProperties.get("formControl")?.removeEventListener("click", this.handleInteraction)
+        changedProperties.get("formControl")?.removeEventListener("focusout", this.__boundHandleInteraction)
+        changedProperties.get("formControl")?.removeEventListener("blur", this.__boundHandleInteraction)
+        changedProperties.get("formControl")?.removeEventListener("click", this.__boundHandleInteraction)
 
         /**
          * @type {typeof this & { formControl?: HTMLElement | null | undefined }}
          */
         const self = this
-        self.formControl?.addEventListener("focusout", this.handleInteraction)
-        self.formControl?.addEventListener("blur", this.handleInteraction)
-        self.formControl?.addEventListener("click", this.handleInteraction)
+        self.formControl?.addEventListener("focusout", this.__boundHandleInteraction)
+        self.formControl?.addEventListener("blur", this.__boundHandleInteraction)
+        self.formControl?.addEventListener("click", this.__boundHandleInteraction)
       }
 
       if (

@@ -223,10 +223,7 @@ export function LitTextareaMixin(superclass) {
         if (e.target !== this) return
         if (this.isDisabled) return
 
-        if (this.value !== this.defaultValue) {
-          this.valueHasChanged = true
-        }
-
+        this.valueHasChanged = true
         this.hasInteracted = true
         this.updateInteractionState()
       }
@@ -239,9 +236,10 @@ export function LitTextareaMixin(superclass) {
       handleInteraction (e) {
         if (this.isDisabled) return
 
-        if (!this.matches(":focus-within") && this.valueHasChanged) {
+        if (!this.matches(":focus-within")) {
           this.hasInteracted = true
         }
+
         this.updateValidity()
       }
 
@@ -303,6 +301,13 @@ export function LitTextareaMixin(superclass) {
       formResetCallback () {
         this.value = this.defaultValue
 
+        if (/** @type {any} */ (this).formControl)  {
+          /** @type {any} */ (this).formControl.value = this.value
+        }
+
+        this.hasInteracted = false
+        this.valueHasChanged = false
+
         super.formResetCallback()
       }
 
@@ -310,7 +315,7 @@ export function LitTextareaMixin(superclass) {
        * @param {Parameters<import("lit").LitElement["willUpdate"]>[0]} changedProperties
        */
       willUpdate (changedProperties) {
-        if (changedProperties.has("value") && this.hasInteracted) {
+        if (changedProperties.has("value")) {
           if (this.value !== this.defaultValue) {
             this.valueHasChanged = true
           }
