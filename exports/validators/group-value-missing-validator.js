@@ -2,7 +2,7 @@ import { uuidv4 } from '../../internal/uuid-v4.js'
 
 /**
  * @template {HTMLElement & { required?: boolean, form: HTMLFormElement, name?: string }} [T=HTMLElement & { required?: boolean, form: HTMLFormElement, name?: string }]
- * @type {() => import("../types.js").Validator<T>}
+ * @returns {import("../types.js").Validator<T>}
  * @example Creating a validator for a radio form associated element.
  *   class MyEl {
  *     static validators = [

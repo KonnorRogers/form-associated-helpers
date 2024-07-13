@@ -216,7 +216,8 @@ export default class TextareaComponent extends LitTextareaMixin(LitElement) {
         @keydown=${(/** @type {Event} */ e) => {
           this.value = /** @type {HTMLTextAreaElement} */ (e.currentTarget).value
         }}
-      ></textarea>
+      >
+      </textarea>
     `
   }
 

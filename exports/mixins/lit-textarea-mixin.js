@@ -2,53 +2,122 @@ import { TooLongValidator } from "../validators/too-long-validator.js"
 import { TooShortValidator } from "../validators/too-short-validator.js"
 import { LitFormAssociatedMixin } from "./lit-form-associated-mixin.js"
 
-LitTextareaMixin.formProperties = Object.freeze(
-  Object.assign(
-    {
-      autocomplete: {},
-      wrap: {},
-      readOnly: {attribute: "readonly", type: Boolean, reflect: true},
-      placeholder: {},
-      dirName: {},
-      rows: {type: Number},
-      cols: {type: Number},
+const formProperties = () => Object.assign(
+  {
+    autocomplete: {},
+    wrap: {},
+    readOnly: {attribute: "readonly", type: Boolean, reflect: true},
+    placeholder: {},
+    dirName: {},
+    rows: {type: Number},
+    cols: {type: Number},
 
-      // Validation
-      maxLength: {attribute: "maxlength", type: Number},
-      minLength: {attribute: "minlength", type: Number},
-    },
-    LitFormAssociatedMixin.formProperties
-  )
+    defaultValue: {attribute: "value", reflect: true},
+    valueHasChanged: {type: Boolean, attribute: false, state: true},
+    value: {attribute: false, state: true},
+
+    // Validation
+    maxLength: {attribute: "maxlength", type: Number},
+    minLength: {attribute: "minlength", type: Number},
+  },
+  // structuredClone so we dont have mutable properties.
+  LitFormAssociatedMixin.formProperties
 )
+
+Object.defineProperty(LitTextareaMixin, "formProperties", {
+  get () {
+    return formProperties()
+  }
+})
+
+/**
+ * @typedef {import("./lit-textarea-mixin-types.js").TextareaGetters} TextareaGetters
+ */
+
+/**
+ * @template {{ new (...args: any[]): HTMLElement }} T
+ * @param {T} superclass
+ */
+export function TextareaGettersMixin(superclass) {
+  return /** @type {T & { new (...args: any[]): TextareaGetters}} */ (_TextareaGettersMixin(superclass))
+}
+
+/**
+ * @template {{ new (...args: any[]): HTMLElement }} T
+ * @param {T} superclass
+ */
+function _TextareaGettersMixin(superclass) {
+  return (
+    /**
+     * @implements {TextareaGetters}
+     */
+    class extends superclass {
+      /**
+        * @returns {HTMLTextAreaElement["textLength"]}
+        */
+      get textLength () {
+        const formControl = /** @type {any} */(this).formControl
+
+        if (formControl && "textLength" in formControl) {
+          return /** @type {HTMLTextAreaElement} */ (formControl).textLength
+        }
+
+        return 0
+      }
+
+      /**
+        * @returns {HTMLTextAreaElement["selectionStart"]}
+        */
+      get selectionStart () {
+        const formControl = /** @type {any} */ (this).formControl
+
+        if (formControl && "selectionStart" in formControl) {
+          return formControl.selectionStart
+        }
+
+        return 0
+      }
+
+      /**
+        * @returns {HTMLTextAreaElement["selectionEnd"]}
+        */
+      get selectionEnd () {
+        const formControl = /** @type {any} */ (this).formControl
+
+        if (formControl && "selectionEnd" in formControl) {
+          return formControl.selectionEnd
+        }
+
+        return 0
+      }
+
+      /**
+      * @returns {boolean}
+      */
+      get isUserInvalid () {
+        return /** @type {any} */ (this).hasInteracted && /** @type {any} */ (this).valueHasChanged
+      }
+    }
+  )
+}
 
 /**
  * A mixin for build a `<textarea>` specifically for Lit.
  *
  * @see https://webkit.org/blog/13711/elementinternals-and-form-associated-custom-elements/
- * @template {import("lit").LitElement} T
+ * @template {{ new (...args: any[]): HTMLElement }} T
  * @param {T} superclass
  */
 export function LitTextareaMixin(superclass) {
-  const makeUsable = /** @type {import("./vanilla-form-associated-mixin.js").FormAssociatedElement<typeof superclass>} */ (superclass)
-  // This looks weird, but it's the only way to correctly cast the TextAreaMixin to have a "typesafe" value.
-  const modifiedSuperclass = LitFormAssociatedMixin(makeUsable)
-
-  const typeSafeSuperclass = /** @type {typeof modifiedSuperclass & {
-    new (...args: any[]): {
-      value: string
-      defaultValue: string
-    }
-  }} */ (modifiedSuperclass)
-
   return (
     /**
-      * @implements {HTMLTextAreaElement}
-      */
-    class extends LitFormAssociatedMixin(typeSafeSuperclass) {
+    * @implements HTMLTextAreaElement
+    */
+    class LitFormAssociatedClass extends TextareaGettersMixin(LitFormAssociatedMixin(superclass)) {
       /**
-       * @override
-       * @type {Array<import("../types.js").Validator>}
-       */
+      * @override
+      * @type {Array<import("../types.js").Validator>}
+      */
       static get validators () {
         return [
           ...super.validators,
@@ -67,10 +136,8 @@ export function LitTextareaMixin(superclass) {
           return {...LitTextareaMixin.formProperties, ...properties}
         }
 
-
         return LitTextareaMixin.formProperties
       }
-
 
       /**
         * @param {...any} args
@@ -89,14 +156,19 @@ export function LitTextareaMixin(superclass) {
         this.wrap = ""
 
         /**
-          * @type {HTMLTextAreaElement["value"]}
+          * @type {string}
           */
         this.value = ""
 
         /**
-          * @type {HTMLTextAreaElement["defaultValue"]}
+          * @type {string}
           */
         this.defaultValue = ""
+
+        /**
+         * @type {boolean}
+         */
+        this.valueHasChanged = false
 
         /**
           * @type {HTMLTextAreaElement["maxLength"]}
@@ -140,16 +212,63 @@ export function LitTextareaMixin(superclass) {
           * @type {number}
           */
         this.cols = 20
+
       }
+
+      /**
+       * @override
+       * @param {Event} e
+       */
+      handleInvalid (e) {
+        if (e.target !== this) return
+        if (this.isDisabled) return
+
+        this.valueHasChanged = true
+        this.hasInteracted = true
+        this.updateInteractionState()
+      }
+
+      /**
+       * @override
+       * Sets `this.hasInteracted = true` to true when the users focus / clicks the element.
+       * @param {Event} e
+       */
+      handleInteraction (e) {
+        if (this.isDisabled) return
+
+        if (!this.matches(":focus-within")) {
+          this.hasInteracted = true
+        }
+
+        this.updateValidity()
+      }
+
+      /**
+       * @param {string} name
+       * @param {null | string} oldVal
+       * @param {null | string} newVal
+       */
+      attributeChangedCallback (name, oldVal, newVal) {
+        if (name === "value") {
+          this.defaultValue = newVal || ""
+
+          if (!this.hasInteracted && !this.valueHasChanged) {
+            this.value = this.defaultValue
+            this.setFormValue(/** @type {any} */ (this.toFormValue()), /** @type {any} */ (this.value))
+          }
+        }
+        super.attributeChangedCallback(name, oldVal, newVal)
+      }
+
 
       /**
         * @param {Parameters<HTMLTextAreaElement["setSelectionRange"]>} args
         */
       setSelectionRange (...args) {
-        const formControl = this.formControl
+        const formControl = /** @type {any} */(this).formControl
 
         if (formControl && "selectionRange" in formControl) {
-          /** @type {HTMLTextAreaElement} */ (/** @type {unknown} */ (formControl)).setSelectionRange(...args)
+          /** @type {HTMLTextAreaElement} */ (/** @type {unknown} */ (formControl)).setSelectionRange?.(...args)
         }
       }
 
@@ -157,7 +276,7 @@ export function LitTextareaMixin(superclass) {
         * @param {[replacement: string, start: number, end: number, selectionMode?: SelectionMode] | [replacement: string]} args
         */
       setRangeText (...args) {
-        const formControl = this.formControl
+        const formControl = /** @type {any} */ (this).formControl
 
         if (formControl && "setRangeText" in formControl) {
           // @ts-expect-error
@@ -166,53 +285,50 @@ export function LitTextareaMixin(superclass) {
       }
 
       /**
-        * @returns {HTMLTextAreaElement["textLength"]}
-        */
-      get textLength () {
-        const formControl = /** @type {HTMLTextAreaElement} */ (this.formControl)
-
-        if (formControl && "textLength" in formControl) {
-          return formControl.textLength
-        }
-
-        return 0
-      }
-
-      /**
-        * @returns {HTMLTextAreaElement["selectionStart"]}
-        */
-      get selectionStart () {
-        const formControl = /** @type {HTMLTextAreaElement} */ (this.formControl)
-
-        if (formControl && "selectionStart" in formControl) {
-          return formControl.selectionStart
-        }
-
-        return 0
-      }
-
-      /**
-        * @returns {HTMLTextAreaElement["selectionStart"]}
-        */
-      get selectionEnd () {
-        const formControl = /** @type {HTMLTextAreaElement} */ (this.formControl)
-
-        if (formControl && "selectionEnd" in formControl) {
-          return formControl.selectionEnd
-        }
-
-        return 0
-      }
-
-      /**
         * @type {HTMLTextAreaElement["select"]}
         */
       select () {
-        const formControl = this.formControl
+        const formControl = /** @type {HTMLTextAreaElement} */ (/** @type {any} */ (this).formControl)
 
         if (formControl) {
-          /** @type {HTMLTextAreaElement} */ (formControl).select?.()
+          formControl.select?.()
         }
+      }
+
+      /**
+       * @override
+       */
+      formResetCallback () {
+        this.value = this.defaultValue
+
+        if (/** @type {any} */ (this).formControl)  {
+          /** @type {any} */ (this).formControl.value = this.value
+        }
+
+        this.hasInteracted = false
+        this.valueHasChanged = false
+
+        super.formResetCallback()
+      }
+
+      /**
+       * @param {Parameters<import("lit").LitElement["willUpdate"]>[0]} changedProperties
+       */
+      willUpdate (changedProperties) {
+        if (changedProperties.has("value")) {
+          if (this.value !== this.defaultValue) {
+            this.valueHasChanged = true
+          }
+        }
+
+        if (changedProperties.has("defaultValue")) {
+          if (!this.hasInteracted && !this.valueHasChanged) {
+            this.value = this.defaultValue
+            this.setFormValue(/** @type {any} */ (this.toFormValue()), /** @type {any} */ (this.value))
+          }
+        }
+
+        super.willUpdate(changedProperties)
       }
     }
   )

@@ -1,6 +1,9 @@
 import { VanillaFormAssociatedMixin } from "./vanilla-form-associated-mixin.js"
 
-const formProperties = Object.freeze({
+/**
+ * Create a new object every time to avoid mutation.
+ */
+const formProperties = () => ({
   role: {reflect: true},
   name: {reflect: true},
   type: {reflect: true},
@@ -10,20 +13,26 @@ const formProperties = Object.freeze({
    */
   disabled: {type: Boolean},
   required: {reflect: true, type: Boolean},
-  defaultValue: {attribute: "value", reflect: true},
-  valueHasChanged: {type: Boolean, attribute: false, state: true},
   hasInteracted: {attribute: false, type: Boolean, state: true},
   formControl: {attribute: false, state: true},
+  defaultValue: {attribute: "value", reflect: true},
+  valueHasChanged: {type: Boolean, attribute: false, state: true},
   value: {attribute: false, state: true},
 })
 
-LitFormAssociatedMixin.formProperties = formProperties
+Object.defineProperty(LitFormAssociatedMixin, "formProperties", {
+  get () {
+    return formProperties()
+  }
+})
 
 /**
  * An extension of the VanillaFormAssociatedMixin intended for LitElement by providing formProperties and willUpdate() callbacks with the appropriate properties.
  *
  * @see https://webkit.org/blog/13711/elementinternals-and-form-associated-custom-elements/
- * @template {{ new (...args: any[]): import("lit").LitElement }} T
+ * @template {{
+    new (...args: any[]): HTMLElement
+  }} T
  * @param {T} superclass
  */
 export function LitFormAssociatedMixin(superclass) {
@@ -44,33 +53,36 @@ export function LitFormAssociatedMixin(superclass) {
 
 
     /**
+     * @protected
      * @type {import("lit").LitElement["willUpdate"]}
      */
     willUpdate (changedProperties) {
+      // @ts-expect-error
       if (typeof super.willUpdate !== "function") {
         return
       }
 
       if (changedProperties.has("formControl")) {
-        changedProperties.get("formControl")?.removeEventListener("focusout", this.handleInteraction)
-        changedProperties.get("formControl")?.removeEventListener("blur", this.handleInteraction)
-        changedProperties.get("formControl")?.removeEventListener("click", this.handleInteraction)
+        changedProperties.get("formControl")?.removeEventListener("focusout", this.__boundHandleInteraction)
+        changedProperties.get("formControl")?.removeEventListener("blur", this.__boundHandleInteraction)
+        changedProperties.get("formControl")?.removeEventListener("click", this.__boundHandleInteraction)
 
         /**
          * @type {typeof this & { formControl?: HTMLElement | null | undefined }}
          */
         const self = this
-        self.formControl?.addEventListener("focusout", this.handleInteraction)
-        self.formControl?.addEventListener("blur", this.handleInteraction)
-        self.formControl?.addEventListener("click", this.handleInteraction)
+        self.formControl?.addEventListener("focusout", this.__boundHandleInteraction)
+        self.formControl?.addEventListener("blur", this.__boundHandleInteraction)
+        self.formControl?.addEventListener("click", this.__boundHandleInteraction)
       }
 
       if (
         changedProperties.has("value")
       ) {
-        this.setFormValue(/** @type {any} */ (this.getFormValue()), /** @type {any} */ (this.value))
+        this.setFormValue(/** @type {any} */ (this.toFormValue()), /** @type {any} */ (this).value)
       }
 
+      // @ts-expect-error
       super.willUpdate(changedProperties)
     }
   }

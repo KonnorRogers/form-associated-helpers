@@ -3,7 +3,7 @@
 
 /**
  * @template {HTMLElement & { min?: number, value: null | string | File | FormData }} T
- * @type {() => import("../types.js").Validator<T> }}
+ * @returns {import("../types.js").Validator<T>}
  */
 export const RangeUnderflowValidator = () => {
   /**

@@ -2,7 +2,7 @@
  * A validator for custom errors. This will check if there is an `.customError` property or an `custom-error` attribute
  *   and append it to the ValidityState of the custom element.
  * @template {HTMLElement & { customError?: string | boolean }} T
- * @type {() => import("../types.js").Validator<T> & { fallbackMessage: ((element: T) => string) | string } }
+ * @returns {import("../types.js").Validator<T> & { fallbackMessage: ((element: T) => string) | string }}
  */
 export const CustomErrorValidator = () => {
   /**

@@ -3,23 +3,6 @@ import { CustomStatesMixin } from "./custom-states-mixin.js"
 import { FormAssociatedMixin } from "./form-associated-mixin.js"
 
 /**
- * @typedef {Object} FormAssociatedInstanceProperties
- * @property {null | undefined | (HTMLElement & { value: any, defaultValue: any })} [formControl]
- * @property {ElementInternals} internals
- * @property {boolean} disabled
- * @property {boolean} hasInteracted: boolean
- * @property {Array<import("../types.js").Validator>} validators
- */
-
-
-/**
- * @param {HTMLElement & { disabled: boolean }} el
- */
-function isDisabled (el) {
-  return Boolean(el.matches(":disabled") || el.disabled)
-}
-
-/**
  * @template T
  * @template U
  * @param {T} val
@@ -73,11 +56,6 @@ function _VanillaFormAssociatedGettersMixin(superclass) {
         return [...staticValidators, ...validators]
       }
 
-      get willShowValidationMessage () {
-        const self = /** @type {FormAssociatedProperties<T>} */ (this)
-        return isDisabled(self) && self.hasInteracted === true
-      }
-
       get labels () {
         const self = /** @type {FormAssociatedProperties<T>} */ (this)
         return /** @type {NodeListOf<HTMLLabelElement>} */ (self.internals.labels)
@@ -115,6 +93,23 @@ function _VanillaFormAssociatedGettersMixin(superclass) {
         const self = /** @type {FormAssociatedProperties<T>} */ (this)
         return self.internals.form
       }
+
+      /**
+       * Tracks whether or not an element meets criteria for `:user-invalid`.
+       *   By default, always returns false.
+       * @returns {boolean}
+       */
+      get isUserInvalid () {
+        return /** @type {any} */ (this).hasInteracted && !this.validity.valid
+      }
+
+      /**
+       * We use a `isDisabled` that checks both `matches(":disabled")` and `this.disabled` which
+       *   accounts for if the element is wrapped in a `<fieldset disabled>`
+       */
+      get isDisabled () {
+        return Boolean(this.matches(":disabled") || /** @type {any} */ (this).disabled)
+      }
   })
 }
 
@@ -137,7 +132,7 @@ export function VanillaFormAssociatedGettersMixin(superclass) {
  * @param {T} superclass
  */
 export function VanillaFormAssociatedMixin(superclass) {
-    return class extends CustomStatesMixin(VanillaFormAssociatedGettersMixin(FormAssociatedMixin(superclass))) {
+    return class _VanillaFormAssociatedMixin_ extends CustomStatesMixin(VanillaFormAssociatedGettersMixin(FormAssociatedMixin(superclass))) {
       static get observedAttributes () {
         /**
          * @type {undefined | string[]}
@@ -174,11 +169,11 @@ export function VanillaFormAssociatedMixin(superclass) {
        * @default ["focusout", "blur"]
        * @type {string[]}
        */
-      // static assumeInteractionOn =
-      //   /** @type {{ assumeInteractionOn: string[] }} */ (/** @type {unknown} */ (this.constructor)).assumeInteractionOn || [
-      //   "focusout",
-      //   "blur"
-      // ]
+      static assumeInteractionOn =
+        /** @type {{ assumeInteractionOn: string[] }} */ (/** @type {unknown} */ (this.constructor)).assumeInteractionOn || [
+        "focusout",
+        "blur",
+      ]
 
       /**
        * @param {...any} args
@@ -186,93 +181,138 @@ export function VanillaFormAssociatedMixin(superclass) {
       constructor (...args) {
         super(...args)
 
+
+        // We wrap it all in a `queueMicrotask` because we want this to run after the real constructor.
         /**
-         * @type {ElementInternals["role"]}
-         */
+        * @type {ElementInternals["role"]}
+        */
         this.role = fallbackValue(this.role, this.getAttribute("role") || null)
 
         /**
-         * @type {unknown}
-         */
-        this.value = fallbackValue(this.value, this.getAttribute("value") || null)
-
-        /**
-         * @type {null | string}
-         */
-        this.defaultValue = fallbackValue(this.defaultValue, this.getAttribute("value") || null)
-
-        /**
-         * @type {HTMLInputElement["name"]}
-         */
+        * @type {HTMLInputElement["name"]}
+        */
         this.name = fallbackValue(this.name, (this.getAttribute("name") || ""))
 
         /**
-         * `this.type` is used by ElementInternals.
-         * @type {string}
-         */
+        * `this.type` is used by ElementInternals.
+        * @type {string}
+        */
         this.type = fallbackValue(this.type, (this.getAttribute("type") || this.localName || ""))
 
         /**
-         * Make sure if you're using a library that "reflects" properties to attributes, you don't reflect this `disabled.`
-         * @type {boolean}
-         */
-        this.disabled = fallbackValue(this.disabled, isDisabled(this))
+        * Make sure if you're using a library that "reflects" properties to attributes, you don't reflect this `disabled.`
+        * @type {boolean}
+        */
+        this.disabled = fallbackValue(this.disabled, this.isDisabled)
 
         /**
-         * Generally form controls can have "required", this may not be necessary here, but is a nice convention.
-         * @type {boolean}
-         */
+        * Generally form controls can have "required", this may not be necessary here, but is a nice convention.
+        * @type {boolean}
+        */
         this.required = fallbackValue(this.required, this.hasAttribute("required"))
 
         /**
-         * Tracks when a user blurs from a form control.
-         * @type {boolean}
-         */
+        * Tracks when a user blurs from a form control.
+        * @type {boolean}
+        */
         this.hasInteracted = fallbackValue(this.hasInteracted, false)
 
         /**
-         * Dirty tracks if the value has been changed.
-         * @type {boolean}
-         */
-        this.valueHasChanged = fallbackValue(this.valueHasChanged, false)
-
-        /**
-         * While not generally encouraged, you can add instance level validators.
-         *   These validators should not rely on an attribute, or should already have a "watched" attribute
-         *   to know when to re-run the validator.
-         * @type {Array<import("../types.js").Validator>}
-         */
+        * While not generally encouraged, you can add instance level validators.
+        *   These validators should not rely on an attribute, or should already have a "watched" attribute
+        *   to know when to re-run the validator.
+        * @type {Array<import("../types.js").Validator>}
+        */
         this.validators = fallbackValue(this.validators, [])
 
-        this.addEventListener("focusout", this.handleInteraction)
-        this.addEventListener("blur", this.handleInteraction)
-        this.addEventListener("invalid", this.handleInvalid)
+        queueMicrotask(() => {
+          /**
+          * @protected
+          */
+          this.__boundHandleInvalid = this.handleInvalid.bind(this)
 
-        // Private
+          /**
+          * @protected
+          */
+          this.__boundHandleInteraction = this.handleInteraction.bind(this)
 
-        /** These are dirty checks for custom errors. In Safari, {customError: true} always happens with `setValidity()`. This is the workaround. */
+          /**
+          * @protected
+          */
+          this.__boundHandleSubmit = this.__handleSubmit.bind(this)
 
-        /**
-         * @private
-         */
-        this.__hasCustomError = false
+          ;/** @type {typeof _VanillaFormAssociatedMixin_} */(this.constructor).assumeInteractionOn.forEach((str) => {
+            this.addEventListener(str, this.__boundHandleInteraction)
+          })
 
-        /**
-         * @private
-         */
-        this.__customErrorMessage = ""
+          this.addEventListener("invalid", this.__boundHandleInvalid)
+
+          // Private
+
+          /** These are dirty checks for custom errors. In Safari, {customError: true} always happens with `setValidity()`. This is the workaround. */
+
+          /**
+          * @private
+          */
+          this.__hasCustomError = false
+
+          /**
+          * @private
+          */
+          this.__customErrorMessage = ""
+        })
+      }
+
+      connectedCallback () {
+        // @ts-expect-error
+        if (typeof super.connectedCallback === "function") {
+          // @ts-expect-error
+          super.connectedCallback()
+        }
+
+        this.getRootNode().addEventListener("submit", this.__boundHandleSubmit)
+      }
+
+      disconnectedCallback () {
+        // @ts-expect-error
+        if (typeof super.disconnectedCallback === "function") {
+          // @ts-expect-error
+          super.disconnectedCallback()
+        }
+
+        this.getRootNode().removeEventListener("submit", this.__boundHandleSubmit)
       }
 
       /**
+       * Handles a submit to a form. Dont use this directly. Instead use `submitCallback (form: HTMLFormElement) {}` for reacting to when the element has been submitted by the form.
+       * @param {Event} e
+       * @private
+       */
+      __handleSubmit (e) {
+        const { target } = e
+
+        if (target === this.form) {
+          this.submitCallback()
+        }
+      }
+
+      /**
+       * Use this callback for when the element has been part of a form that was attempted to be submitted.
+       * If a form is invalid, this will not fire.
+       * If someone catches the event earlier in the tree and stops propagation, you this event will not fire.
+       */
+      submitCallback () {
+        this.hasInteracted = true
+      }
+
+      /**
+       * Override this to do things like emit your own `invalid` event.
        * @param {Event} e
        */
-      handleInvalid = (e) => {
+      handleInvalid (e) {
+        // invalid events could bubble from children. We only want invalid events on the parent.
         if (e.target !== this) return
-        if (isDisabled(this)) return
-
-        if (this.value !== this.defaultValue) {
-          this.valueHasChanged = true
-        }
+        if (this.isDisabled) return
 
         this.hasInteracted = true
 
@@ -281,14 +321,16 @@ export function VanillaFormAssociatedMixin(superclass) {
 
       /**
        * Sets `this.hasInteracted = true` to true when the users focus / clicks the element.
+       * Override this to have your own `handleInteraction` function.
        * @param {Event} e
        */
-      handleInteraction = (e) => {
-        if (isDisabled(this)) return
+      handleInteraction (e) {
+        if (this.isDisabled) return
 
-        if (!this.matches(":focus-within") && this.valueHasChanged) {
+        if (!this.matches(":focus-within")) {
           this.hasInteracted = true
         }
+
         this.updateValidity()
       }
 
@@ -312,8 +354,8 @@ export function VanillaFormAssociatedMixin(superclass) {
 
       /**
        * @param {string} name
-       * @param {string} oldVal
-       * @param {string} newVal
+       * @param {null | string} oldVal
+       * @param {null | string} newVal
        */
       attributeChangedCallback(name, oldVal, newVal) {
         // @ts-expect-error
@@ -330,15 +372,6 @@ export function VanillaFormAssociatedMixin(superclass) {
           this.internals.role = newVal || null
         }
 
-        if (name === "value") {
-          this.defaultValue = newVal
-
-          if (!this.hasInteracted && !this.valueHasChanged) {
-            this.value = this.defaultValue
-            this.setFormValue(/** @type {any} */ (this.getFormValue()), /** @type {any} */ (this.value))
-          }
-        }
-
         if (name === "disabled") {
           this.disabled = Boolean(newVal)
         }
@@ -348,23 +381,26 @@ export function VanillaFormAssociatedMixin(superclass) {
 
       /**
       * Called when the form is being reset. (e.g. user pressed `<input[type=reset]>` button). Custom element should clear whatever value set by the user.
+      * Generally it is best to call this *after* setting any properties you need as this will call `this.updateValidity()` and `this.setFormValue()`
+      * @example
+      *    class MyClass extends VanillaFormAssociatedMixin(HTMLElement) {
+      *       formResetCallback () {
+      *          // set values first for validation
+      *          this.value = this.defaultValue
+      *          // call the reset handler to update validity.
+      *          super.formResetCallback()
+      *       }
+      *    }
       * @returns {void}
       */
       formResetCallback() {
-        if ("formControl" in this && this.formControl) {
-          /** @type {HTMLElement & { value: unknown }} */ (this.formControl).value = this.defaultValue
-        }
-
         this.resetValidity()
-        this.value = this.defaultValue
-        this.hasInteracted = false
-        this.valueHasChanged = false
         this.updateValidity()
-        this.setFormValue(this.getFormValue(), this.value)
+        this.setFormValue(this.toFormValue(), /** @type {any} */ (this).value)
       }
 
       /**
-      * Called when the disabled state of the form changes
+      * Called when the disabled state of the form changes.
       * @param {boolean} isDisabled
       * @returns {void}
       */
@@ -376,18 +412,22 @@ export function VanillaFormAssociatedMixin(superclass) {
 
       /**
       * Called when the browser is trying to restore element’s state to state in which case reason is “restore”, or when the browser is trying to fulfill autofill on behalf of user in which case reason is “autocomplete”. In the case of “restore”, state is a string, File, or FormData object previously set as the second argument to setFormValue.
-      * @param {string | File | FormData | null} state
-      * @param {string} reason
+      * @param {unknown} state
+      * @param {"restore" | "autocomplete"} reason
       * @returns {void}
       */
       formStateRestoreCallback(state, reason) {
-        this.value = state
+        // Wrapped in an {any} type so it doesnt get add to the host type.
+        /** @type {any} */ (this).value = state
 
         if ("formControl" in this && this.formControl) {
           /** @type {HTMLElement & { value: unknown }} */ (this.formControl).value = state
         }
 
-        this.resetValidity()
+        // We don't want to reset validity on "autocomplete", jsut on `"restore"`
+        if (reason === "restore") {
+          this.resetValidity()
+        }
         this.updateValidity()
       }
 
@@ -426,37 +466,38 @@ export function VanillaFormAssociatedMixin(superclass) {
         * @param {Parameters<ElementInternals["setFormValue"]>} args
         */
       setFormValue (...args) {
-        // Dirty tracking of values.
-        if (this.value !== this.defaultValue) {
-          this.valueHasChanged = true
-        }
-
         this.internals.setFormValue(...args)
         this.updateValidity()
       }
 
       /**
        * This function generally just returns `this.value`. Occasionally, you may want to apply transforms to your `this.value` prior to setting it on the form. This is the place to do that.
+       * @returns {File | null | FormData | string}
        * @example
        *    class MyElement extends VanillaFormAssociatedMixin(HTMLElement) {
-       *       getFormValue () {
+       *       toFormValue () {
        *         const elementValue = this.value // => ["1", "2", "3"]
        *         // Transform elementValue array into a comma separated string.
        *         return elementValue.join(", ")
        *       }
        *    }
        */
-      getFormValue () {
-        return this.value
+       toFormValue () {
+         /**
+          * @type {null | File | FormData | string}
+          */
+         const val = /** @type {any} */ (this).value
+        return val
       }
 
       resetValidity () {
+        this.hasInteracted = false
         this.setCustomValidity("")
         this.setValidity({})
       }
 
       updateValidity () {
-        if (isDisabled(this)) {
+        if (this.isDisabled) {
           this.resetValidity()
           // We don't run validators on disabled thiss to be inline with native HTMLElements.
           // https://codepen.io/paramagicdev/pen/PoLogeL
@@ -506,7 +547,7 @@ export function VanillaFormAssociatedMixin(superclass) {
       }
 
       updateInteractionState () {
-        if (isDisabled(this)) {
+        if (this.isDisabled) {
           this.addCustomState("disabled")
           this.deleteCustomState("invalid")
           this.deleteCustomState("user-invalid")
@@ -521,12 +562,12 @@ export function VanillaFormAssociatedMixin(superclass) {
           this.deleteCustomState("invalid")
           this.deleteCustomState("user-invalid")
           this.addCustomState("valid")
-          this.toggleCustomState("user-valid", this.hasInteracted && this.valueHasChanged)
+          this.toggleCustomState("user-valid", this.isUserInvalid)
         } else {
           this.deleteCustomState("valid")
           this.deleteCustomState("user-valid")
           this.addCustomState("invalid")
-          this.toggleCustomState("user-invalid", this.hasInteracted && this.valueHasChanged)
+          this.toggleCustomState("user-invalid", this.isUserInvalid)
         }
       }
     }
