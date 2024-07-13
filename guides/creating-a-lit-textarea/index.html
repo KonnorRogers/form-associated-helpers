@@ -6,17 +6,17 @@
 <!-- <base href="/form-associated-helpers/"> -->
 
 <meta name="description" content="A collection of reusable mixins + helpers for working with form associated custom elements.">
-<link rel="modulepreload" href="/form-associated-helpers/bridgetown/static/javascript/index.K2VRRIV3.js">
-<link rel="modulepreload" href="/form-associated-helpers/bridgetown/static/javascript/defer.VJ7JBS7Y.js">
-<link rel="preload" href="/form-associated-helpers/bridgetown/static/javascript/defer.4HSYBBID.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="modulepreload" href="/form-associated-helpers/bridgetown/static/javascript/index.XJB4BP4G.js">
+<link rel="modulepreload" href="/form-associated-helpers/bridgetown/static/javascript/defer.EO5KWNBA.js">
+<link rel="preload" href="/form-associated-helpers/bridgetown/static/javascript/defer.E44RECTW.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <!-- Critical CSS -->
 <link rel="stylesheet" data-turbo-track="reload" href="/form-associated-helpers/bridgetown/static/javascript/index.JCINR555.css">
 <!-- Deferred CSS -->
-<noscript><link rel="stylesheet" href="/form-associated-helpers/bridgetown/static/javascript/defer.4HSYBBID.css"></noscript>
+<noscript><link rel="stylesheet" href="/form-associated-helpers/bridgetown/static/javascript/defer.E44RECTW.css"></noscript>
 
 <!-- Entrypoints -->
-<script data-turbo-track="reload" src="/form-associated-helpers/bridgetown/static/javascript/index.K2VRRIV3.js" type="module"></script>
-<script data-turbo-track="reload" src="/form-associated-helpers/bridgetown/static/javascript/defer.VJ7JBS7Y.js" type="module"></script>
+<script data-turbo-track="reload" src="/form-associated-helpers/bridgetown/static/javascript/index.XJB4BP4G.js" type="module"></script>
+<script data-turbo-track="reload" src="/form-associated-helpers/bridgetown/static/javascript/defer.EO5KWNBA.js" type="module"></script>
 
 <!-- Favicons -->
 <link rel="apple-touch-icon" sizes="180x180" href="https://KonnorRogers.github.io/form-associated-helpers/apple-touch-icon.png">
@@ -120,14 +120,12 @@
     </div>
 
     <div class="top-nav__links">
-      <!-- <div class="top-nav__categories"> -->
-      <!--     <a class="nav-link" href="/form-associated-helpers/guides">Guides</a>
+       <div class="top-nav__categories">
+           <a class="nav-link" href="/form-associated-helpers/guides">Guides</a>
   <a class="nav-link" href="/form-associated-helpers/how-tos">How Tos</a>
   <a class="nav-link" href="/form-associated-helpers/references">References</a>
-  <a class="nav-link" href="/form-associated-helpers/mixins">Mixins</a>
-  <a class="nav-link" href="/form-associated-helpers/validators">Validators</a>
- -->
-      <!-- </div> -->
+
+       </div>
       <a target="_blank" rel="nofollow noopener noreferrer" aria-label="Link to GitHub" href="https://github.com/konnorrogers/form-associated-helpers" class="nav-link top-nav__github" no-external-icon="">
         <sl-icon name="github"></sl-icon>
       </a>
@@ -379,12 +377,12 @@
             JavaScript
           </div>
 
-          <clipboard-copy for="c83fcbc0-9b30-438d-b11f-be90f5756bfa" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="3cc83a1b-b1d7-4bc6-8077-38a2a5e3e827" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="c83fcbc0-9b30-438d-b11f-be90f5756bfa" hidden="">import { LitElement, css, html } from "lit"
+          <script type="text/plain" id="3cc83a1b-b1d7-4bc6-8077-38a2a5e3e827" hidden="">import { LitElement, css, html } from &quot;lit&quot;
 
 export default class TextareaComponent extends LitElement {
   static styles = css`
@@ -394,11 +392,11 @@ export default class TextareaComponent extends LitElement {
   `
   render () {
     return html`
-      &lt;textarea part="form-control"&gt;</textarea>
+      &lt;textarea part=&quot;form-control&quot;&gt;&lt;/textarea&gt;
     `
   }
 }
-
+</script>
         </div>
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">LitElement</span><span class="p">,</span> <span class="nx">css</span><span class="p">,</span> <span class="nx">html</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">lit</span><span class="dl">"</span><span class="gh">
 
@@ -434,13 +432,13 @@ component to work with form association.</p>
             JavaScript
           </div>
 
-          <clipboard-copy for="0113811b-060f-4d03-9fbd-88947bfa0865" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="6ee9bda2-c6aa-413d-8e6d-c94adcdba68b" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="0113811b-060f-4d03-9fbd-88947bfa0865" hidden="">import { LitElement, css, html } from "lit"
-+ import { LitTextareaMixin } from "form-associated-helpers/exports/mixins/lit-textarea-mixin.js"
+          <script type="text/plain" id="6ee9bda2-c6aa-413d-8e6d-c94adcdba68b" hidden="">import { LitElement, css, html } from &quot;lit&quot;
++ import { LitTextareaMixin } from &quot;form-associated-helpers/exports/mixins/lit-textarea-mixin.js&quot;
 
 - export default class TextareaComponent extends LitElement {
 + export default class TextareaComponent extends LitTextareaMixin(LitElement) {
@@ -451,11 +449,11 @@ component to work with form association.</p>
   `
   render () {
     return html`
-      &lt;textarea part="form-control"&gt;</textarea>
+      &lt;textarea part=&quot;form-control&quot;&gt;&lt;/textarea&gt;
     `
   }
 }
-
+</script>
         </div>
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">LitElement</span><span class="p">,</span> <span class="nx">css</span><span class="p">,</span> <span class="nx">html</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">lit</span><span class="dl">"</span><span class="gh">
 </span><span class="gi">+ import { LitTextareaMixin } from "form-associated-helpers/exports/mixins/lit-textarea-mixin.js"
@@ -492,18 +490,18 @@ is if we don’t add this, when validations fail, the browser will throw a “fo
             JavaScript
           </div>
 
-          <clipboard-copy for="c9325411-9127-494f-b7ec-9c4fb85729f1" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="9b8d427c-c41c-45ea-b469-a7546637d0bc" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="c9325411-9127-494f-b7ec-9c4fb85729f1" hidden="">import { LitElement, css, html } from "lit"
-import { LitTextareaMixin } from "form-associated-helpers/exports/mixins/lit-textarea-mixin.js"
+          <script type="text/plain" id="9b8d427c-c41c-45ea-b469-a7546637d0bc" hidden="">import { LitElement, css, html } from &quot;lit&quot;
+import { LitTextareaMixin } from &quot;form-associated-helpers/exports/mixins/lit-textarea-mixin.js&quot;
 
 export default class TextareaComponent extends LitTextareaMixin(LitElement) {
 +   /**
 +    * Without delegatesFocus, or manually setting a `tabindex`, we get this fun message from the browser:
-+    *  "The invalid form control with name=‘editor’ is not focusable.
++    *  &quot;The invalid form control with name=‘editor’ is not focusable.
 +    */
 +   static shadowRootOptions = {...LitElement.shadowRootOptions, delegatesFocus: true};
 
@@ -514,11 +512,11 @@ export default class TextareaComponent extends LitTextareaMixin(LitElement) {
   `
   render () {
     return html`
-      &lt;textarea part="form-control"&gt;</textarea>
+      &lt;textarea part=&quot;form-control&quot;&gt;&lt;/textarea&gt;
     `
   }
 }
-
+</script>
         </div>
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">LitElement</span><span class="p">,</span> <span class="nx">css</span><span class="p">,</span> <span class="nx">html</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">lit</span><span class="dl">"</span><span class="gh">
 </span><span class="k">import</span> <span class="p">{</span> <span class="nx">LitTextareaMixin</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">form-associated-helpers/exports/mixins/lit-textarea-mixin.js</span><span class="dl">"</span><span class="gh">
@@ -559,14 +557,14 @@ assign it to <code class="highlighter-rouge">this.formControl</code>. Like so:</
             JavaScript
           </div>
 
-          <clipboard-copy for="3dd89618-6ed7-45ae-9d27-62056f669423" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="c725914c-b39c-40c0-85b6-f38509de20fe" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="3dd89618-6ed7-45ae-9d27-62056f669423" hidden="">import { LitElement, css, html } from "lit"
-import { LitTextareaMixin } from "form-associated-helpers/exports/mixins/lit-textarea-mixin.js"
-+ import { ref } from 'lit/directives/ref.js';
+          <script type="text/plain" id="c725914c-b39c-40c0-85b6-f38509de20fe" hidden="">import { LitElement, css, html } from &quot;lit&quot;
+import { LitTextareaMixin } from &quot;form-associated-helpers/exports/mixins/lit-textarea-mixin.js&quot;
++ import { ref } from &#39;lit/directives/ref.js&#39;;
 
 export default class TextareaComponent extends LitTextareaMixin(LitElement) {
   static shadowRootOptions = {...LitElement.shadowRootOptions, delegatesFocus: true};
@@ -579,9 +577,9 @@ export default class TextareaComponent extends LitTextareaMixin(LitElement) {
   render () {
     + return html`
       &lt;textarea
-        part="form-control"
+        part=&quot;form-control&quot;
         ${ref(this.formControlChanged)}
-      &gt;</textarea>
+      &gt;&lt;/textarea&gt;
     `
   }
 
@@ -589,7 +587,7 @@ export default class TextareaComponent extends LitTextareaMixin(LitElement) {
 +    this.formControl = el
 +  }
 }
-
+</script>
         </div>
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">LitElement</span><span class="p">,</span> <span class="nx">css</span><span class="p">,</span> <span class="nx">html</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">lit</span><span class="dl">"</span><span class="gh">
 </span><span class="k">import</span> <span class="p">{</span> <span class="nx">LitTextareaMixin</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">form-associated-helpers/exports/mixins/lit-textarea-mixin.js</span><span class="dl">"</span><span class="gh">
@@ -638,14 +636,14 @@ are <code class="highlighter-rouge">minlength</code>, <code class="highlighter-r
             HTML
           </div>
 
-          <clipboard-copy for="307efdd1-1144-4705-a962-3e796aa38eb7" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="9e0233d7-eff0-49c4-bdd0-b9b8a3e74166" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="307efdd1-1144-4705-a962-3e796aa38eb7" hidden="">&lt;example-textarea required minlength="5" maxlength="10"&gt;
+          <script type="text/plain" id="9e0233d7-eff0-49c4-bdd0-b9b8a3e74166" hidden="">&lt;example-textarea required minlength=&quot;5&quot; maxlength=&quot;10&quot;&gt;
 &lt;/example-textarea&gt;
-</textarea>
+</script>
         </div>
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;example-textarea</span> <span class="na">required</span> <span class="na">minlength=</span><span class="s">"5"</span> <span class="na">maxlength=</span><span class="s">"10"</span><span class="nt">&gt;</span><span class="gh">
 </span><span class="nt">&lt;/example-textarea&gt;</span><span class="gh">
@@ -669,20 +667,20 @@ formAssociation to your elements and you generally won’t have to think about i
             JavaScript
           </div>
 
-          <clipboard-copy for="95ac48b5-36fe-4952-81b4-ab1352d69682" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="c05c2fd1-5b6e-4ca2-a0f8-db006abf7eb0" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="95ac48b5-36fe-4952-81b4-ab1352d69682" hidden="">import { LitElement, css, html } from "lit"
-import { ref } from 'lit/directives/ref.js';
-import { live } from 'lit/directives/live.js';
-import { LitTextareaMixin } from "form-associated-helpers/exports/mixins/lit-textarea-mixin.js"
+          <script type="text/plain" id="c05c2fd1-5b6e-4ca2-a0f8-db006abf7eb0" hidden="">import { LitElement, css, html } from &quot;lit&quot;
+import { ref } from &#39;lit/directives/ref.js&#39;;
+import { live } from &#39;lit/directives/live.js&#39;;
+import { LitTextareaMixin } from &quot;form-associated-helpers/exports/mixins/lit-textarea-mixin.js&quot;
 
 export default class TextareaComponent extends LitTextareaMixin(LitElement) {
   /**
    * Without delegatesFocus, or manually setting a `tabindex`, we get this fun message from the browser:
-   *  "The invalid form control with name=‘editor’ is not focusable.
+   *  &quot;The invalid form control with name=‘editor’ is not focusable.
    */
   static shadowRootOptions = {...LitElement.shadowRootOptions, delegatesFocus: true};
 
@@ -715,7 +713,7 @@ export default class TextareaComponent extends LitTextareaMixin(LitElement) {
   render () {
     return html`
       &lt;textarea
-        part="form-control"
+        part=&quot;form-control&quot;
         ${ref(this.formControlChanged)}
         .defaultValue=${this.defaultValue}
         .value=${live(this.value)}
@@ -738,7 +736,8 @@ export default class TextareaComponent extends LitTextareaMixin(LitElement) {
         @keydown=${(/** @type {Event} */ e) =&gt; {
           this.value = /** @type {HTMLTextAreaElement} */ (e.currentTarget).value
         }}
-      &gt;</textarea>
+      &gt;
+      &lt;/textarea&gt;
     `
   }
 
@@ -746,7 +745,7 @@ export default class TextareaComponent extends LitTextareaMixin(LitElement) {
     this.formControl = /** @type {HTMLTextAreaElement} */ (textarea)
   }
 }
-
+</script>
         </div>
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">LitElement</span><span class="p">,</span> <span class="nx">css</span><span class="p">,</span> <span class="nx">html</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">lit</span><span class="dl">"</span><span class="gh">
 </span><span class="k">import</span> <span class="p">{</span> <span class="nx">ref</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">lit/directives/ref.js</span><span class="dl">'</span><span class="p">;</span>
@@ -812,7 +811,8 @@ export default class TextareaComponent extends LitTextareaMixin(LitElement) {
         @keydown=</span><span class="p">${(</span><span class="cm">/** @type {Event} */</span> <span class="nx">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
           <span class="k">this</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="cm">/** @type {HTMLTextAreaElement} */</span> <span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">currentTarget</span><span class="p">).</span><span class="nx">value</span>
         <span class="p">}}</span><span class="s2">
-      &gt;&lt;/textarea&gt;
+      &gt;
+      &lt;/textarea&gt;
     `</span><span class="gh">
 </span>  <span class="p">}</span>
 
@@ -829,16 +829,16 @@ export default class TextareaComponent extends LitTextareaMixin(LitElement) {
             JavaScript
           </div>
 
-          <clipboard-copy for="c34d8af7-64b7-47ca-82d9-ae9bd4df4c8a" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+          <clipboard-copy for="b4a83ecd-43ce-4786-84ce-e7ef6c0e9780" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
             <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
             <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
           </clipboard-copy>
 
-          <textarea id="c34d8af7-64b7-47ca-82d9-ae9bd4df4c8a" hidden="">`
+          <script type="text/plain" id="b4a83ecd-43ce-4786-84ce-e7ef6c0e9780" hidden="">`
         rows=${this.rows}
         cols=${this.cols}
 `
-</textarea>
+</script>
         </div>
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s2">`
         rows=</span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">rows</span><span class="p">}</span><span class="s2">
@@ -909,7 +909,7 @@ properties and functions a “native” textarea would have.</p>
       <button>Submit</button>
 
       <script type="module">
-        import TextareaComponent from "/form-associated-helpers/bridgetown/static/textarea-component.3FN5SM5A.js"
+        import TextareaComponent from "/form-associated-helpers/bridgetown/static/textarea-component.265QEL2Q.js"
 
         if (!window.customElements.get("textarea-component")) {
           window.customElements.define("textarea-component", TextareaComponent)

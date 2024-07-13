@@ -1,2 +1,0 @@
-import"/form-associated-helpers/pull/6/bridgetown/static/chunks/chunk-JGX3FA43.js";var a=()=>({observedAttributes:["type"],checkValidity(i){let t={message:"",isValid:!0,invalidKeys:[]},e=i.formControl;return e?(e.checkValidity(),e.validity.badInput===!0&&(t.invalidKeys.push("badInput"),t.isValid=!1,t.message=e.validationMessage),t):t}});export{a as BadInputValidator};
-//# sourceMappingURL=/form-associated-helpers/pull/6/bridgetown/static/bad-input-validator.js.NSDUJROY.js.map
