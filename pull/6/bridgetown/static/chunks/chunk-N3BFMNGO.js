@@ -1,0 +1,2 @@
+var r=()=>{let s={observedAttributes:["required"],message:Object.assign(document.createElement("input"),{required:!0}).validationMessage,checkValidity(i){let e={message:"",isValid:!0,invalidKeys:[]};return(i.required??i.hasAttribute("required"))&&(i.value||(e.message=(typeof s.message=="function"?s.message(i):s.message)||"",e.isValid=!1,e.invalidKeys.push("valueMissing"))),e}};return s};export{r as a};
+//# sourceMappingURL=/form-associated-helpers/pull/6/bridgetown/static/chunks/chunk-N3BFMNGO.js.map

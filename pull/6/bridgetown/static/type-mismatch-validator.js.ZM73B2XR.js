@@ -1,0 +1,2 @@
+import"/form-associated-helpers/pull/6/bridgetown/static/chunks/chunk-JGX3FA43.js";var s=()=>({observedAttributes:["type"],checkValidity(i){let t={message:"",isValid:!0,invalidKeys:[]},e=i.formControl;return e?(e.checkValidity(),e.validity.typeMismatch===!0&&(t.invalidKeys.push("typeMismatch"),t.isValid=!1,t.message=e.validationMessage),t):t}});export{s as TypeMismatchValidator};
+//# sourceMappingURL=/form-associated-helpers/pull/6/bridgetown/static/type-mismatch-validator.js.ZM73B2XR.js.map
