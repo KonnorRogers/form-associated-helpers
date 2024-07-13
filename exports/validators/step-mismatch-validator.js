@@ -40,7 +40,7 @@ function toNumberOrNull (maybeNum) {
 
 /**
  * @template {RangeElement} [T=RangeElement]
- * @type {() => import("../types.js").Validator<T> }}
+ * @returns {import("../types.js").Validator<T>}
  */
 export const StepMismatchValidator = () => {
   /**
