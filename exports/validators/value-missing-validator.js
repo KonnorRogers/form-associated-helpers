@@ -3,9 +3,23 @@
  */
 
 /**
- * @type {() => import("../types.js").Validator<HTMLElement & { required?: boolean }>}
+ * @typedef {object} ValidationOptions
+ * @property {(element: HTMLElement) => boolean} validateElement - Adds the ability to determine what is considered a "value missing". A use case would be checkboxes. `ValueMissingValidator({ validateElement: (element) => Boolean(element.checked) })`
  */
-export const ValueMissingValidator = () => {
+
+/**
+ * @type {(options: Partial<ValidationOptions>) => import("../types.js").Validator<HTMLElement & { required?: boolean }>}
+ */
+export const ValueMissingValidator = (options = {}) => {
+  if (!options.validateElement) {
+    options.validateElement = (element) => Boolean(/** @type {HTMLInputElement} */(element).value)
+  }
+
+  /**
+   * @type {ValidationOptions["validateElement"]}
+   */
+  const validateElement = options.validateElement
+
   /**
    * @type {ReturnType<ValueMissingValidator>}
    */
@@ -31,7 +45,7 @@ export const ValueMissingValidator = () => {
         return validity
       }
 
-      if (!element.value) {
+      if (!validateElement(element)) {
         validity.message = (typeof obj.message === "function" ? obj.message(element) : obj.message) || ""
         validity.isValid = false
         validity.invalidKeys.push("valueMissing")
