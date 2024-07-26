@@ -8,7 +8,7 @@
  */
 
 /**
- * @type {(options: Partial<ValidationOptions>) => import("../types.js").Validator<HTMLElement & { required?: boolean }>}
+ * @param {Partial<ValidationOptions>} [options]
  */
 export const ValueMissingValidator = (options = {}) => {
   if (!options.validateElement) {
@@ -21,7 +21,7 @@ export const ValueMissingValidator = (options = {}) => {
   const validateElement = options.validateElement
 
   /**
-   * @type {ReturnType<ValueMissingValidator>}
+   * @type {import("../types.js").Validator<HTMLElement & { required?: boolean }>}
    */
   const obj = {
     observedAttributes: ["required"],
