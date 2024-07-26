@@ -1,3 +1,7 @@
+## Next
+
+- Add a `validateElement` option to `ValueMissingValidator` for cases where `valueMissing` (required) isn't keyed off of `element.value` such as checkboxes [#7](https://github.com/KonnorRogers/form-associated-helpers/pull/7)
+
 ## v0.0.10
 
 - Introduce a pattern for easier translations of error messages
